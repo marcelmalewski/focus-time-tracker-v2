@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "focus-time-tracker-ui": {
+    "ui": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/focus-time-tracker-ui",
+            "outputPath": "dist/ui",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -59,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "focus-time-tracker-ui:build:production"
+              "buildTarget": "ui:build:production"
             },
             "development": {
-              "buildTarget": "focus-time-tracker-ui:build:development"
+              "buildTarget": "ui:build:development"
             }
           },
           "defaultConfiguration": "development"
