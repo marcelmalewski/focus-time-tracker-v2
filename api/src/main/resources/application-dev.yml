@@ -1,0 +1,24 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+#      javax: # uncomment to create database schema
+#        persistence:
+#          schema-generation:
+#            scripts:
+#              action: create
+#              create-target: V1__init-db.sql
+#              create-source: metadata
+
+
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+      hibernate:
+        orm:
+          jdbc:
+#            bind: trace # uncomment for bind value debugging
