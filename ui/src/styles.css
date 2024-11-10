@@ -5,7 +5,21 @@
 @tailwind components;
 @tailwind utilities;
 
-*, *:before, *:after {
+@layer components {
+  .dash-animation {
+    @apply cursor-pointer after:block after:h-0.5 after:w-0 after:bg-base-line after:duration-200 hover:after:w-full;
+  }
+  .screen-box {
+    @apply flex h-screen w-screen flex-col items-center justify-center bg-base-bg text-base-text;
+  }
+  .test {
+    @apply border border-black;
+  }
+}
+
+*,
+*:before,
+*:after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;

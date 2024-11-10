@@ -4,9 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-home',
   standalone: true,
   imports: [],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  templateUrl: './timer.component.html',
 })
-export class HomeComponent {
-
-}
+export class TimerComponent {}

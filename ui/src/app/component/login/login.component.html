@@ -1,0 +1,16 @@
+<div class="screen-box">
+  <form
+    #loginForm="ngForm"
+    (ngSubmit)="onSubmit()"
+    class="flex w-96 flex-col items-center justify-between gap-3 rounded-lg bg-form-bg p-12">
+    <div>
+      <label for="login">Login</label>
+      <input
+        type="text"
+        class="block w-full rounded-lg border border-form-border bg-form-bg p-2 focus:outline-none"
+        id="login"
+        name="login"
+        [(ngModel)]="loginData.login" />
+    </div>
+  </form>
+</div>

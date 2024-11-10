@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './component/login/login.component';
+import { TimerComponent } from './component/timer/timer.component';
 
 export const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/login' },
-  { path: '**', component: LoginComponent },
+  { path: 'home', title: 'home', component: TimerComponent },
+  { path: 'login', title: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', component: LoginComponent }, //TODO add page not found
 ];

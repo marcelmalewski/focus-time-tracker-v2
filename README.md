@@ -9,7 +9,7 @@ Official name is in progress :)
 * [Launch Instructions](#launch-instructions)
 
 ## General Info
-Desing made in figma is in main directory: FocusTimeTrackerCoreDesign.png
+Design made in figma is in main directory: FocusTimeTrackerCoreDesign.png
 
 ### Inspiration
 Both Pomodoro and Flowtime techniques offer unique advantages. Sometimes, one is necessary, and other times, the other is preferred. Flowtime allows for long, uninterrupted work sessions, but too much sitting isn't good. On the other hand, strict adherence to Pomodoro intervals may feel limiting. Combining these methods can yield significant benefits. Additionally, presenting this hybrid approach with maximum simplicity and providing useful statistics is essential.
@@ -53,9 +53,8 @@ The Docker setup will launch:
 1. Set prettier. In Intellij you can just set "Automatic Prettier configuration".
 
 #### Running the Local Frontend
-1. Navigate to the ./frontend directory.
-2. Install the required dependencies using: yarn install
-3. Launch the frontend by executing: `yarn dev`
+1. npm install
+2. Use intellij config or command: `ng start`
 
 ### Backend
 
@@ -69,4 +68,3 @@ To start the application, execute `application bootRun` from the Gradle panel, u
 4. Push the image to Docker Hub: `docker push 6745345/play-together-api:1.0`
 5. Use the provided docker-compose-dev.yml.
    In case push doesn't reflect changes, remove the local image and rerun the Docker Compose.
-
