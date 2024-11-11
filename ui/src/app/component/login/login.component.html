@@ -1,16 +1,52 @@
 <div class="screen-box">
+  <div class="mb-10 flex items-center justify-center bg-base-bg text-base-text">
+    <p class="text-3xl">Welcome on timero!</p>
+  </div>
   <form
+    class="flex w-96 flex-col items-center justify-between gap-3 rounded-lg bg-form-bg p-12"
     #loginForm="ngForm"
-    (ngSubmit)="onSubmit()"
-    class="flex w-96 flex-col items-center justify-between gap-3 rounded-lg bg-form-bg p-12">
+    (ngSubmit)="onSubmit()">
     <div>
-      <label for="login">Login</label>
+      <label for="loginOrEmail">Login / Email</label>
       <input
-        type="text"
         class="block w-full rounded-lg border border-form-border bg-form-bg p-2 focus:outline-none"
-        id="login"
-        name="login"
-        [(ngModel)]="loginData.login" />
+        type="text"
+        id="loginOrEmail"
+        name="loginOrEmail"
+        required
+        #loginOrEmail="ngModel"
+        [(ngModel)]="loginData.loginOrEmail" />
+      <div
+        *ngIf="
+          loginOrEmail.invalid && (loginOrEmail.touched || loginForm.submitted)
+        "
+        class="text-sm text-error">
+        Login or email is required
+      </div>
     </div>
+    <div>
+      <label for="password">Password</label>
+      <input
+        class="block w-full rounded-lg border border-form-border bg-form-bg p-2 focus:outline-none"
+        type="password"
+        id="password"
+        name="password"
+        required
+        #password="ngModel"
+        [(ngModel)]="loginData.password" />
+      <div
+        *ngIf="password.invalid && (password.touched || loginForm.submitted)"
+        class="text-sm text-error">
+        Password is required
+      </div>
+    </div>
+
+    <button
+      class="mt-6 rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov"
+      type="submit">
+      Login
+    </button>
+
+    <a href="/register" class="dash-animation text-xl"> Or create account </a>
   </form>
 </div>
