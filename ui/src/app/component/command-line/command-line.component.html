@@ -1,11 +1,28 @@
+<!--<form  class="flex items-center gap-2 px-2">-->
+<!--  <input-->
+<!--    type="text"-->
+<!--    id="command"-->
+<!--    class="grow border border-form-border bg-form-bg p-2 focus:outline-none"-->
+<!--    autofocus-->
+<!--    #myInput-->
+<!--    [(ngModel)]="commandValue" />-->
+<!--</form>-->
+
+<div class="h-12"></div>
+
 <form (ngSubmit)="onSubmit()" class="flex items-center gap-2 px-2">
   <label for="command">Command: </label>
   <input
     type="text"
     id="command"
-    name="command"
     class="grow border border-form-border bg-form-bg p-2 focus:outline-none"
     autofocus
-    #myInput
-    [(ngModel)]="commandValue" />
+    #commandInput
+    [formControl]="commandInputControl"
+    [matAutocomplete]="auto" />
+  <mat-autocomplete #auto="matAutocomplete">
+    @for (command of filteredCommands | async; track command) {
+      <mat-option [value]="command">{{ command }}</mat-option>
+    }
+  </mat-autocomplete>
 </form>
