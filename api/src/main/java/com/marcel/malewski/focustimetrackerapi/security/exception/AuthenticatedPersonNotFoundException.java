@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class AuthenticatedGamerNotFoundException extends RuntimeException {
-	public AuthenticatedGamerNotFoundException() {
-		super("Authenticated gamer not found");
+public class AuthenticatedPersonNotFoundException extends RuntimeException {
+	public AuthenticatedPersonNotFoundException() {
+		super("Authenticated person not found");
 	}
 }
