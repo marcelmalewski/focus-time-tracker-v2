@@ -4,17 +4,17 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 public class SpaceWithinAWordValidator implements ConstraintValidator<WithoutSpacesWithinAWord, String> {
-	@Override
-	public boolean isValid(String string, ConstraintValidatorContext context) {
-		if (string == null || string.isBlank()) {
-			return true;
-		}
+  @Override
+  public boolean isValid(String string, ConstraintValidatorContext context) {
+    if (string == null || string.isBlank()) {
+      return true;
+    }
 
-		String trimmedString = string.trim();
-		if(trimmedString.contains(" ")) {
-			return false;
-		}
+    String trimmedString = string.trim();
+    if (trimmedString.contains(" ")) {
+      return false;
+    }
 
-		return true;
-	}
+    return true;
+  }
 }

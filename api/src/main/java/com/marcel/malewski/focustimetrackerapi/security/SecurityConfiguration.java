@@ -24,62 +24,64 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
-	//TODO dodac specjalna permisje dostepu do swaggera
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http
-			.csrf(AbstractHttpConfigurer::disable)
-			.authorizeHttpRequests(authorize -> authorize
-				.requestMatchers(
-					HttpMethod.POST,
-					"/v1/registration/gamers"
-				)
-				.permitAll()
+  //TODO dodac specjalna permisje dostepu do swaggera
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+      .csrf(AbstractHttpConfigurer::disable)
+      .authorizeHttpRequests(authorize -> authorize
+        .requestMatchers(
+          HttpMethod.GET,
+          "/docs",
+          "/v2/api-docs/**",
+          "/v3/api-docs/**",
+          "/swagger-resources/**",
+          "/swagger-ui/**",
+          "/swagger-ui.html"
+        )
+        .permitAll()
 
-				.requestMatchers(
-					HttpMethod.GET,
-					"/docs",
-					"/v2/api-docs/**",
-					"/v3/api-docs/**",
-					"/swagger-resources/**",
-					"/swagger-ui/**",
-					"/swagger-ui.html"
-				)
-				.permitAll()
+        .requestMatchers(
+          HttpMethod.POST,
+          "/v1/registration/persons",
+          "/v1/registration/moderators"
+        )
+        .permitAll()
 
-				.requestMatchers(
-					"/error",
-					"/v1/gamers/@me/authentication-data"
-				)
-				.permitAll()
+        .requestMatchers(
+          "/error",
+          //for local testing:
+          "/v1/gamers"
+        )
+        .permitAll()
 
-				.anyRequest()
-				.authenticated()
-			)
+        .anyRequest()
+        .authenticated()
+      )
 
-			.formLogin(formLogin -> formLogin
-				.successHandler((request, response, authentication) -> {
-					// Do nothing upon successful login
-				})
-			)
+      .formLogin(formLogin -> formLogin
+        .successHandler((request, response, authentication) -> {
+          // Do nothing upon successful login
+        })
+      )
 
-			.exceptionHandling(exceptionHandling -> exceptionHandling
-				.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-				.accessDeniedHandler(accessDeniedHandler())
-			);
+      .exceptionHandling(exceptionHandling -> exceptionHandling
+        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+        .accessDeniedHandler(accessDeniedHandler())
+      );
 
-		return http.build();
-	}
+    return http.build();
+  }
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+  @Bean
+  public BCryptPasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-	@Bean
-	public AccessDeniedHandler accessDeniedHandler() {
-		return new CustomAccessDeniedHandler();
-	}
+  @Bean
+  public AccessDeniedHandler accessDeniedHandler() {
+    return new CustomAccessDeniedHandler();
+  }
 
 //	@Bean
 //	public RoleHierarchy roleHierarchy() {

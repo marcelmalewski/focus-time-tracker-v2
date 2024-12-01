@@ -13,19 +13,19 @@ import java.util.concurrent.Executors;
 @EnableAsync
 @Configuration
 @ConditionalOnProperty(
-	value = "spring.thread-executor",
-	havingValue = "virtual"
+  value = "spring.thread-executor",
+  havingValue = "virtual"
 )
 public class ThreadConfig {
-	@Bean
-	public AsyncTaskExecutor applicationTaskExecutor() {
-		return new TaskExecutorAdapter(Executors.newVirtualThreadPerTaskExecutor());
-	}
+  @Bean
+  public AsyncTaskExecutor applicationTaskExecutor() {
+    return new TaskExecutorAdapter(Executors.newVirtualThreadPerTaskExecutor());
+  }
 
-	@Bean
-	public TomcatProtocolHandlerCustomizer<?> protocolHandlerVirtualThreadExecutorCustomizer() {
-		return protocolHandler -> {
-			protocolHandler.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
-		};
-	}
+  @Bean
+  public TomcatProtocolHandlerCustomizer<?> protocolHandlerVirtualThreadExecutorCustomizer() {
+    return protocolHandler -> {
+      protocolHandler.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
+    };
+  }
 }

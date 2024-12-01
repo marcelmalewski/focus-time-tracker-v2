@@ -9,8 +9,8 @@ import java.security.Principal;
 @Component
 @Validated
 public class PrincipalExtractor {
-	public long extractIdFromPrincipal(@NotNull Principal principal) {
-		String gamerIdAsString = principal.getName();
-		return Long.parseLong(gamerIdAsString);
-	}
+  public long extractIdFromPrincipal(@NotNull Principal principal) {
+    String personIdAsString = principal.getName();
+    return Long.parseLong(personIdAsString);
+  }
 }

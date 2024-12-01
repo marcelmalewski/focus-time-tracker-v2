@@ -1,19 +1,19 @@
 package com.marcel.malewski.focustimetrackerapi.enums;
 
 public enum Stage {
-	HOME("Home"),
-	FOCUS("Focus"),
-	PAUSE("Pause"),
-	SHORT_BREAK("Short break"),
-	LONG_BREAK("Long break");
+  HOME("Home"),
+  FOCUS("Focus"),
+  PAUSE("Pause"),
+  SHORT_BREAK("Short break"),
+  LONG_BREAK("Long break");
 
-	private final String stageName;
+  private final String stageName;
 
-	private Stage(String stageName) {
-		this.stageName = stageName;
-	}
+  Stage(String stageName) {
+    this.stageName = stageName;
+  }
 
-	public String getStageName() {
-		return stageName;
-	}
+  public String getStageName() {
+    return stageName;
+  }
 }

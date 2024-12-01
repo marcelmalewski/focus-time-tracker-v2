@@ -10,8 +10,10 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface WithoutSpacesOnTheSides {
-	String message() default "must not contain spaces on the sides";
-	Class<?>[] groups() default {};
-	Class<? extends Payload>[] payload() default {};
+  String message() default "must not contain spaces on the sides";
+
+  Class<?>[] groups() default {};
+
+  Class<? extends Payload>[] payload() default {};
 }
 
