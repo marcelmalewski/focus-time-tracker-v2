@@ -6,7 +6,7 @@ import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 
 import java.util.List;
 
-//TODO walidacja
+// TODO walidacja
 public record PrincipalBasicDataWithMainTopicsDto(
   Long id,
   String login,

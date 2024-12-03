@@ -1,6 +1,7 @@
 package com.marcel.malewski.focustimetrackerapi.entity.focussession;
 
 import com.marcel.malewski.focustimetrackerapi.entity.dailyfocusSummary.DailyFocusSummary;
+import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -22,7 +23,7 @@ public class FocusSession {
   private Integer version;
 
   @NotNull
-  private String sessionType; //timer || stopwatch
+  private String sessionType; //TODO timer || stopwatch
   @NotNull
   private Boolean finished;
 
@@ -37,9 +38,7 @@ public class FocusSession {
 
   @Override
   public String toString() {
-    return "FocusSession{" +
-      "id=" + id +
-      '}';
+    return "FocusSession{" + "id=" + id + '}';
   }
 
   @Override

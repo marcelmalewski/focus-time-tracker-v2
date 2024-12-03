@@ -1,10 +1,9 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person.registration;
 
-import com.marcelmalewski.focustimetracker.entity.person.Person;
-import com.marcelmalewski.focustimetracker.entity.person.PersonService;
-import com.marcelmalewski.focustimetracker.entity.person.exception.EmailAlreadyUsedException;
-import com.marcelmalewski.focustimetracker.entity.person.exception.LoginAlreadyUsedException;
-import jakarta.validation.constraints.NotNull;
+import com.marcel.malewski.focustimetrackerapi.entity.person.Person;
+import com.marcel.malewski.focustimetrackerapi.entity.person.PersonService;
+import com.marcel.malewski.focustimetrackerapi.entity.person.exception.EmailAlreadyUsedException;
+import com.marcel.malewski.focustimetrackerapi.entity.person.exception.LoginAlreadyUsedException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,7 @@ public class RegisterService {
 
 
   //TODO probably settings entity should be created here as well
-  public void register(@NotNull RegisterRequestDto registerRequestDto) {
+  public void register(RegisterRequestDto registerRequestDto) {
     String login = registerRequestDto.getLogin();
     if (personService.existsByLogin(login)) {
       throw new LoginAlreadyUsedException(login);

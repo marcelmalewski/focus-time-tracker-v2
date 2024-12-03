@@ -33,9 +33,7 @@ public class SubTopic implements Topic {
 
   @Override
   public String toString() {
-    return "SubTopic{" +
-      "id=" + id +
-      '}';
+    return "SubTopic{" + "id=" + id + '}';
   }
 
   @Override

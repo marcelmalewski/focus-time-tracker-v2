@@ -2,18 +2,18 @@ package com.marcel.malewski.focustimetrackerapi.entity.person;
 
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalBasicDataDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalBasicDataWithMainTopicsDto;
+import com.marcel.malewski.focustimetrackerapi.entity.person.timer.TimerFocusAfterHomeDto;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 import com.marcel.malewski.focustimetrackerapi.security.exception.AuthenticatedPersonNotFoundException;
 import com.marcel.malewski.focustimetrackerapi.security.util.SecurityHelper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
 
-//AuthenticatedPersonNotFoundException is only for sensitive methods
+// AuthenticatedPersonNotFoundException is only for sensitive methods
 @Service
 @Validated
 public class PersonService {
@@ -51,23 +51,23 @@ public class PersonService {
     };
   }
 
-  public boolean existsByLogin(@NotNull String login) {
+  public boolean existsByLogin(String login) {
     return personRepository.existsByLogin(login);
   }
 
-  public boolean existsByEmail(@NotNull String email) {
+  public boolean existsByEmail(String email) {
     return personRepository.existsByEmail(email);
   }
 
-  public Person create(@NotNull Person person) {
+  public Person create(Person person) {
     return personRepository.save(person);
   }
 
   public void updatePrincipalTimerStage(
     long principalId,
-    @NotNull Stage timerStage,
-    @NotNull HttpServletRequest request,
-    @NotNull HttpServletResponse response
+    Stage timerStage,
+    HttpServletRequest request,
+    HttpServletResponse response
   ) throws AuthenticatedPersonNotFoundException {
     int numberOfAffectedRows = personRepository.updateTimerStage(principalId, timerStage);
 
@@ -79,10 +79,10 @@ public class PersonService {
 
   public void updatePrincipalTimerStageAndRemainingTime(
     long principalId,
-    @NotNull Stage timerStage,
+    Stage timerStage,
     int timerRemainingTime,
-    @NotNull HttpServletRequest request,
-    @NotNull HttpServletResponse response
+    HttpServletRequest request,
+    HttpServletResponse response
   ) throws AuthenticatedPersonNotFoundException {
     int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingTime(principalId, timerStage, timerRemainingTime);
 
@@ -95,8 +95,8 @@ public class PersonService {
   public void updatePrincipalTimerAutoBreak(
     long principalId,
     boolean timerAutoBreak,
-    @NotNull HttpServletRequest request,
-    @NotNull HttpServletResponse response
+    HttpServletRequest request,
+    HttpServletResponse response
   ) throws AuthenticatedPersonNotFoundException {
     int numberOfAffectedRows = personRepository.updateTimerAutoBreak(principalId, timerAutoBreak);
 
@@ -109,9 +109,9 @@ public class PersonService {
   // TODO update tylko gdy faktycznie coś się zmieniło
   public void updatePrincipalFocusAfterHome(
     long principalId,
-    @NotNull TimerFocusAfterHomeDto dto,
-    @NotNull HttpServletRequest request,
-    @NotNull HttpServletResponse response
+    TimerFocusAfterHomeDto dto,
+    HttpServletRequest request,
+    HttpServletResponse response
   ) throws AuthenticatedPersonNotFoundException {
     int remainingTime = (dto.timerSetHours() * 60 * 60) + (dto.timerSetMinutes() * 60) + dto.timerSetSeconds();
     int numberOfAffectedRows;

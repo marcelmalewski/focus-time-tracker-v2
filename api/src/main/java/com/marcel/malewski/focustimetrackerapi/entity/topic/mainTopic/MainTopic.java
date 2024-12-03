@@ -51,9 +51,7 @@ public class MainTopic implements Topic {
 
   @Override
   public String toString() {
-    return "MainTopic{" +
-      "id=" + id +
-      '}';
+    return "MainTopic{" + "id=" + id + '}';
   }
 
   @Override

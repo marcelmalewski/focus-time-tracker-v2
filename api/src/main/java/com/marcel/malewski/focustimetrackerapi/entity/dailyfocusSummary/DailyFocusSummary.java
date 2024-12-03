@@ -1,5 +1,6 @@
 package com.marcel.malewski.focustimetrackerapi.entity.dailyfocusSummary;
 
+import com.marcel.malewski.focustimetrackerapi.entity.focussession.FocusSession;
 import com.marcel.malewski.focustimetrackerapi.entity.person.Person;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -37,9 +38,7 @@ public class DailyFocusSummary {
 
   @Override
   public String toString() {
-    return "DailyFocusSummary{" +
-      "id=" + id +
-      '}';
+    return "DailyFocusSummary{" + "id=" + id + '}';
   }
 
   @Override

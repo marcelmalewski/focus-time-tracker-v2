@@ -46,7 +46,7 @@ public class Person implements UserDetails {
   @Column(updatable = false)
   private LocalDate createdAt;
 
-  //timer settings
+  // Timer settings
   @NotNull
   @Convert(converter = StageConverter.class)
   @Builder.Default
@@ -103,10 +103,7 @@ public class Person implements UserDetails {
 
   @Override
   public String toString() {
-    return "Person{" +
-      "id=" + id +
-      ", login='" + login + '\'' +
-      '}';
+    return "Person{" + "id=" + id + ", login='" + login + '\'' + '}';
   }
 
   @Override

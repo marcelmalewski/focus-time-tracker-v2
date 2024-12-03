@@ -3,7 +3,7 @@ package com.marcel.malewski.focustimetrackerapi.entity.person.dto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.TimerFocusFields;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 
-//TODO walidacja
+// TODO walidacja
 public record PrincipalBasicDataDto(
   Long id,
   String login,

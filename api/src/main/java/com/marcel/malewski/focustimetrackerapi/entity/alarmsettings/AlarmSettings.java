@@ -32,9 +32,7 @@ public class AlarmSettings {
 
   @Override
   public String toString() {
-    return "AlarmSettings{" +
-      "id=" + id +
-      '}';
+    return "AlarmSettings{" + "id=" + id + '}';
   }
 
   @Override
