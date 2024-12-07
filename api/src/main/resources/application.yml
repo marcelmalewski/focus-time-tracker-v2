@@ -22,7 +22,7 @@ spring:
 #        current_session_context_class: thread, check what is it
     hibernate:
       ddl-auto: create-drop # When flyway is used, change to "validate"
-    open-in-view: false
+    open-in-view: true
     database: postgresql
 
 springdoc:

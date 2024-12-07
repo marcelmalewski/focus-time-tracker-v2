@@ -1,6 +1,6 @@
 package com.marcel.malewski.focustimetrackerapi.security;
 
-import com.marcelmalewski.focustimetracker.entity.person.PersonRepository;
+import com.marcel.malewski.focustimetrackerapi.entity.person.PersonRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

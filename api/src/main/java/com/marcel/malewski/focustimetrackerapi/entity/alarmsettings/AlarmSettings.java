@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-//TODO custom sound?
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

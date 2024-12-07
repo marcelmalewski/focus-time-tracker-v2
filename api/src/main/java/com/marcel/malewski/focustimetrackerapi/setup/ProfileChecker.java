@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-//TODO zmienić na logowanie "error" zamiast rzucania wyjątku, a moze wyjatek jest dobrą opcja hm
 @Configuration
 public class ProfileChecker {
 
@@ -22,7 +21,6 @@ public class ProfileChecker {
     return args -> {
       if (environment.getActiveProfiles().length == 0) {
         throw new IllegalStateException("No profile set. Please set one of the following profiles: dev, test, prod (see README)");
-//				error("No profile set. Please set one of the following profiles: dev, prod (see README)");
       }
     };
   }

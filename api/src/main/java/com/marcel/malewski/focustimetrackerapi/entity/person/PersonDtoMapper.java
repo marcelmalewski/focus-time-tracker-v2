@@ -1,6 +1,7 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalBasicDataWithMainTopicsDto;
+import com.marcel.malewski.focustimetrackerapi.entity.person.timer.TimerPauseDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

@@ -9,4 +9,3 @@ public class AlreadyAuthenticatedPersonException extends RuntimeException {
     super("Person is already authenticated");
   }
 }
-

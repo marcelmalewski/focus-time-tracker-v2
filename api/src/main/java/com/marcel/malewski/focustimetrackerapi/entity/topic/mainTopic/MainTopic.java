@@ -44,11 +44,6 @@ public class MainTopic implements Topic {
   @JoinColumn(name = "focussession_id")
   private FocusSession focusSession;
 
-  public MainTopic(String name, Person owner) {
-    this.name = name;
-    this.owner = owner;
-  }
-
   @Override
   public String toString() {
     return "MainTopic{" + "id=" + id + '}';
