@@ -14,6 +14,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 //TODO dodać profile
+//TODO dodac specjalna permisje dostepu do swaggera
 //TODO co to dokladnie stateless session
 //TODO jaki powinien byc dostep do dokumentacji
 //TODO obargnac sesjie co to znaczy
@@ -23,8 +24,6 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
-
-  //TODO dodac specjalna permisje dostepu do swaggera
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
@@ -50,8 +49,7 @@ public class SecurityConfiguration {
 
         .requestMatchers(
           "/error",
-          //for local testing:
-          "/v1/gamers"
+          "/v1/test"// TODO for test purpose
         )
         .permitAll()
 

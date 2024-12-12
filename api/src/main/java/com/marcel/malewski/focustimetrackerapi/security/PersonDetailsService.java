@@ -16,6 +16,7 @@ public class PersonDetailsService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String loginOrEmail) {
-    return personRepository.findByLoginOrEmail(loginOrEmail, loginOrEmail).orElseThrow(() -> new UsernameNotFoundException(loginOrEmail));
+    return personRepository.findByLoginOrEmail(loginOrEmail, loginOrEmail)
+      .orElseThrow(() -> new UsernameNotFoundException(loginOrEmail));
   }
 }

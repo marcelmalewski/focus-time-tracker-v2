@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.List;
 import java.util.Optional;
 
 // AuthenticatedPersonNotFoundException is only for sensitive methods
@@ -21,13 +22,25 @@ public class PersonService {
   private final SecurityHelper securityHelper;
   private final PersonMapper personMapper;
 
-  public PersonService(PersonRepository personRepository, SecurityHelper securityHelper, PersonMapper personMapper) {
+  public PersonService(PersonRepository personRepository, SecurityHelper securityHelper,
+                       PersonMapper personMapper) {
     this.personRepository = personRepository;
     this.securityHelper = securityHelper;
     this.personMapper = personMapper;
   }
 
-  public PrincipalBasicDataDto getPrincipalBasicData(long principalId, HttpServletRequest request, HttpServletResponse response) {
+  public List<PrincipalBasicDataDto> getAllPersonsBasicData() {
+    List<Person> persons = personRepository.findAll();
+
+    return persons
+      .stream()
+      .map(personMapper::toPrincipalBasicDataDto)
+      .toList();
+  }
+
+  public PrincipalBasicDataDto getPrincipalBasicData(long principalId,
+                                                     HttpServletRequest request,
+                                                     HttpServletResponse response) {
     Optional<Person> optionalPerson = personRepository.findById(principalId);
 
     return switch (optionalPerson.orElse(null)) {
@@ -39,7 +52,9 @@ public class PersonService {
     };
   }
 
-  public PrincipalBasicDataWithMainTopicsDto getPrincipalBasicDataWithMainTopics(long principalId, HttpServletRequest request, HttpServletResponse response) {
+  public PrincipalBasicDataWithMainTopicsDto getPrincipalBasicDataWithMainTopics(long principalId,
+                                                                                 HttpServletRequest request,
+                                                                                 HttpServletResponse response) {
     Optional<Person> optionalPerson = personRepository.findByIdWithFetchedMainTopics(principalId);
 
     return switch (optionalPerson.orElse(null)) {
@@ -84,7 +99,11 @@ public class PersonService {
     HttpServletRequest request,
     HttpServletResponse response
   ) throws AuthenticatedPersonNotFoundException {
-    int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingTime(principalId, timerStage, timerRemainingTime);
+    int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingTime(
+      principalId,
+      timerStage,
+      timerRemainingTime
+    );
 
     if (numberOfAffectedRows == 0) {
       securityHelper.logoutManually(request, response);
