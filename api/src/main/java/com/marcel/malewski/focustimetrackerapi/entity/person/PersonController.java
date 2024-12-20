@@ -5,10 +5,8 @@ import com.marcel.malewski.focustimetrackerapi.entity.person.dto.UpdateTimerAuto
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -16,6 +14,8 @@ import java.util.List;
 
 @RestController
 public class PersonController {
+  public static final String PERSON_PATH_V1 = "/v1/persons";
+
   private final PersonService personService;
 
   public PersonController(PersonService personService) {
@@ -23,11 +23,19 @@ public class PersonController {
   }
 
 
-  @GetMapping(value = "/v1/test")
+  @GetMapping(value = PERSON_PATH_V1 + " " + "/test")
   @Operation(summary = "Find all persons public info")
   public ResponseEntity<List<PrincipalBasicDataDto>> findAllGamers() {
     List<PrincipalBasicDataDto> allPersons = personService.getAllPersonsBasicData();
     return new ResponseEntity<>(allPersons, HttpStatus.OK);
+  }
+
+  @GetMapping(value = PERSON_PATH_V1 + " " + "/principal/basic-data")
+  @Operation(summary = "Get principal basic data")
+  public ResponseEntity<PrincipalBasicDataDto> getPrincipalBasicData(Principal principal, HttpServletRequest request,
+                                                                     HttpServletResponse response) {
+    PrincipalBasicDataDto dto = personService.getPrincipalBasicData(principal, request, response);
+    return new ResponseEntity<>(dto, HttpStatus.OK);
   }
 
   @PatchMapping(value = "person/timer-auto-break")

@@ -8,13 +8,14 @@ import com.marcel.malewski.focustimetrackerapi.security.exception.AuthenticatedP
 import com.marcel.malewski.focustimetrackerapi.security.util.SecurityHelper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
-// AuthenticatedPersonNotFoundException is only for sensitive methods
 @Service
 @Validated
 public class PersonService {
@@ -38,9 +39,10 @@ public class PersonService {
       .toList();
   }
 
-  public PrincipalBasicDataDto getPrincipalBasicData(long principalId,
+  public PrincipalBasicDataDto getPrincipalBasicData(Principal principal,
                                                      HttpServletRequest request,
                                                      HttpServletResponse response) {
+    long principalId = securityHelper.extractIdFromPrincipal(principal);
     Optional<Person> optionalPerson = personRepository.findById(principalId);
 
     return switch (optionalPerson.orElse(null)) {
@@ -52,9 +54,10 @@ public class PersonService {
     };
   }
 
-  public PrincipalBasicDataWithMainTopicsDto getPrincipalBasicDataWithMainTopics(long principalId,
+  public PrincipalBasicDataWithMainTopicsDto getPrincipalBasicDataWithMainTopics(Principal principal,
                                                                                  HttpServletRequest request,
                                                                                  HttpServletResponse response) {
+    long principalId = securityHelper.extractIdFromPrincipal(principal);
     Optional<Person> optionalPerson = personRepository.findByIdWithFetchedMainTopics(principalId);
 
     return switch (optionalPerson.orElse(null)) {
@@ -74,7 +77,7 @@ public class PersonService {
     return personRepository.existsByEmail(email);
   }
 
-  public Person create(Person person) {
+  public Person create(@NotNull Person person) {
     return personRepository.save(person);
   }
 

@@ -14,14 +14,17 @@
         id="loginOrEmail"
         name="loginOrEmail"
         required
-        #loginOrEmail="ngModel"
+        #loginOrEmailField="ngModel"
         [(ngModel)]="loginData.loginOrEmail" />
       <div
         *ngIf="
-          loginOrEmail.invalid && (loginOrEmail.touched || loginForm.submitted)
+          loginOrEmailField.invalid &&
+          (loginOrEmailField.touched || loginForm.submitted)
         "
         class="text-sm text-error">
-        Login or email is required
+        <div *ngIf="loginOrEmailField.errors?.['required']">
+          Login or email is required
+        </div>
       </div>
     </div>
     <div>
@@ -32,13 +35,22 @@
         id="password"
         name="password"
         required
-        #password="ngModel"
+        #passwordField="ngModel"
         [(ngModel)]="loginData.password" />
       <div
-        *ngIf="password.invalid && (password.touched || loginForm.submitted)"
+        *ngIf="
+          passwordField.invalid &&
+          (passwordField.touched || loginForm.submitted)
+        "
         class="text-sm text-error">
-        Password is required
+        <div *ngIf="passwordField.errors?.['required']">
+          Password is required
+        </div>
       </div>
+    </div>
+
+    <div *ngIf="notCorrectLoginOrEmailOrPasswords" class="text-sm text-error">
+      Login, email or password are incorrect.
     </div>
 
     <button

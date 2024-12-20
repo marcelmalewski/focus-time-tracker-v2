@@ -1,4 +1,5 @@
 export const Pages = {
+  LOGIN: 'login',
   TIMER: 'timer',
   TIMER_EDIT: 'timer/edit',
   SETTINGS: 'settings',
@@ -13,3 +14,13 @@ export const Commands = {
 export const CommandsValues = Object.values(Commands);
 type CommandsKeys = keyof typeof Commands;
 export type Command = (typeof Commands)[CommandsKeys];
+
+export const Stages = {
+  HOME: 'Home',
+  FOCUS: 'Focus',
+  PAUSE: 'Pause',
+  SHORT_BREAK: 'Short break',
+  LONG_BREAK: 'Long break',
+} as const;
+type StagesKeys = keyof typeof Stages;
+export type Stage = (typeof Stages)[StagesKeys];

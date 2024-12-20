@@ -31,7 +31,6 @@ public class RegisterService {
     }
 
     String encodedPassword = passwordEncoder.encode(registerRequestDto.getPassword());
-
     Person newPerson = Person.builder().login(login).password(encodedPassword).email(email).build();
 
     personService.create(newPerson);
