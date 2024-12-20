@@ -23,14 +23,14 @@ public class PersonController {
   }
 
 
-  @GetMapping(value = PERSON_PATH_V1 + " " + "/test")
+  @GetMapping(value = PERSON_PATH_V1 + "/test")
   @Operation(summary = "Find all persons public info")
   public ResponseEntity<List<PrincipalBasicDataDto>> findAllGamers() {
     List<PrincipalBasicDataDto> allPersons = personService.getAllPersonsBasicData();
     return new ResponseEntity<>(allPersons, HttpStatus.OK);
   }
 
-  @GetMapping(value = PERSON_PATH_V1 + " " + "/principal/basic-data")
+  @GetMapping(value = PERSON_PATH_V1 + "/principal/basic-data")
   @Operation(summary = "Get principal basic data")
   public ResponseEntity<PrincipalBasicDataDto> getPrincipalBasicData(Principal principal, HttpServletRequest request,
                                                                      HttpServletResponse response) {

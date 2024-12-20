@@ -9,6 +9,9 @@ import { catchError, map, Observable, of, retry, tap } from 'rxjs';
 import { PrincipalDataService } from '../service/principal-data.service';
 import { PrincipalBasicData } from '../interface/person.interface';
 import { Pages } from '../other/typesAndConsts';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotLoggedIn } from '../other/message';
+import { NotLoggedInNotificationComponent } from '../other/not-logged-in-snack-bar/not-logged-in-notification.component';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +19,8 @@ import { Pages } from '../other/typesAndConsts';
 export class PrincipalBasicDataGuard implements CanActivate {
   constructor(
     private principalDataService: PrincipalDataService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   canActivate(
@@ -30,11 +34,11 @@ export class PrincipalBasicDataGuard implements CanActivate {
       }),
       map(() => true),
       catchError(err => {
-        console.log('test');
         if (err.status === 401) {
-          console.log('not logged in');
+          this.openBasicNotification(NotLoggedIn);
           this.router.navigateByUrl(Pages.LOGIN);
         } else {
+          console.log('not known error');
           // TODO jak obsluguje 500 itd.
           this.router.navigateByUrl(Pages.LOGIN);
         }
@@ -42,5 +46,18 @@ export class PrincipalBasicDataGuard implements CanActivate {
         return of(false);
       })
     );
+  }
+
+  // openBasicNotification() {
+  //   this.snackBar.openFromComponent(NotLoggedInNotificationComponent, {
+  //     duration: 2000,
+  //   });
+  // }
+
+  openBasicNotification(message: string) {
+    this.snackBar.open(message, undefined, {
+      duration: 2000,
+      panelClass: ['notification-error'],
+    });
   }
 }

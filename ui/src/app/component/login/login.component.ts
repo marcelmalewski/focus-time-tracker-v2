@@ -52,6 +52,7 @@ export class LoginComponent implements OnDestroy {
         },
         error: (response: HttpResponse<any>) => {
           console.log(response.status);
+          console.log('response.status');
           if (response.status === 401) {
             this.notCorrectLoginOrEmailOrPasswords = true;
           } else {

@@ -16,3 +16,15 @@
     @apply border border-black;
   }
 }
+
+:root {
+  .notification-error {
+    --mdc-snackbar-container-color: red; /* Background color */
+    --mdc-snackbar-supporting-text-color: black; /* Text color */
+  }
+
+  .notification-success {
+    --mdc-snackbar-container-color: green;
+    --mdc-snackbar-supporting-text-color: white;
+  }
+}
