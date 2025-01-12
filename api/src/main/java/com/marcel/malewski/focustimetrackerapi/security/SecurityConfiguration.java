@@ -24,62 +24,63 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-      .csrf(AbstractHttpConfigurer::disable)
-      .authorizeHttpRequests(authorize -> authorize
-        .requestMatchers(
-          HttpMethod.GET,
-          "/docs",
-          "/v2/api-docs/**",
-          "/v3/api-docs/**",
-          "/swagger-resources/**",
-          "/swagger-ui/**",
-          "/swagger-ui.html"
-        )
-        .permitAll()
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers(
+                    HttpMethod.GET,
+                    "/v1/persons/principal/logged-in",
+                    "/docs",
+                    "/v2/api-docs/**",
+                    "/v3/api-docs/**",
+                    "/swagger-resources/**",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html"
+                )
+                .permitAll()
 
-        .requestMatchers(
-          HttpMethod.POST,
-          "/v1/registration/persons",
-          "/v1/registration/moderators"
-        )
-        .permitAll()
+                .requestMatchers(
+                    HttpMethod.POST,
+                    "/v1/registration/persons",
+                    "/v1/registration/moderators"
+                )
+                .permitAll()
 
-        .requestMatchers(
-          "/error",
-          "/v1/test"// TODO for test purpose
-        )
-        .permitAll()
+                .requestMatchers(
+                    "/error",
+                    "/v1/test"// TODO for test purpose
+                )
+                .permitAll()
 
-        .anyRequest()
-        .authenticated()
-      )
+                .anyRequest()
+                .authenticated()
+            )
 
-      .formLogin(formLogin -> formLogin
-        .successHandler((request, response, authentication) -> {
-          // Do nothing upon successful login
-        })
-      )
+            .formLogin(formLogin -> formLogin
+                .successHandler((request, response, authentication) -> {
+                    // Do nothing upon successful login
+                })
+            )
 
-      .exceptionHandling(exceptionHandling -> exceptionHandling
-        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-        .accessDeniedHandler(accessDeniedHandler())
-      );
+            .exceptionHandling(exceptionHandling -> exceptionHandling
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .accessDeniedHandler(accessDeniedHandler())
+            );
 
-    return http.build();
-  }
+        return http.build();
+    }
 
-  @Bean
-  public BCryptPasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-  @Bean
-  public AccessDeniedHandler accessDeniedHandler() {
-    return new CustomAccessDeniedHandler();
-  }
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
+    }
 
 //	@Bean
 //	public RoleHierarchy roleHierarchy() {

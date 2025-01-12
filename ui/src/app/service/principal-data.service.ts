@@ -4,24 +4,28 @@ import { HttpClient } from '@angular/common/http';
 import { PrincipalBasicData } from '../interface/person.interface';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class PrincipalDataService {
-  private principalBasicData: PrincipalBasicData | undefined;
+    private principalBasicData: PrincipalBasicData | undefined;
 
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
-  getPrincipalBasicData(): Observable<PrincipalBasicData> {
-    if (this.principalBasicData !== undefined)
-      return of(this.principalBasicData);
+    getLoggedIn(): Observable<boolean> {
+        return this.http.get<boolean>('/api/v1/persons/principal/logged-in');
+    }
 
-    return this.http.get<PrincipalBasicData>(
-      '/api/v1/persons/principal/basic-data'
-    );
-  }
+    getPrincipalBasicData(): Observable<PrincipalBasicData> {
+        if (this.principalBasicData !== undefined)
+            return of(this.principalBasicData);
 
-  // TODO use with logout
-  setPrincipalBasicData(data: PrincipalBasicData | undefined) {
-    this.principalBasicData = data;
-  }
+        return this.http.get<PrincipalBasicData>(
+            '/api/v1/persons/principal/basic-data'
+        );
+    }
+
+    // TODO use with logout
+    setPrincipalBasicData(data: PrincipalBasicData | undefined) {
+        this.principalBasicData = data;
+    }
 }

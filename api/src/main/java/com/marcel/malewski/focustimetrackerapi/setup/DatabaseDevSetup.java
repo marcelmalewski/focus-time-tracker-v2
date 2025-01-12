@@ -27,7 +27,7 @@ public class DatabaseDevSetup implements CommandLineRunner {
     public void run(String... args) {
         Person admin = Person.builder()
             .login("admin")
-            .password(passwordEncoder.encode("admin.123"))
+            .password(passwordEncoder.encode("admin"))
             .email("admin@admin.com")
             .timerSetHours(1)
             .timerSetMinutes(12)
