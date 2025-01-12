@@ -12,34 +12,34 @@ import org.springframework.stereotype.Component;
 @Profile("dev")
 @Component
 public class DatabaseDevSetup implements CommandLineRunner {
-  private final PersonService personService;
-  private final MainTopicService mainTopicService;
-  private final BCryptPasswordEncoder passwordEncoder;
+    private final PersonService personService;
+    private final MainTopicService mainTopicService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-  public DatabaseDevSetup(PersonService personService, MainTopicService mainTopicService,
-                          BCryptPasswordEncoder passwordEncoder) {
-    this.personService = personService;
-    this.mainTopicService = mainTopicService;
-    this.passwordEncoder = passwordEncoder;
-  }
+    public DatabaseDevSetup(PersonService personService, MainTopicService mainTopicService,
+                            BCryptPasswordEncoder passwordEncoder) {
+        this.personService = personService;
+        this.mainTopicService = mainTopicService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-  @Override
-  public void run(String... args) {
-    Person admin = Person.builder()
-      .login("admin")
-      .password(passwordEncoder.encode("admin.123"))
-      .email("admin@admin.com")
-      .timerSetHours(1)
-      .timerSetMinutes(12)
-      .timerSetSeconds(40)
-      .timerAutoBreak(false)
-      .build();
-    Person savedAdmin = personService.create(admin);
+    @Override
+    public void run(String... args) {
+        Person admin = Person.builder()
+            .login("admin")
+            .password(passwordEncoder.encode("admin.123"))
+            .email("admin@admin.com")
+            .timerSetHours(1)
+            .timerSetMinutes(12)
+            .timerSetSeconds(40)
+            .timerAutoBreak(false)
+            .build();
+        Person savedAdmin = personService.create(admin);
 
-    MainTopic programming = new MainTopic("Programming", savedAdmin);
-    mainTopicService.create(programming);
+        MainTopic programming = new MainTopic("Programming", savedAdmin);
+        mainTopicService.create(programming);
 
-    MainTopic selfGrowth = new MainTopic("Self Growth", savedAdmin);
-    mainTopicService.create(selfGrowth);
-  }
+        MainTopic selfGrowth = new MainTopic("Self Growth", savedAdmin);
+        mainTopicService.create(selfGrowth);
+    }
 }
