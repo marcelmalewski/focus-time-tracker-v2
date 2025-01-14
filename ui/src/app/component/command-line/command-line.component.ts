@@ -93,8 +93,10 @@ export class CommandLineComponent implements OnInit {
 
         if (commandValue === Commands.GO_TO_SETTINGS) {
             this.router.navigate([Pages.SETTINGS]);
-        } else {
+        } else if (commandValue === Commands.GO_TO_TIMER) {
             this.router.navigate([Pages.TIMER]);
+        } else if (commandValue === Commands.LOGOUT) {
+            // TODO
         }
 
         this.commandInputControl.reset();
