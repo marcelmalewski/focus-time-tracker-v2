@@ -1,73 +1,73 @@
 <div
-  class="flex h-screen w-screen flex-col justify-between bg-base-bg text-base-text">
-  <div class="align-ce mt-5 flex w-192 items-center self-center">
-    <div class="flex grow flex-col items-center justify-center">
-      <div
-        class="mb-10 flex flex-col items-center justify-center gap-3 text-2xl">
-        <div class="flex items-center justify-center gap-3">
-          <div>
-            <input
-              type="number"
-              id="timerSetHours"
-              class="mr-1.5 w-16 rounded-lg border p-2 text-black focus:outline-none" />
-            <label for="timerSetHours" class="text-3xl">h</label>
-          </div>
+    class="flex h-screen w-screen flex-col justify-between bg-base-bg text-base-text">
+    <div class="align-ce mt-5 flex w-192 items-center self-center">
+        <div class="flex grow flex-col items-center justify-center">
+            <div
+                class="mb-10 flex flex-col items-center justify-center gap-3 text-2xl">
+                <div class="flex items-center justify-center gap-3">
+                    <div>
+                        <input
+                            type="number"
+                            id="timerSetHours"
+                            class="mr-1.5 w-16 rounded-lg border p-2 text-black focus:outline-none" />
+                        <label for="timerSetHours" class="text-3xl">h</label>
+                    </div>
 
-          <div>
-            <input
-              type="number"
-              id="timerSetMinutes"
-              class="mr-1.5 w-16 rounded-lg border p-2 text-black focus:outline-none" />
-            <label for="timerSetMinutes" class="text-3xl">m</label>
-          </div>
+                    <div>
+                        <input
+                            type="number"
+                            id="timerSetMinutes"
+                            class="mr-1.5 w-16 rounded-lg border p-2 text-black focus:outline-none" />
+                        <label for="timerSetMinutes" class="text-3xl">m</label>
+                    </div>
 
-          <div>
-            <input
-              type="number"
-              id="timerSetSeconds"
-              class="mr-1.5 w-16 rounded-lg border p-2 text-black focus:outline-none" />
-            <label for="timerSetSeconds" class="text-3xl">s</label>
-          </div>
+                    <div>
+                        <input
+                            type="number"
+                            id="timerSetSeconds"
+                            class="mr-1.5 w-16 rounded-lg border p-2 text-black focus:outline-none" />
+                        <label for="timerSetSeconds" class="text-3xl">s</label>
+                    </div>
+                </div>
+
+                <p id="currentStage" class="text-2xl">Home</p>
+            </div>
+
+            <button
+                class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov">
+                Start
+            </button>
         </div>
 
-        <p id="currentStage" class="text-2xl">Home</p>
-      </div>
+        <div
+            class="flex w-2/5 flex-col items-start gap-3 border-l-2 border-black pl-4">
+            <form class="flex w-4/5 flex-col">
+                <label class="mb-0.5 ml-2">Select a topic</label>
+            </form>
 
-      <button
-        class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov">
-        Start
-      </button>
+            <div>
+                <label class="mb-0.5 ml-2" for="shortBreak">Short break</label>
+                <div id="shortBreak" class="flex items-center gap-2 text-2xl">
+                    <input
+                        type="number"
+                        id="shortBreakInput"
+                        class="w-16 rounded-lg border p-2 text-black focus:outline-none" />
+                    <label class="text-2xl">minutes</label>
+                </div>
+            </div>
+
+            <div>
+                <label class="mb-0.5 ml-2" for="longBreak">Long break</label>
+                <div id="longBreak" class="flex items-center gap-2 text-2xl">
+                    <input
+                        type="number"
+                        id="longBreakInput"
+                        class="w-16 rounded-lg border p-2 text-black focus:outline-none" />
+                    <label>minutes</label>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div
-      class="flex w-2/5 flex-col items-start gap-3 border-l-2 border-black pl-4">
-      <form class="flex w-4/5 flex-col">
-        <label class="mb-0.5 ml-2">Select a topic</label>
-      </form>
-
-      <div>
-        <label class="mb-0.5 ml-2" for="shortBreak">Short break</label>
-        <div id="shortBreak" class="flex items-center gap-2 text-2xl">
-          <input
-            type="number"
-            id="shortBreakInput"
-            class="w-16 rounded-lg border p-2 text-black focus:outline-none" />
-          <label class="text-2xl">minutes</label>
-        </div>
-      </div>
-
-      <div>
-        <label class="mb-0.5 ml-2" for="longBreak">Long break</label>
-        <div id="longBreak" class="flex items-center gap-2 text-2xl">
-          <input
-            type="number"
-            id="longBreakInput"
-            class="w-16 rounded-lg border p-2 text-black focus:outline-none" />
-          <label>minutes</label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <app-command-line [commandContext]="'st'"></app-command-line>
+    <app-command-line [commandContext]="'st'"></app-command-line>
 </div>

@@ -11,6 +11,7 @@ export type Page = (typeof Pages)[PagesKeys];
 export const Commands = {
     GO_TO_TIMER: 'go to timer',
     GO_TO_SETTINGS: 'go to settings',
+    LOGOUT: 'logout',
 } as const;
 export const CommandsValues = Object.values(Commands);
 type CommandsKeys = keyof typeof Commands;
