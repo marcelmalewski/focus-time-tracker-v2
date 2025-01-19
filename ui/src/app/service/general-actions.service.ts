@@ -13,9 +13,9 @@ export class GeneralActionsService {
     }
 
     login(payload: HttpParams): Observable<any> {
-        return this.http.post('/api/login/', payload);
+        return this.http.post('/api/login', payload);
     }
     logout(): Observable<any> {
-        return this.http.post('/api/v1/login/?logout', null);
+        return this.http.post('/api/logout', null);
     }
 }
