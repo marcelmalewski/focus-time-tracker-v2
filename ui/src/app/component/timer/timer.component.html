@@ -68,6 +68,13 @@
             </div>
         </div>
     </div>
-
+    <div id="actions">
+        <button
+            class="mt-6 rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov"
+            type="submit"
+            (click)="submitLogout()">
+            Logout
+        </button>
+    </div>
     <app-command-line [commandContext]="'st'"></app-command-line>
 </div>
