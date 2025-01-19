@@ -5,16 +5,16 @@ import {
     Router,
     RouterStateSnapshot,
 } from '@angular/router';
-import { catchError, map, Observable, of, retry, tap } from 'rxjs';
-import { PrincipalDataService } from '../service/principal-data.service';
+import { catchError, map, Observable, of, retry } from 'rxjs';
 import { Pages } from '../other/typesAndConsts';
+import { GeneralActionsService } from '../service/general-actions.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class LoggedOutGuard implements CanActivate {
     constructor(
-        private principalDataService: PrincipalDataService,
+        private generalActionsService: GeneralActionsService,
         private router: Router
     ) {}
 
@@ -22,7 +22,7 @@ export class LoggedOutGuard implements CanActivate {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<boolean> {
-        return this.principalDataService.getLoggedIn().pipe(
+        return this.generalActionsService.getLoggedIn().pipe(
             retry(3),
             map(loggedIn => {
                 if (loggedIn) {
