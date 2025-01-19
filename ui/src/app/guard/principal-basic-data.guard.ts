@@ -9,20 +9,20 @@ import { catchError, map, Observable, of, retry, tap } from 'rxjs';
 import { PrincipalDataService } from '../service/principal-data.service';
 import { PrincipalBasicData } from '../interface/person.interface';
 import { Pages } from '../other/typesAndConsts';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import {
     NotLoggedInMessage,
     UnknownServerErrorMessage,
 } from '../other/message';
+import { NotificationService } from '../service/notification.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PrincipalBasicDataGuard implements CanActivate {
     constructor(
-        private principalDataService: PrincipalDataService,
         private router: Router,
-        private snackBar: MatSnackBar
+        private principalDataService: PrincipalDataService,
+        private notificationService: NotificationService
     ) {}
 
     canActivate(
@@ -37,10 +37,14 @@ export class PrincipalBasicDataGuard implements CanActivate {
             map(() => true),
             catchError(err => {
                 if (err.status === 401) {
-                    this.openErrorNotification(NotLoggedInMessage);
+                    this.notificationService.openErrorNotification(
+                        NotLoggedInMessage
+                    );
                     this.router.navigateByUrl(Pages.LOGIN);
                 } else {
-                    this.openErrorNotification(UnknownServerErrorMessage);
+                    this.notificationService.openErrorNotification(
+                        UnknownServerErrorMessage
+                    );
                     this.router.navigateByUrl(Pages.UNKNOWN_ERROR, {
                         skipLocationChange: true,
                     });
@@ -49,12 +53,5 @@ export class PrincipalBasicDataGuard implements CanActivate {
                 return of(false);
             })
         );
-    }
-
-    openErrorNotification(message: string) {
-        this.snackBar.open(message, undefined, {
-            duration: 2000,
-            panelClass: ['notification-error'],
-        });
     }
 }
