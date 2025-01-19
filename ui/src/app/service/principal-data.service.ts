@@ -11,10 +11,6 @@ export class PrincipalDataService {
 
     constructor(private http: HttpClient) {}
 
-    getLoggedIn(): Observable<boolean> {
-        return this.http.get<boolean>('/api/v1/persons/principal/logged-in');
-    }
-
     getPrincipalBasicData(): Observable<PrincipalBasicData> {
         if (this.principalBasicData !== undefined)
             return of(this.principalBasicData);
