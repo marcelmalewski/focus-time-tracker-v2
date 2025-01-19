@@ -7,6 +7,11 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Pages } from '../../other/typesAndConsts';
 import { Router } from '@angular/router';
 import { GeneralActionsService } from '../../service/general-actions.service';
+import {
+    LoggedOutMessage,
+    UnknownServerErrorMessage,
+} from '../../other/message';
+import { NotificationService } from '../../service/notification.service';
 
 @Component({
     selector: 'app-login',
@@ -26,7 +31,8 @@ export class LoginComponent implements OnDestroy {
 
     constructor(
         private router: Router,
-        private generalActionsService: GeneralActionsService
+        private generalActionsService: GeneralActionsService,
+        private notificationService: NotificationService
     ) {}
 
     ngOnDestroy(): void {
@@ -55,7 +61,12 @@ export class LoginComponent implements OnDestroy {
                     if (response.status === 401) {
                         this.notCorrectLoginOrEmailOrPasswords = true;
                     } else {
-                        // TODO inny error?
+                        this.notificationService.openErrorNotification(
+                            UnknownServerErrorMessage
+                        );
+                        this.router.navigateByUrl(Pages.UNKNOWN_ERROR, {
+                            skipLocationChange: true,
+                        });
                     }
                 },
             });
