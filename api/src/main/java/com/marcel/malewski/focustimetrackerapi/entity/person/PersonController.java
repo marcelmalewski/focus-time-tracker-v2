@@ -25,14 +25,6 @@ public class PersonController {
         this.personService = personService;
     }
 
-
-    @GetMapping(value = PERSON_PATH_V1 + "/test")
-    @Operation(summary = "Find all persons public info")
-    public ResponseEntity<List<PrincipalBasicDataDto>> findAllGamers() {
-        List<PrincipalBasicDataDto> allPersons = personService.getAllPersonsBasicData();
-        return new ResponseEntity<>(allPersons, HttpStatus.OK);
-    }
-
     @GetMapping(value = PERSON_PATH_V1 + "/principal/logged-in")
     @Operation(summary = "Check if person is logged in")
     public ResponseEntity<Boolean> getLoggedIn() {

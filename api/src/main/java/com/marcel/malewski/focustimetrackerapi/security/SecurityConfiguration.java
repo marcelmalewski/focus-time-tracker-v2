@@ -49,8 +49,7 @@ public class SecurityConfiguration {
                 .permitAll()
 
                 .requestMatchers(
-                    "/error",
-                    "/v1/test"// TODO for test purpose
+                    "/error"
                 )
                 .permitAll()
 
