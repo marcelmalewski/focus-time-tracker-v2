@@ -11,7 +11,7 @@ export class PrincipalDataService {
 
     constructor(private http: HttpClient) {}
 
-    getPrincipalBasicData(): Observable<PrincipalBasicData> {
+    getOrLoadPrincipalBasicData(): Observable<PrincipalBasicData> {
         if (this.principalBasicData !== undefined)
             return of(this.principalBasicData);
 
@@ -20,7 +20,10 @@ export class PrincipalDataService {
         );
     }
 
-    // TODO use with logout
+    getPrincipalBasicData(): PrincipalBasicData {
+        return this.principalBasicData!;
+    }
+
     setPrincipalBasicData(data: PrincipalBasicData | undefined) {
         this.principalBasicData = data;
     }

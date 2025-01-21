@@ -29,7 +29,7 @@ export class PrincipalBasicDataGuard implements CanActivate {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<boolean> {
-        return this.principalDataService.getPrincipalBasicData().pipe(
+        return this.principalDataService.getOrLoadPrincipalBasicData().pipe(
             retry(3),
             tap((data: PrincipalBasicData) => {
                 this.principalDataService.setPrincipalBasicData(data);
