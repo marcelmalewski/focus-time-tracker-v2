@@ -1,4 +1,9 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy } from '@angular/core';
+import {
+    Component,
+    CUSTOM_ELEMENTS_SCHEMA,
+    OnDestroy,
+    OnInit,
+} from '@angular/core';
 import { CommandLineComponent } from '../command-line/command-line.component';
 import { MatFormField, MatInput } from '@angular/material/input';
 import { HttpParams, HttpResponse } from '@angular/common/http';
@@ -12,6 +17,7 @@ import {
     UnknownServerErrorMessage,
 } from '../../other/message';
 import { NotificationService } from '../../service/notification.service';
+import { PrincipalBasicData } from '../../interface/person.interface';
 
 @Component({
     selector: 'app-home',
@@ -20,8 +26,9 @@ import { NotificationService } from '../../service/notification.service';
     templateUrl: './timer.component.html',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class TimerComponent implements OnDestroy {
+export class TimerComponent implements OnDestroy, OnInit {
     private componentDestroyed$ = new Subject<void>();
+    principalBasicData: PrincipalBasicData | undefined;
 
     constructor(
         private router: Router,
@@ -29,6 +36,11 @@ export class TimerComponent implements OnDestroy {
         private principalDataService: PrincipalDataService,
         private notificationService: NotificationService
     ) {}
+
+    ngOnInit(): void {
+        this.principalBasicData =
+            this.principalDataService.getPrincipalBasicData();
+    }
 
     ngOnDestroy(): void {
         this.componentDestroyed$.next();
