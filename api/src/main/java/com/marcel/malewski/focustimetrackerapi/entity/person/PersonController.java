@@ -1,7 +1,8 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
-import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalBasicDataDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.UpdateTimerAutoBreakDto;
+import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalBasicData;
+import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalWithMainTopics;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,9 +38,17 @@ public class PersonController {
 
     @GetMapping(value = PERSON_PATH_V1 + "/principal/basic-data")
     @Operation(summary = "Get principal basic data")
-    public ResponseEntity<PrincipalBasicDataDto> getPrincipalBasicData(Principal principal, HttpServletRequest request,
-                                                                       HttpServletResponse response) {
-        PrincipalBasicDataDto dto = personService.getPrincipalBasicData(principal, request, response);
+    public ResponseEntity<PrincipalBasicData> getPrincipalBasicData(Principal principal, HttpServletRequest request,
+                                                                    HttpServletResponse response) {
+        PrincipalBasicData dto = personService.getPrincipalBasicData(principal, request, response);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+    @GetMapping(value = PERSON_PATH_V1 + "/principal/with-main-topics")
+    @Operation(summary = "Get principal basic data")
+    public ResponseEntity<PrincipalWithMainTopics> getPrincipalWithMainTopics(Principal principal, HttpServletRequest request,
+                                                                              HttpServletResponse response) {
+        PrincipalWithMainTopics dto = personService.getPrincipalWithMainTopics(principal, request, response);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 

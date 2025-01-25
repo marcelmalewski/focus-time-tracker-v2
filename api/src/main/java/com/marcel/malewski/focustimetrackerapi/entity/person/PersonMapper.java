@@ -1,12 +1,12 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalBasicDataDto;
-import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalBasicDataWithMainTopicsDto;
+import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalWithMainTopicsDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface PersonMapper {
-  PrincipalBasicDataDto toPrincipalBasicDataDto(Person person);
+    PrincipalBasicDataDto toPrincipalBasicDataDto(Person person);
 
-  PrincipalBasicDataWithMainTopicsDto toPrincipalBasicDataWithMainTopicsDto(Person person);
+    PrincipalWithMainTopicsDto toPrincipalBasicDataWithMainTopicsDto(Person person);
 }

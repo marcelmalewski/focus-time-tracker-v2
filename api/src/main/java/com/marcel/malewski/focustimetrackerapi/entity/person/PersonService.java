@@ -1,7 +1,7 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
-import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalBasicDataDto;
-import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalBasicDataWithMainTopicsDto;
+import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalBasicData;
+import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalWithMainTopics;
 import com.marcel.malewski.focustimetrackerapi.entity.person.timer.TimerFocusAfterHomeDto;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 import com.marcel.malewski.focustimetrackerapi.security.exception.AuthenticatedPersonNotFoundException;
@@ -29,9 +29,9 @@ public class PersonService {
         this.personMapper = personMapper;
     }
 
-    public PrincipalBasicDataDto getPrincipalBasicData(Principal principal,
-                                                       HttpServletRequest request,
-                                                       HttpServletResponse response) {
+    public PrincipalBasicData getPrincipalBasicData(Principal principal,
+                                                    HttpServletRequest request,
+                                                    HttpServletResponse response) {
         long principalId = securityHelper.extractIdFromPrincipal(principal);
         Optional<Person> optionalPerson = personRepository.findById(principalId);
 
@@ -44,9 +44,9 @@ public class PersonService {
         };
     }
 
-    public PrincipalBasicDataWithMainTopicsDto getPrincipalBasicDataWithMainTopics(Principal principal,
-                                                                                   HttpServletRequest request,
-                                                                                   HttpServletResponse response) {
+    public PrincipalWithMainTopics getPrincipalWithMainTopics(Principal principal,
+                                                              HttpServletRequest request,
+                                                              HttpServletResponse response) {
         long principalId = securityHelper.extractIdFromPrincipal(principal);
         Optional<Person> optionalPerson = personRepository.findByIdWithFetchedMainTopics(principalId);
 

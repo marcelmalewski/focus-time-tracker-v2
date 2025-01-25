@@ -1,38 +1,38 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
-import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalBasicDataWithMainTopicsDto;
+import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalWithMainTopicsDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.timer.TimerPauseDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public abstract class PersonDtoMapper {
-	public TimerPauseDto toTimerPauseDto(PrincipalBasicDataWithMainTopicsDto principalBasicDataWithMainTopicsDto) {
-		if (principalBasicDataWithMainTopicsDto == null) {
-			return null;
-		}
+    public TimerPauseDto toTimerPauseDto(PrincipalWithMainTopicsDto principalWithMainTopicsDto) {
+        if (principalWithMainTopicsDto == null) {
+            return null;
+        }
 
-		String setTimePretty = principalBasicDataWithMainTopicsDto.timerSetHours() + "h " +
-			principalBasicDataWithMainTopicsDto.timerSetMinutes() + "m " +
-			principalBasicDataWithMainTopicsDto.timerSetSeconds() + "s";
+        String setTimePretty = principalWithMainTopicsDto.timerSetHours() + "h " +
+            principalWithMainTopicsDto.timerSetMinutes() + "m " +
+            principalWithMainTopicsDto.timerSetSeconds() + "s";
 
-		int remainingTime = principalBasicDataWithMainTopicsDto.timerRemainingTime();
-		int remainingTimeSeconds = remainingTime % 60;
-		int remainingTimeMinutes = (remainingTime / 60) % 60;
-		int remainingTimeHours = remainingTime / 60 / 60;
+        int remainingTime = principalWithMainTopicsDto.timerRemainingTime();
+        int remainingTimeSeconds = remainingTime % 60;
+        int remainingTimeMinutes = (remainingTime / 60) % 60;
+        int remainingTimeHours = remainingTime / 60 / 60;
 
-		String remainingTimePretty = remainingTimeHours + "h " +
-			remainingTimeMinutes + "m " +
-			remainingTimeSeconds + "s";
+        String remainingTimePretty = remainingTimeHours + "h " +
+            remainingTimeMinutes + "m " +
+            remainingTimeSeconds + "s";
 
 
-		return new TimerPauseDto(
-			setTimePretty,
-			remainingTimePretty,
-			principalBasicDataWithMainTopicsDto.timerRemainingTime(),
-			principalBasicDataWithMainTopicsDto.timerSelectedTopic(),
-			principalBasicDataWithMainTopicsDto.timerShortBreak(),
-			principalBasicDataWithMainTopicsDto.timerLongBreak(),
-			principalBasicDataWithMainTopicsDto.timerAutoBreak()
-		);
-	}
+        return new TimerPauseDto(
+            setTimePretty,
+            remainingTimePretty,
+            principalWithMainTopicsDto.timerRemainingTime(),
+            principalWithMainTopicsDto.timerSelectedTopic(),
+            principalWithMainTopicsDto.timerShortBreak(),
+            principalWithMainTopicsDto.timerLongBreak(),
+            principalWithMainTopicsDto.timerAutoBreak()
+        );
+    }
 }
