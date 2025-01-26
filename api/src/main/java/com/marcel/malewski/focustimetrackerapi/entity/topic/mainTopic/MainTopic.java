@@ -2,7 +2,7 @@ package com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic;
 
 import com.marcel.malewski.focustimetrackerapi.entity.focussession.FocusSession;
 import com.marcel.malewski.focustimetrackerapi.entity.person.Person;
-import com.marcel.malewski.focustimetrackerapi.entity.topic.Topic;
+import com.marcel.malewski.focustimetrackerapi.entity.topic.interfaces.Topic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
