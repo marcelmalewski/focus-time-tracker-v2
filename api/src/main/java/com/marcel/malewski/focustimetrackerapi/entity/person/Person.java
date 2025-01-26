@@ -27,125 +27,125 @@ import java.util.List;
 @Entity
 @Table(name = "person")
 public class Person implements UserDetails {
-  @Id
-  @SequenceGenerator(name = "person_sequence", sequenceName = "person_sequence")
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_sequence")
-  private Long id;
-  @Version
-  private Integer version;
+    @Id
+    @SequenceGenerator(name = "person_sequence", sequenceName = "person_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_sequence")
+    private Long id;
+    @Version
+    private Integer version;
 
-  @Column(unique = true)
-  @NotNull
-  private String login;
-  @NotNull
-  private String password;
-  @Column(unique = true)
-  @NotNull
-  private String email;
-  @CreationTimestamp
-  @Column(updatable = false)
-  private LocalDate createdAt;
+    @Column(unique = true)
+    @NotNull
+    private String login;
+    @NotNull
+    private String password;
+    @Column(unique = true)
+    @NotNull
+    private String email;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDate createdAt;
 
-  // Timer settings
-  @NotNull
-  @Convert(converter = StageConverter.class)
-  @Builder.Default
-  private Stage timerStage = Stage.HOME;
-  @Nullable
-  private String timerSelectedTopic;
+    // Timer settings
+    @NotNull
+    @Convert(converter = StageConverter.class)
+    @Builder.Default
+    private Stage timerStage = Stage.HOME;
+    @Nullable
+    private String timerSelectedTopic;
 
-  @NotNull
-  @Builder.Default
-  private Integer timerSetHours = 0;
-  @NotNull
-  @Builder.Default
-  private Integer timerSetMinutes = 0;
-  @NotNull
-  @Builder.Default
-  private Integer timerSetSeconds = 0;
+    @NotNull
+    @Builder.Default
+    private Integer timerSetHours = 0;
+    @NotNull
+    @Builder.Default
+    private Integer timerSetMinutes = 0;
+    @NotNull
+    @Builder.Default
+    private Integer timerSetSeconds = 0;
 
-  @NotNull
-  @Builder.Default
-  private Integer timerShortBreak = 5;
-  @NotNull
-  @Builder.Default
-  private Integer timerLongBreak = 10;
+    @NotNull
+    @Builder.Default
+    private Integer timerShortBreak = 5;
+    @NotNull
+    @Builder.Default
+    private Integer timerLongBreak = 10;
 
-  @NotNull
-  @Builder.Default
-  private Boolean timerAutoBreak = false;
-  @NotNull
-  @Builder.Default
-  private Integer timerInterval = 1;
-  @Nullable
-  private Integer timerRemainingTime;
+    @NotNull
+    @Builder.Default
+    private Boolean timerAutoBreak = false;
+    @NotNull
+    @Builder.Default
+    private Integer timerInterval = 1;
+    @Nullable
+    private Integer timerRemainingTime;
 
-  // Stopwatch settings
-  @NotNull
-  @Builder.Default
-  private Boolean stopWatchAutoBreak = true;
+    // Stopwatch settings
+    @NotNull
+    @Builder.Default
+    private Boolean stopWatchAutoBreak = true;
 
-  @OneToMany(mappedBy = "owner")
-  @ToString.Exclude
-  @Builder.Default
-  @NotNull
-  private List<DailyFocusSummary> dailyFocusSummaries = new ArrayList<>();
+    @OneToMany(mappedBy = "owner")
+    @ToString.Exclude
+    @Builder.Default
+    @NotNull
+    private List<DailyFocusSummary> dailyFocusSummaries = new ArrayList<>();
 
-  @OneToMany(mappedBy = "owner")
-  @ToString.Exclude
-  @Builder.Default
-  @NotNull
-  private List<MainTopic> mainTopics = new ArrayList<>();
+    @OneToMany(mappedBy = "owner")
+    @ToString.Exclude
+    @Builder.Default
+    @NotNull
+    private List<MainTopic> mainTopics = new ArrayList<>();
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "alarmsettings_id")
-  private AlarmSettings alarmSettings;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "alarmsettings_id")
+    private AlarmSettings alarmSettings;
 
-  @Override
-  public String toString() {
-    return "Person{" + "id=" + id + ", login='" + login + '\'' + '}';
-  }
+    @Override
+    public String toString() {
+        return "Person{" + "id=" + id + ", login='" + login + '\'' + '}';
+    }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Person person)) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person person)) return false;
 
-    return getId() != null ? getId().equals(person.getId()) : person.getId() == null;
-  }
+        return getId() != null ? getId().equals(person.getId()) : person.getId() == null;
+    }
 
-  @Override
-  public int hashCode() {
-    return getId() != null ? getId().hashCode() : 0;
-  }
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
+    }
 
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return Collections.emptyList();
-  }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.emptyList();
+    }
 
-  @Override
-  public String getUsername() {
-    return this.id.toString();
-  }
+    @Override
+    public String getUsername() {
+        return this.id.toString();
+    }
 
-  @Override
-  public boolean isAccountNonExpired() {
-    return true;
-  }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-  @Override
-  public boolean isAccountNonLocked() {
-    return true;
-  }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return true;
-  }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-  @Override
-  public boolean isEnabled() {
-    return true;
-  }
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
