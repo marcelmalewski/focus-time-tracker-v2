@@ -45,7 +45,7 @@ public class PersonController {
     }
 
     @GetMapping(value = PERSON_PATH_V1 + "/principal/with-main-topics")
-    @Operation(summary = "Get principal basic data")
+    @Operation(summary = "Get principal basic data with main topics")
     public ResponseEntity<PrincipalWithMainTopics> getPrincipalWithMainTopics(Principal principal, HttpServletRequest request,
                                                                               HttpServletResponse response) {
         PrincipalWithMainTopics dto = personService.getPrincipalWithMainTopics(principal, request, response);
