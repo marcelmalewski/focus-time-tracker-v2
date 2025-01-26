@@ -1,7 +1,7 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person.dto;
 
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalWithMainTopics;
-import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopic;
+import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopicBasicDataDto;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 
 import java.util.List;
@@ -22,6 +22,6 @@ public record PrincipalWithMainTopicsDto(
     Boolean stopWatchAutoBreak,
     Integer timerRemainingTime,
     Integer timerInterval,
-    List<MainTopic> mainTopics
+    List<MainTopicBasicDataDto> mainTopicsBasicDataDtos
 ) implements PrincipalWithMainTopics {
 }
