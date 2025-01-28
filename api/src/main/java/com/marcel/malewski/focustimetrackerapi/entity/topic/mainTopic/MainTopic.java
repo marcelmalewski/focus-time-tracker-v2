@@ -2,7 +2,6 @@ package com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic;
 
 import com.marcel.malewski.focustimetrackerapi.entity.focussession.FocusSession;
 import com.marcel.malewski.focustimetrackerapi.entity.person.Person;
-import com.marcel.malewski.focustimetrackerapi.entity.topic.interfaces.Topic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -16,7 +15,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "maintopic")
-public class MainTopic implements Topic {
+public class MainTopic {
     @Id
     @SequenceGenerator(name = "maintopic_sequence", sequenceName = "maintopic_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "maintopic_sequence")
