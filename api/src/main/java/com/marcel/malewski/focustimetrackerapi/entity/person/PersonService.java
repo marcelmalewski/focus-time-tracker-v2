@@ -1,8 +1,12 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
+import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalWithMainTopicsDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalBasicData;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalWithMainTopics;
 import com.marcel.malewski.focustimetrackerapi.entity.person.timer.TimerFocusAfterHomeDto;
+import com.marcel.malewski.focustimetrackerapi.entity.topic.dto.TopicBasicDataDto;
+import com.marcel.malewski.focustimetrackerapi.entity.topic.interfaces.TopicBasicData;
+import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopicMapper;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 import com.marcel.malewski.focustimetrackerapi.security.exception.AuthenticatedPersonNotFoundException;
 import com.marcel.malewski.focustimetrackerapi.security.util.SecurityHelper;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,12 +26,14 @@ public class PersonService {
     private final PersonRepository personRepository;
     private final SecurityHelper securityHelper;
     private final PersonMapper personMapper;
+    private final MainTopicMapper mainTopicMapper;
 
     public PersonService(PersonRepository personRepository, SecurityHelper securityHelper,
-                         PersonMapper personMapper) {
+                         PersonMapper personMapper, MainTopicMapper mainTopicMapper) {
         this.personRepository = personRepository;
         this.securityHelper = securityHelper;
         this.personMapper = personMapper;
+        this.mainTopicMapper = mainTopicMapper;
     }
 
     public PrincipalBasicData getPrincipalBasicData(Principal principal,
@@ -55,7 +62,14 @@ public class PersonService {
                 securityHelper.logoutManually(request, response);
                 throw new AuthenticatedPersonNotFoundException();
             }
-            case Person person -> personMapper.toPrincipalBasicDataWithMainTopicsDto(person);
+            case Person person -> {
+                PrincipalBasicData principalBasicData = personMapper.toPrincipalBasicDataDto(person);
+                List<TopicBasicData> topicBasicDataList = person.getMainTopics().stream()
+                    .map(mainTopic -> (TopicBasicData) mainTopicMapper.toMainTopicsBasicDataDto(mainTopic))
+                    .toList();
+
+                yield new PrincipalWithMainTopicsDto(principalBasicData, topicBasicDataList);
+            }
         };
     }
 
