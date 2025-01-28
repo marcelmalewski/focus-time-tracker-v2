@@ -54,9 +54,7 @@ export class TimerComponent implements OnDestroy, OnInit {
             .subscribe({
                 error: (response: HttpResponse<any>) => {
                     if (response.status === 401) {
-                        this.principalDataService.setPrincipalBasicData(
-                            undefined
-                        );
+                        this.principalDataService.clearPrincipalData();
                         this.router.navigateByUrl(Pages.LOGIN);
                         this.notificationService.openSuccessNotification(
                             LoggedOutMessage
