@@ -2,26 +2,16 @@ import { Injectable } from '@angular/core';
 import {
     ActivatedRouteSnapshot,
     CanActivate,
-    Router,
     RouterStateSnapshot,
 } from '@angular/router';
-import { catchError, map, Observable, of, retry, tap } from 'rxjs';
+import { catchError, map, Observable, retry, tap } from 'rxjs';
 import { PrincipalDataService } from '../service/principal-data.service';
-import {
-    PrincipalBasicData,
-    PrincipalWithMainTopics,
-} from '../interface/person.interface';
-import { Pages } from '../other/typesAndConsts';
-import {
-    NotLoggedInMessage,
-    UnknownServerErrorMessage,
-} from '../other/message';
-import { NotificationService } from '../service/notification.service';
+import { PrincipalWithMainTopics } from '../interface/person.interface';
 
 @Injectable({
     providedIn: 'root',
 })
-export class PrincipalBasicDataGuard implements CanActivate {
+export class PrincipalWithMainTopicsGuard implements CanActivate {
     constructor(private principalDataService: PrincipalDataService) {}
 
     canActivate(
