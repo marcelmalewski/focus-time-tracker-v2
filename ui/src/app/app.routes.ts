@@ -7,6 +7,7 @@ import { PrincipalBasicDataGuard } from './guard/principal-basic-data.guard';
 import { UnknownErrorComponent } from './component/unknown-error/unknown-error.component';
 import { NotLoggedInMessage } from './other/message';
 import { LoggedOutGuard } from './guard/logged-out-guard';
+import { PrincipalWithMainTopicsGuard } from './guard/principal-with-main-topics.guard';
 
 export const routes: Routes = [
     {
@@ -26,7 +27,7 @@ export const routes: Routes = [
         path: 'timer',
         title: 'timer',
         component: TimerComponent,
-        canActivate: [PrincipalBasicDataGuard],
+        canActivate: [PrincipalWithMainTopicsGuard],
     },
     {
         path: 'settings',
