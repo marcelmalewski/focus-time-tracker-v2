@@ -17,7 +17,11 @@ import {
     UnknownServerErrorMessage,
 } from '../../other/message';
 import { NotificationService } from '../../service/notification.service';
-import { PrincipalBasicData } from '../../interface/person.interface';
+import {
+    MainTopicBasicData,
+    PrincipalBasicData,
+    PrincipalWithMainTopics,
+} from '../../interface/person.interface';
 
 @Component({
     selector: 'app-home',
@@ -29,6 +33,7 @@ import { PrincipalBasicData } from '../../interface/person.interface';
 export class TimerComponent implements OnDestroy, OnInit {
     private componentDestroyed$ = new Subject<void>();
     principalBasicData: PrincipalBasicData | undefined;
+    mainTopicsBasicData: MainTopicBasicData[] | undefined;
 
     constructor(
         private router: Router,
@@ -38,8 +43,12 @@ export class TimerComponent implements OnDestroy, OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.principalBasicData =
-            this.principalDataService.getPrincipalBasicData();
+        const { principalBasicData, mainTopicsBasicData } =
+            this.principalDataService.getPrincipalMainTopicsBasicData();
+        this.principalBasicData = principalBasicData;
+        this.mainTopicsBasicData = mainTopicsBasicData;
+
+        console.log(this.mainTopicsBasicData);
     }
 
     ngOnDestroy(): void {
