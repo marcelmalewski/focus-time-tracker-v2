@@ -72,6 +72,13 @@ export class PrincipalDataService {
         this.principalBasicData = data;
     }
 
+    getPrincipalMainTopicsBasicData(): PrincipalWithMainTopics {
+        return {
+            principalBasicData: this.principalBasicData!,
+            mainTopicsBasicData: this.mainTopicsBasicData!,
+        };
+    }
+
     setPrincipalDataWithMainTopics(data: PrincipalWithMainTopics) {
         this.principalBasicData = data.principalBasicData;
         this.mainTopicsBasicData = data.mainTopicsBasicData;
