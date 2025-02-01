@@ -43,14 +43,30 @@
 
         <div
             class="flex w-2/5 flex-col items-start gap-3 border-l-2 border-black pl-4">
-            <!--           <mat-form-field>-->
-            <!--                <mat-label>Favorite food</mat-label>-->
-            <!--                <mat-select [(ngModel)]="selectedValue" name="food">-->
-            <!--                    @for (food of foods; track food) {-->
-            <!--                        <mat-option [value]="food.value">{{food.viewValue}}</mat-option>-->
-            <!--                    }-->
-            <!--                </mat-select>-->
-            <!--            </mat-form-field>-->
+            <label class="ml-2">Select a topic</label>
+            <mat-form-field>
+                <mat-label>Topic</mat-label>
+                <mat-select>
+                    @for (topic of mainTopicsBasicData; track topic) {
+                        <mat-option [value]="topic.name">{{
+                            topic.name
+                        }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field floatLabel="always" class="w-1/2">
+                <input
+                    matInput
+                    type="number"
+                    [value]="principalBasicData?.timerShortBreak" />
+                <span matTextSuffix class="text-black">minutes</span>
+            </mat-form-field>
+
+            <mat-form-field class="w-1/2">
+                <mat-label>Favorite food</mat-label>
+                <input matInput placeholder="Ex. Pizza" value="Sushi" />
+            </mat-form-field>
 
             <div>
                 <label class="mb-0.5 ml-2" for="shortBreak">Short break</label>
