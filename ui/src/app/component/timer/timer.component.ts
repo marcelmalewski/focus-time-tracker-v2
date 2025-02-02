@@ -22,11 +22,27 @@ import {
     PrincipalBasicData,
     PrincipalWithMainTopics,
 } from '../../interface/person.interface';
+import {
+    MatOption,
+    MatSelect,
+    MatSelectModule,
+} from '@angular/material/select';
+import { NgIf } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [CommandLineComponent, MatInput, MatFormField],
+    imports: [
+        CommandLineComponent,
+        MatInput,
+        MatFormField,
+        MatSelect,
+        MatOption,
+        NgIf,
+        MatFormFieldModule,
+        MatSelectModule,
+    ],
     templateUrl: './timer.component.html',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -47,8 +63,6 @@ export class TimerComponent implements OnDestroy, OnInit {
             this.principalDataService.getPrincipalMainTopicsBasicData();
         this.principalBasicData = principalBasicData;
         this.mainTopicsBasicData = mainTopicsBasicData;
-
-        console.log(this.mainTopicsBasicData);
     }
 
     ngOnDestroy(): void {
