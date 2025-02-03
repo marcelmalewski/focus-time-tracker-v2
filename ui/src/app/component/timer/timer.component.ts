@@ -3,6 +3,7 @@ import {
     CUSTOM_ELEMENTS_SCHEMA,
     OnDestroy,
     OnInit,
+    ViewChild,
 } from '@angular/core';
 import { CommandLineComponent } from '../command-line/command-line.component';
 import { MatFormField, MatInput } from '@angular/material/input';
@@ -30,6 +31,7 @@ import {
 import { NgIf } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDivider, MatDividerModule } from '@angular/material/divider';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
     selector: 'app-home',
@@ -44,11 +46,13 @@ import { MatDivider, MatDividerModule } from '@angular/material/divider';
         MatFormFieldModule,
         MatSelectModule,
         MatDivider,
+        FormsModule,
     ],
     templateUrl: './timer.component.html',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TimerComponent implements OnDestroy, OnInit {
+    @ViewChild('timerForm') private timerForm!: NgForm;
     private componentDestroyed$ = new Subject<void>();
     principalBasicData: PrincipalBasicData | undefined;
     mainTopicsBasicData: MainTopicBasicData[] | undefined;
@@ -94,5 +98,9 @@ export class TimerComponent implements OnDestroy, OnInit {
                     }
                 },
             });
+    }
+
+    onSubmitSaveOrStart(option: string) {
+        console.log(option);
     }
 }
