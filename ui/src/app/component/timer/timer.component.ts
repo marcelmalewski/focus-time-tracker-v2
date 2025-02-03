@@ -29,6 +29,7 @@ import {
 } from '@angular/material/select';
 import { NgIf } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDivider, MatDividerModule } from '@angular/material/divider';
 
 @Component({
     selector: 'app-home',
@@ -42,6 +43,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         NgIf,
         MatFormFieldModule,
         MatSelectModule,
+        MatDivider,
     ],
     templateUrl: './timer.component.html',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
