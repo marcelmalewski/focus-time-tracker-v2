@@ -34,6 +34,8 @@ import { NgIf } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDivider, MatDividerModule } from '@angular/material/divider';
 import { FormsModule, NgForm } from '@angular/forms';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({
     selector: 'app-home',
@@ -49,6 +51,9 @@ import { FormsModule, NgForm } from '@angular/forms';
         MatSelectModule,
         MatDivider,
         FormsModule,
+        MatCard,
+        MatCardContent,
+        MatSlideToggle,
     ],
     templateUrl: './timer.component.html',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

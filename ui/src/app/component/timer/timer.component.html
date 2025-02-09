@@ -89,6 +89,14 @@
                     [(ngModel)]="timerBasicSettings.timerLongBreak" />
                 <span matTextSuffix class="text-black">minutes</span>
             </mat-form-field>
+
+            <mat-slide-toggle
+                class="text-white"
+                name="timerAutoBreak"
+                #timerAutoBreak="ngModel"
+                [(ngModel)]="timerBasicSettings.timerAutoBreak">
+                Enable auto break
+            </mat-slide-toggle>
         </div>
     </form>
 
