@@ -25,9 +25,9 @@
                 <input
                     matInput
                     type="number"
-                    id="timerSetHours"
+                    name="timerSetHours"
                     #timerSetHours="ngModel"
-                    [(ngModel)]="loginData.loginOrEmail" />
+                    [(ngModel)]="timerBasicSettings.timerSetHours" />
                 <span matTextSuffix class="text-black">hours</span>
             </mat-form-field>
 
@@ -35,8 +35,9 @@
                 <input
                     matInput
                     type="number"
-                    id="timerSetMinutes"
-                    [value]="principalBasicData?.timerSetMinutes" />
+                    name="timerSetMinutes"
+                    #timerSetMinutes="ngModel"
+                    [(ngModel)]="timerBasicSettings.timerSetMinutes" />
                 <span matTextSuffix class="text-black">minutes</span>
             </mat-form-field>
 
@@ -44,8 +45,9 @@
                 <input
                     matInput
                     type="number"
-                    id="timerSetSeconds"
-                    [value]="principalBasicData?.timerSetSeconds" />
+                    name="timerSetSeconds"
+                    #timerSetSeconds="ngModel"
+                    [(ngModel)]="timerBasicSettings.timerSetSeconds" />
                 <span matTextSuffix class="text-black">seconds</span>
             </mat-form-field>
         </div>
@@ -54,7 +56,10 @@
             <label class="ml-2">Select a topic</label>
             <mat-form-field>
                 <mat-label>Topic</mat-label>
-                <mat-select>
+                <mat-select
+                    name="timerSelectedTopic"
+                    #timerSelectedTopic="ngModel"
+                    [(ngModel)]="timerBasicSettings.timerSelectedTopic">
                     @for (topic of mainTopicsBasicData; track topic) {
                         <mat-option [value]="topic.name">{{
                             topic.name
@@ -68,8 +73,9 @@
                 <input
                     matInput
                     type="number"
-                    id="shortBreakInput"
-                    [value]="principalBasicData?.timerShortBreak" />
+                    name="timerShortBreak"
+                    #timerShortBreak="ngModel"
+                    [(ngModel)]="timerBasicSettings.timerShortBreak" />
                 <span matTextSuffix class="text-black">minutes</span>
             </mat-form-field>
 
@@ -78,8 +84,9 @@
                 <input
                     matInput
                     type="number"
-                    id="longBreakInput"
-                    [value]="principalBasicData?.timerLongBreak" />
+                    name="timerLongBreak"
+                    #timerLongBreak="ngModel"
+                    [(ngModel)]="timerBasicSettings.timerLongBreak" />
                 <span matTextSuffix class="text-black">minutes</span>
             </mat-form-field>
         </div>

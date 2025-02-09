@@ -1,6 +1,7 @@
 import {
     Component,
     CUSTOM_ELEMENTS_SCHEMA,
+    numberAttribute,
     OnDestroy,
     OnInit,
     ViewChild,
@@ -9,7 +10,7 @@ import { CommandLineComponent } from '../command-line/command-line.component';
 import { MatFormField, MatInput } from '@angular/material/input';
 import { HttpParams, HttpResponse } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
-import { Pages } from '../../other/typesAndConsts';
+import { Pages, Stages } from '../../other/typesAndConsts';
 import { GeneralActionsService } from '../../service/general-actions.service';
 import { Router } from '@angular/router';
 import { PrincipalDataService } from '../../service/principal-data.service';
@@ -22,6 +23,7 @@ import {
     MainTopicBasicData,
     PrincipalBasicData,
     PrincipalWithMainTopics,
+    TimerBasicSettings,
 } from '../../interface/person.interface';
 import {
     MatOption,
@@ -54,8 +56,19 @@ import { FormsModule, NgForm } from '@angular/forms';
 export class TimerComponent implements OnDestroy, OnInit {
     @ViewChild('timerForm') private timerForm!: NgForm;
     private componentDestroyed$ = new Subject<void>();
-    principalBasicData: PrincipalBasicData | undefined;
     mainTopicsBasicData: MainTopicBasicData[] | undefined;
+
+    timerBasicSettings: TimerBasicSettings = {
+        timerStage: Stages.HOME,
+        timerSelectedTopic: '',
+        timerSetHours: 0,
+        timerSetMinutes: 0,
+        timerSetSeconds: 0,
+        timerShortBreak: 0,
+        timerLongBreak: 0,
+        timerAutoBreak: false,
+        timerInterval: 0,
+    };
 
     constructor(
         private router: Router,
@@ -67,8 +80,22 @@ export class TimerComponent implements OnDestroy, OnInit {
     ngOnInit(): void {
         const { principalBasicData, mainTopicsBasicData } =
             this.principalDataService.getPrincipalMainTopicsBasicData();
-        this.principalBasicData = principalBasicData;
         this.mainTopicsBasicData = mainTopicsBasicData;
+
+        this.timerBasicSettings.timerSetHours =
+            principalBasicData.timerSetHours;
+        this.timerBasicSettings.timerSetMinutes =
+            principalBasicData.timerSetMinutes;
+        this.timerBasicSettings.timerSetSeconds =
+            principalBasicData.timerSetSeconds;
+        this.timerBasicSettings.timerShortBreak =
+            principalBasicData.timerShortBreak;
+        this.timerBasicSettings.timerLongBreak =
+            principalBasicData.timerLongBreak;
+        this.timerBasicSettings.timerAutoBreak =
+            principalBasicData.timerAutoBreak;
+        this.timerBasicSettings.timerInterval =
+            principalBasicData.timerInterval;
     }
 
     ngOnDestroy(): void {
@@ -102,5 +129,10 @@ export class TimerComponent implements OnDestroy, OnInit {
 
     onSubmitSaveOrStart(option: string) {
         console.log(option);
+        console.log(this.timerForm.form.value);
+
+        if (this.timerForm.invalid) {
+            return;
+        }
     }
 }
