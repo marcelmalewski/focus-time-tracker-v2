@@ -17,6 +17,18 @@ export interface PrincipalBasicData {
     timerInterval: number;
 }
 
+export interface TimerBasicSettings {
+    timerStage: Stage;
+    timerSelectedTopic: string;
+    timerSetHours: number;
+    timerSetMinutes: number;
+    timerSetSeconds: number;
+    timerShortBreak: number;
+    timerLongBreak: number;
+    timerAutoBreak: boolean;
+    timerInterval: number;
+}
+
 export interface PrincipalWithMainTopics {
     principalBasicData: PrincipalBasicData;
     mainTopicsBasicData: MainTopicBasicData[];
