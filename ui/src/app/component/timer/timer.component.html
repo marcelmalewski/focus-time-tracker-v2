@@ -91,12 +91,13 @@
             </mat-form-field>
 
             <mat-slide-toggle
-                class="text-white"
+                class="custom-slide-toggle"
+                labelPosition="after"
                 name="timerAutoBreak"
                 #timerAutoBreak="ngModel"
                 [(ngModel)]="timerBasicSettings.timerAutoBreak">
-                Enable auto break
             </mat-slide-toggle>
+            <ng-container class="text-white"> Enable auto break </ng-container>
         </div>
     </form>
 

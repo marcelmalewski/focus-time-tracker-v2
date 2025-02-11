@@ -56,6 +56,7 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
         MatSlideToggle,
     ],
     templateUrl: './timer.component.html',
+    styleUrl: 'timer.component.html',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TimerComponent implements OnDestroy, OnInit {

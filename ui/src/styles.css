@@ -6,25 +6,25 @@
 @tailwind utilities;
 
 @layer components {
-  .dash-animation {
-    @apply cursor-pointer after:block after:h-0.5 after:w-0 after:bg-base-line after:duration-200 hover:after:w-full;
-  }
-  .screen-box {
-    @apply flex h-screen w-screen flex-col items-center justify-center bg-base-bg text-base-text;
-  }
-  .test {
-    @apply border border-black;
-  }
+    .dash-animation {
+        @apply cursor-pointer after:block after:h-0.5 after:w-0 after:bg-base-line after:duration-200 hover:after:w-full;
+    }
+    .screen-box {
+        @apply flex h-screen w-screen flex-col items-center justify-center bg-base-bg text-base-text;
+    }
+    .test {
+        @apply border border-black;
+    }
 }
 
 :root {
-  .notification-error {
-    --mdc-snackbar-container-color: #ff3333; /* Background color */
-    --mdc-snackbar-supporting-text-color: #2f2d2d; /* Text color */
-  }
+    .notification-error {
+        --mdc-snackbar-container-color: #ff3333; /* Background color */
+        --mdc-snackbar-supporting-text-color: #2f2d2d; /* Text color */
+    }
 
-  .notification-success {
-    --mdc-snackbar-container-color: #6cc070;
-    --mdc-snackbar-supporting-text-color: #ffffff;
-  }
+    .notification-success {
+        --mdc-snackbar-container-color: #6cc070;
+        --mdc-snackbar-supporting-text-color: #ffffff;
+    }
 }
