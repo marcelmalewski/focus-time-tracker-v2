@@ -90,14 +90,29 @@
                 <span matTextSuffix class="text-black">minutes</span>
             </mat-form-field>
 
-            <mat-slide-toggle
-                class="custom-slide-toggle"
-                labelPosition="after"
-                name="timerAutoBreak"
-                #timerAutoBreak="ngModel"
-                [(ngModel)]="timerBasicSettings.timerAutoBreak">
-            </mat-slide-toggle>
-            <ng-container class="text-white"> Enable auto break </ng-container>
+            <div class="flex items-center gap-2">
+                <mat-slide-toggle
+                    class="custom-slide-toggle"
+                    labelPosition="after"
+                    name="timerAutoBreak"
+                    #timerAutoBreak="ngModel"
+                    [(ngModel)]="timerBasicSettings.timerAutoBreak">
+                </mat-slide-toggle>
+                <div class="text-xl">Enable auto break</div>
+            </div>
+
+            <mat-form-field
+                *ngIf="timerBasicSettings.timerAutoBreak"
+                floatLabel="always"
+                class="w-36">
+                <mat-label>Interval</mat-label>
+                <input
+                    matInput
+                    type="number"
+                    name="timerInterval"
+                    #timerInterval="ngModel"
+                    [(ngModel)]="timerBasicSettings.timerInterval" />
+            </mat-form-field>
         </div>
     </form>
 
