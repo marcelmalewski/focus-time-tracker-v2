@@ -28,3 +28,9 @@
         --mdc-snackbar-supporting-text-color: #ffffff;
     }
 }
+
+mat-error {
+    font-size: 0.875rem /* 14px */ !important;
+    line-height: 1.25rem /* 20px */ !important;
+    color: #4c0519 !important;
+}
