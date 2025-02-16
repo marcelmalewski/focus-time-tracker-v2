@@ -133,8 +133,10 @@ export class TimerComponent implements OnDestroy, OnInit {
     }
 
     onSubmitSaveOrStart(option: string) {
-        console.log(option);
-        console.log(this.timerForm.form.value);
+        const control = this.timerForm.form.controls['timerSetHoursInput']; // Change this to your specific field name
+        if (control && control.errors) {
+            console.log(`Errors in timerSetHours:`, control.errors);
+        }
 
         if (this.timerForm.invalid) {
             return;
