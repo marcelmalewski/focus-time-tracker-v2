@@ -20,7 +20,7 @@
             <div
                 *ngIf="
                     loginOrEmailField.invalid &&
-                    (loginOrEmailField.touched || loginForm.submitted)
+                    (loginOrEmailField.touched || loginOrEmailField.dirty)
                 "
                 class="text-sm text-error">
                 <div *ngIf="loginOrEmailField.errors?.['required']">
@@ -41,7 +41,7 @@
             <div
                 *ngIf="
                     passwordField.invalid &&
-                    (passwordField.touched || loginForm.submitted)
+                    (passwordField.touched || passwordField.dirty)
                 "
                 class="text-sm text-error">
                 <div *ngIf="passwordField.errors?.['required']">
