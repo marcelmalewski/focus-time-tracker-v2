@@ -38,10 +38,10 @@
                         timerSetHoursInput.hasError('required') ||
                         timerSetHoursInput.hasError('min')
                     ">
-                    Must be at least 0
+                    {{ AtLeastZeroMessage }}
                 </mat-error>
                 <mat-error *ngIf="timerSetHoursInput.hasError('max')">
-                    Must be less than or equal to 99
+                    {{ LessThanOrEqual99Message }}
                 </mat-error>
             </mat-form-field>
 
@@ -62,10 +62,10 @@
                         timerSetMinutesInput.hasError('required') ||
                         timerSetMinutesInput.hasError('min')
                     ">
-                    Must be at least 0
+                    {{ AtLeastZeroMessage }}
                 </mat-error>
                 <mat-error *ngIf="timerSetMinutesInput.hasError('max')">
-                    Must be less than or equal to 59
+                    {{ LessThanOrEqual59Message }}
                 </mat-error>
             </mat-form-field>
 
@@ -86,10 +86,10 @@
                         timerSetSecondsInput.hasError('required') ||
                         timerSetSecondsInput.hasError('min')
                     ">
-                    Must be at least 0
+                    {{ AtLeastZeroMessage }}
                 </mat-error>
                 <mat-error *ngIf="timerSetSecondsInput.hasError('max')">
-                    Must be less than or equal to 59
+                    {{ LessThanOrEqual59Message }}
                 </mat-error>
             </mat-form-field>
         </div>
@@ -100,6 +100,7 @@
                 <mat-label>Topic</mat-label>
                 <mat-select
                     name="timerSelectedTopic"
+                    required
                     #timerSelectedTopicInput="ngModel"
                     [(ngModel)]="timerBasicSettings.timerSelectedTopic">
                     @for (topic of mainTopicsBasicData; track topic) {
@@ -153,10 +154,10 @@
                         timerLongBreakInput.hasError('required') ||
                         timerLongBreakInput.hasError('min')
                     ">
-                    Must be at least 1
+                    {{ AtLeastOneMessage }}
                 </mat-error>
                 <mat-error *ngIf="timerLongBreakInput.hasError('max')">
-                    Must be less than or equal to 99
+                    {{ LessThanOrEqual99Message }}
                 </mat-error>
             </mat-form-field>
 
@@ -185,6 +186,17 @@
                     [max]="99"
                     #timerIntervalInput="ngModel"
                     [(ngModel)]="timerBasicSettings.timerInterval" />
+
+                <mat-error
+                    *ngIf="
+                        timerLongBreakInput.hasError('required') ||
+                        timerLongBreakInput.hasError('min')
+                    ">
+                    {{ AtLeastOneMessage }}
+                </mat-error>
+                <mat-error *ngIf="timerLongBreakInput.hasError('max')">
+                    {{ LessThanOrEqual99Message }}
+                </mat-error>
             </mat-form-field>
         </div>
     </form>

@@ -1,28 +1,29 @@
 import {
     Component,
     CUSTOM_ELEMENTS_SCHEMA,
-    numberAttribute,
     OnDestroy,
     OnInit,
     ViewChild,
 } from '@angular/core';
 import { CommandLineComponent } from '../command-line/command-line.component';
 import { MatFormField, MatInput } from '@angular/material/input';
-import { HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
 import { Pages, Stages } from '../../other/typesAndConsts';
 import { GeneralActionsService } from '../../service/general-actions.service';
 import { Router } from '@angular/router';
 import { PrincipalDataService } from '../../service/principal-data.service';
 import {
+    AtLeastOneMessage,
+    AtLeastZeroMessage,
+    LessThanOrEqual59Message,
+    LessThanOrEqual99Message,
     LoggedOutMessage,
     UnknownServerErrorMessage,
 } from '../../other/message';
 import { NotificationService } from '../../service/notification.service';
 import {
     MainTopicBasicData,
-    PrincipalBasicData,
-    PrincipalWithMainTopics,
     TimerBasicSettings,
 } from '../../interface/person.interface';
 import {
@@ -32,7 +33,7 @@ import {
 } from '@angular/material/select';
 import { NgIf } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDivider, MatDividerModule } from '@angular/material/divider';
+import { MatDivider } from '@angular/material/divider';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
@@ -142,4 +143,9 @@ export class TimerComponent implements OnDestroy, OnInit {
             return;
         }
     }
+
+    protected readonly AtLeastOneMessage = AtLeastOneMessage;
+    protected readonly LessThanOrEqual99Message = LessThanOrEqual99Message;
+    protected readonly AtLeastZeroMessage = AtLeastZeroMessage;
+    protected readonly LessThanOrEqual59Message = LessThanOrEqual59Message;
 }
