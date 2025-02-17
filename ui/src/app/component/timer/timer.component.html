@@ -189,12 +189,12 @@
 
                 <mat-error
                     *ngIf="
-                        timerLongBreakInput.hasError('required') ||
-                        timerLongBreakInput.hasError('min')
+                        timerIntervalInput.hasError('required') ||
+                        timerIntervalInput.hasError('min')
                     ">
                     {{ AtLeastOneMessage }}
                 </mat-error>
-                <mat-error *ngIf="timerLongBreakInput.hasError('max')">
+                <mat-error *ngIf="timerIntervalInput.hasError('max')">
                     {{ LessThanOrEqual99Message }}
                 </mat-error>
             </mat-form-field>
