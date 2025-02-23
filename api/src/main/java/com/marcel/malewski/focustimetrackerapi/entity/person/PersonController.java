@@ -1,6 +1,6 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
-import com.marcel.malewski.focustimetrackerapi.entity.person.dto.UpdateTimerAutoBreakDto;
+import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerSettingsDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalBasicData;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalWithMainTopics;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,15 +52,11 @@ public class PersonController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PatchMapping(value = "person/timer-auto-break")
-    public String updateTimerAutoBreak(Principal principal, HttpServletRequest request,
-                                       HttpServletResponse response,
-                                       @RequestBody UpdateTimerAutoBreakDto updateTimerAutoBreakDto) {
-        long principalId = Long.parseLong(principal.getName());
-        boolean timerAutoBreak = updateTimerAutoBreakDto.timerAutoBreakInput() != null;
-
-        personService.updatePrincipalTimerAutoBreak(principalId, timerAutoBreak, request, response);
-
-        return "test";
+    @PatchMapping(value = "person/timer/settings")
+    public ResponseEntity<Void> updateTimerSettings(Principal principal, HttpServletRequest request,
+                                                    HttpServletResponse response,
+                                                    @RequestBody TimerSettingsDto timerSettingsDto) {
+        personService.updatePrincipalTimerSettings(principal, timerSettingsDto, request, response);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

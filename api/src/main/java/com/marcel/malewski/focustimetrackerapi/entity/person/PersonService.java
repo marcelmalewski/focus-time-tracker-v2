@@ -3,8 +3,7 @@ package com.marcel.malewski.focustimetrackerapi.entity.person;
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalWithMainTopicsDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalBasicData;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalWithMainTopics;
-import com.marcel.malewski.focustimetrackerapi.entity.person.timer.TimerFocusAfterHomeDto;
-import com.marcel.malewski.focustimetrackerapi.entity.topic.dto.TopicBasicDataDto;
+import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerSettingsDto;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.interfaces.TopicBasicData;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopicMapper;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
@@ -85,6 +84,35 @@ public class PersonService {
         return personRepository.save(person);
     }
 
+    public void updatePrincipalTimerSettings(
+        Principal principal,
+        TimerSettingsDto dto,
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws AuthenticatedPersonNotFoundException {
+        long principalId = securityHelper.extractIdFromPrincipal(principal);
+        int remainingTime = (dto.timerSetHours() * 60 * 60) + (dto.timerSetMinutes() * 60) + dto.timerSetSeconds();
+        int numberOfAffectedRows;
+
+        numberOfAffectedRows = personRepository.updateTimerSettings(
+            principalId,
+            Stage.FOCUS,
+            dto.timerSelectedTopic(),
+            dto.timerSetHours(),
+            dto.timerSetMinutes(),
+            dto.timerSetSeconds(),
+            dto.timerShortBreak(),
+            dto.timerLongBreak(),
+            dto.timerInterval(),
+            remainingTime
+        );
+
+        if (numberOfAffectedRows == 0) {
+            securityHelper.logoutManually(request, response);
+            throw new AuthenticatedPersonNotFoundException();
+        }
+    }
+
     public void updatePrincipalTimerStage(
         long principalId,
         Stage timerStage,
@@ -125,49 +153,6 @@ public class PersonService {
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         int numberOfAffectedRows = personRepository.updateTimerAutoBreak(principalId, timerAutoBreak);
-
-        if (numberOfAffectedRows == 0) {
-            securityHelper.logoutManually(request, response);
-            throw new AuthenticatedPersonNotFoundException();
-        }
-    }
-
-    // TODO update tylko gdy faktycznie coś się zmieniło
-    public void updatePrincipalFocusAfterHome(
-        long principalId,
-        TimerFocusAfterHomeDto dto,
-        HttpServletRequest request,
-        HttpServletResponse response
-    ) throws AuthenticatedPersonNotFoundException {
-        int remainingTime = (dto.timerSetHours() * 60 * 60) + (dto.timerSetMinutes() * 60) + dto.timerSetSeconds();
-        int numberOfAffectedRows;
-
-        if (dto.timerAutoBreak()) {
-            numberOfAffectedRows = personRepository.updatePrincipalFocusAfterHomeWithAutoBreakOn(
-                principalId,
-                dto.timerSelectedTopic(),
-                dto.timerSetHours(),
-                dto.timerSetMinutes(),
-                dto.timerSetSeconds(),
-                dto.timerShortBreak(),
-                dto.timerLongBreak(),
-                dto.timerInterval(),
-                Stage.FOCUS,
-                remainingTime
-            );
-        } else {
-            numberOfAffectedRows = personRepository.updatePrincipalFocusAfterHomeWithAutoBreakOff(
-                principalId,
-                dto.timerSelectedTopic(),
-                dto.timerSetHours(),
-                dto.timerSetMinutes(),
-                dto.timerSetSeconds(),
-                dto.timerShortBreak(),
-                dto.timerLongBreak(),
-                Stage.FOCUS,
-                remainingTime
-            );
-        }
 
         if (numberOfAffectedRows == 0) {
             securityHelper.logoutManually(request, response);
