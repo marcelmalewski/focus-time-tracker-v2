@@ -17,7 +17,7 @@ export interface PrincipalBasicData {
     timerInterval: number;
 }
 
-export interface TimerBasicSettings {
+export interface TimerSettings {
     timerStage: Stage;
     timerSelectedTopic: string;
     timerSetHours: number;

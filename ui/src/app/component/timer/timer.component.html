@@ -30,7 +30,7 @@
                     [min]="0"
                     [max]="99"
                     #timerSetHoursInput="ngModel"
-                    [(ngModel)]="timerBasicSettings.timerSetHours" />
+                    [(ngModel)]="timerSettings.timerSetHours" />
                 <span matTextSuffix class="text-black">hours</span>
 
                 <mat-error
@@ -54,7 +54,7 @@
                     [min]="0"
                     [max]="59"
                     #timerSetMinutesInput="ngModel"
-                    [(ngModel)]="timerBasicSettings.timerSetMinutes" />
+                    [(ngModel)]="timerSettings.timerSetMinutes" />
                 <span matTextSuffix class="text-black">minutes</span>
 
                 <mat-error
@@ -78,7 +78,7 @@
                     [min]="0"
                     [max]="59"
                     #timerSetSecondsInput="ngModel"
-                    [(ngModel)]="timerBasicSettings.timerSetSeconds" />
+                    [(ngModel)]="timerSettings.timerSetSeconds" />
                 <span matTextSuffix class="text-black">seconds</span>
 
                 <mat-error
@@ -102,7 +102,7 @@
                     name="timerSelectedTopicInput"
                     required
                     #timerSelectedTopicInput="ngModel"
-                    [(ngModel)]="timerBasicSettings.timerSelectedTopic">
+                    [(ngModel)]="timerSettings.timerSelectedTopic">
                     @for (topic of mainTopicsBasicData; track topic) {
                         <mat-option [value]="topic.name">{{
                             topic.name
@@ -125,7 +125,7 @@
                     [min]="1"
                     [max]="99"
                     #timerShortBreakInput="ngModel"
-                    [(ngModel)]="timerBasicSettings.timerShortBreak" />
+                    [(ngModel)]="timerSettings.timerShortBreak" />
                 <span matTextSuffix class="text-black">minutes</span>
 
                 <mat-error
@@ -150,7 +150,7 @@
                     [min]="1"
                     [max]="99"
                     #timerLongBreakInput="ngModel"
-                    [(ngModel)]="timerBasicSettings.timerLongBreak" />
+                    [(ngModel)]="timerSettings.timerLongBreak" />
                 <span matTextSuffix class="text-black">minutes</span>
 
                 <mat-error
@@ -171,13 +171,13 @@
                     labelPosition="after"
                     name="timerAutoBreakInput"
                     #timerAutoBreakInput="ngModel"
-                    [(ngModel)]="timerBasicSettings.timerAutoBreak">
+                    [(ngModel)]="timerSettings.timerAutoBreak">
                 </mat-slide-toggle>
                 <div class="text-xl">Enable auto break</div>
             </div>
 
             <mat-form-field
-                *ngIf="timerBasicSettings.timerAutoBreak"
+                *ngIf="timerSettings.timerAutoBreak"
                 floatLabel="always"
                 class="w-40">
                 <mat-label>Interval</mat-label>
@@ -189,7 +189,7 @@
                     [min]="1"
                     [max]="99"
                     #timerIntervalInput="ngModel"
-                    [(ngModel)]="timerBasicSettings.timerInterval" />
+                    [(ngModel)]="timerSettings.timerInterval" />
 
                 <mat-error
                     *ngIf="

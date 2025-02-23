@@ -24,7 +24,7 @@ import {
 import { NotificationService } from '../../service/notification.service';
 import {
     MainTopicBasicData,
-    TimerBasicSettings,
+    TimerSettings,
 } from '../../interface/person.interface';
 import {
     MatOption,
@@ -64,7 +64,7 @@ export class TimerComponent implements OnDestroy, OnInit {
     private componentDestroyed$ = new Subject<void>();
     mainTopicsBasicData: MainTopicBasicData[] | undefined;
 
-    timerBasicSettings: TimerBasicSettings = {
+    timerSettings: TimerSettings = {
         timerStage: Stages.HOME,
         timerSelectedTopic: '',
         timerSetHours: 0,
@@ -88,20 +88,13 @@ export class TimerComponent implements OnDestroy, OnInit {
             this.principalDataService.getPrincipalMainTopicsBasicData();
         this.mainTopicsBasicData = mainTopicsBasicData;
 
-        this.timerBasicSettings.timerSetHours =
-            principalBasicData.timerSetHours;
-        this.timerBasicSettings.timerSetMinutes =
-            principalBasicData.timerSetMinutes;
-        this.timerBasicSettings.timerSetSeconds =
-            principalBasicData.timerSetSeconds;
-        this.timerBasicSettings.timerShortBreak =
-            principalBasicData.timerShortBreak;
-        this.timerBasicSettings.timerLongBreak =
-            principalBasicData.timerLongBreak;
-        this.timerBasicSettings.timerAutoBreak =
-            principalBasicData.timerAutoBreak;
-        this.timerBasicSettings.timerInterval =
-            principalBasicData.timerInterval;
+        this.timerSettings.timerSetHours = principalBasicData.timerSetHours;
+        this.timerSettings.timerSetMinutes = principalBasicData.timerSetMinutes;
+        this.timerSettings.timerSetSeconds = principalBasicData.timerSetSeconds;
+        this.timerSettings.timerShortBreak = principalBasicData.timerShortBreak;
+        this.timerSettings.timerLongBreak = principalBasicData.timerLongBreak;
+        this.timerSettings.timerAutoBreak = principalBasicData.timerAutoBreak;
+        this.timerSettings.timerInterval = principalBasicData.timerInterval;
     }
 
     ngOnDestroy(): void {
