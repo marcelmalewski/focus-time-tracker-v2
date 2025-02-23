@@ -1,13 +1,10 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person.dto;
 
-import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalBasicData;
+import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.TimerBasicFields;
+import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.TimerFocusFields;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 
-// TODO walidacja
-public record PrincipalBasicDataDto(
-    Long id,
-    String login,
-    String email,
+public record TimerSettingsDto(
     Stage timerStage,
     String timerSelectedTopic,
     Integer timerSetHours,
@@ -16,8 +13,6 @@ public record PrincipalBasicDataDto(
     Integer timerShortBreak,
     Integer timerLongBreak,
     Boolean timerAutoBreak,
-    Boolean stopWatchAutoBreak,
-    Integer timerRemainingTime,
     Integer timerInterval
-) implements PrincipalBasicData {
+) implements TimerBasicFields, TimerFocusFields {
 }
