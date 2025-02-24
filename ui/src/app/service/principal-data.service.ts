@@ -8,7 +8,7 @@ import {
 } from '../interface/person.interface';
 import {
     NotLoggedInMessage,
-    UnknownServerErrorMessage,
+    UnknownServerErrorMessageRefreshPage,
 } from '../other/message';
 import { Pages } from '../other/typesAndConsts';
 import { NotificationService } from './notification.service';
@@ -54,7 +54,7 @@ export class PrincipalDataService {
             this.router.navigateByUrl(Pages.LOGIN);
         } else {
             this.notificationService.openErrorNotification(
-                UnknownServerErrorMessage
+                UnknownServerErrorMessageRefreshPage
             );
             this.router.navigateByUrl(Pages.UNKNOWN_ERROR, {
                 skipLocationChange: true,
