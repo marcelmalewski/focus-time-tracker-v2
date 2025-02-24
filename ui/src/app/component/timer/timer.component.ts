@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { CommandLineComponent } from '../command-line/command-line.component';
 import { MatFormField, MatInput } from '@angular/material/input';
-import { HttpResponse } from '@angular/common/http';
+import { HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
 import { Pages, Stages } from '../../other/typesAndConsts';
 import { GeneralActionsService } from '../../service/general-actions.service';
@@ -19,7 +19,9 @@ import {
     LessThanOrEqual59Message,
     LessThanOrEqual99Message,
     LoggedOutMessage,
+    TimerSettingsUpdated,
     UnknownServerErrorMessage,
+    UnknownServerErrorMessageRefreshPage,
 } from '../../other/message';
 import { NotificationService } from '../../service/notification.service';
 import {
@@ -37,6 +39,7 @@ import { MatDivider } from '@angular/material/divider';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { TimerService } from '../../service/timer.service';
 
 @Component({
     selector: 'app-home',
@@ -79,6 +82,7 @@ export class TimerComponent implements OnDestroy, OnInit {
     constructor(
         private router: Router,
         private generalActionsService: GeneralActionsService,
+        private timerService: TimerService,
         private principalDataService: PrincipalDataService,
         private notificationService: NotificationService
     ) {}
@@ -116,12 +120,46 @@ export class TimerComponent implements OnDestroy, OnInit {
                         );
                     } else {
                         this.notificationService.openErrorNotification(
-                            UnknownServerErrorMessage
+                            UnknownServerErrorMessageRefreshPage
                         );
                         this.router.navigateByUrl(Pages.UNKNOWN_ERROR, {
                             skipLocationChange: true,
                         });
                     }
+                },
+            });
+    }
+
+    onSubmitSave() {
+        if (this.timerForm.invalid) {
+            return;
+        }
+
+        const body = {
+            timerStage: this.timerSettings.timerStage,
+            timerSelectedTopic: this.timerSettings.timerSelectedTopic,
+            timerSetHours: this.timerSettings.timerSetHours,
+            timerSetMinutes: this.timerSettings.timerSetMinutes,
+            timerSetSeconds: this.timerSettings.timerSetSeconds,
+            timerShortBreak: this.timerSettings.timerShortBreak,
+            timerLongBreak: this.timerSettings.timerLongBreak,
+            timerAutoBreak: this.timerSettings.timerAutoBreak,
+            timerInterval: this.timerSettings.timerInterval,
+        };
+
+        this.timerService
+            .updatePrincipalTimerSettings(body)
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe({
+                next: () => {
+                    this.notificationService.openSuccessNotification(
+                        TimerSettingsUpdated
+                    );
+                },
+                error: (_: HttpResponse<any>) => {
+                    this.notificationService.openErrorNotification(
+                        UnknownServerErrorMessage
+                    );
                 },
             });
     }

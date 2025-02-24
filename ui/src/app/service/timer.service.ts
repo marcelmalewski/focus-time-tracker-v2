@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
 })
-export class GeneralActionsService {
+export class TimerService {
+    headers = new HttpHeaders().set('content-type', 'application/json');
+
     constructor(private http: HttpClient) {}
 
-    updatePrincipalTimerSettings(payload: HttpParams): Observable<any> {
-        return this.http.post('/api/timer/settings', payload);
+    updatePrincipalTimerSettings(body: Object): Observable<any> {
+        return this.http.put('/api/v1/persons/principal/timer/settings', body, {
+            headers: this.headers,
+        });
     }
 }
