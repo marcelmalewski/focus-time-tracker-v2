@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
-import { UnknownServerErrorMessage } from '../../other/message';
+import { UnknownServerErrorMessageRefreshPage } from '../../other/message';
 
 @Component({
     selector: 'app-unknown-error',
@@ -10,5 +10,6 @@ import { UnknownServerErrorMessage } from '../../other/message';
     templateUrl: './unknown-error.component.html',
 })
 export class UnknownErrorComponent {
-    protected readonly UnknownServerErrorMessage = UnknownServerErrorMessage;
+    protected readonly UnknownServerErrorMessage =
+        UnknownServerErrorMessageRefreshPage;
 }

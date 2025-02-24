@@ -18,11 +18,11 @@ type CommandsKeys = keyof typeof Commands;
 export type Command = (typeof Commands)[CommandsKeys];
 
 export const Stages = {
-    HOME: 'Home',
-    FOCUS: 'Focus',
-    PAUSE: 'Pause',
-    SHORT_BREAK: 'Short break',
-    LONG_BREAK: 'Long break',
+    HOME: 'HOME',
+    FOCUS: 'FOCUS',
+    PAUSE: 'PAUSE',
+    SHORT_BREAK: 'SHORT_BREAK',
+    LONG_BREAK: 'LONG_BREAK',
 } as const;
 type StagesKeys = keyof typeof Stages;
 export type Stage = (typeof Stages)[StagesKeys];
