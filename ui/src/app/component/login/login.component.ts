@@ -3,14 +3,11 @@ import { AuthInterface } from '../../interface/auth.interface';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpParams, HttpResponse } from '@angular/common/http';
 import { Pages } from '../../other/typesAndConsts';
 import { Router } from '@angular/router';
 import { GeneralActionsService } from '../../service/general-actions.service';
-import {
-    LoggedOutMessage,
-    UnknownServerErrorMessage,
-} from '../../other/message';
+import { UnknownServerErrorMessageRefreshPage } from '../../other/message';
 import { NotificationService } from '../../service/notification.service';
 
 @Component({
@@ -62,7 +59,7 @@ export class LoginComponent implements OnDestroy {
                         this.notCorrectLoginOrEmailOrPasswords = true;
                     } else {
                         this.notificationService.openErrorNotification(
-                            UnknownServerErrorMessage
+                            UnknownServerErrorMessageRefreshPage
                         );
                         this.router.navigateByUrl(Pages.UNKNOWN_ERROR, {
                             skipLocationChange: true,
