@@ -52,7 +52,7 @@ public class PersonController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PatchMapping(value = "person/timer/settings")
+    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/settings")
     public ResponseEntity<Void> updateTimerSettings(Principal principal, HttpServletRequest request,
                                                     HttpServletResponse response,
                                                     @RequestBody TimerSettingsDto timerSettingsDto) {
