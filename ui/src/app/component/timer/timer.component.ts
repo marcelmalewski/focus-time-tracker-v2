@@ -130,7 +130,15 @@ export class TimerComponent implements OnDestroy, OnInit {
             });
     }
 
+    onSubmitStart() {
+        this.timerForm.controls['timerSelectedTopicInput'].setErrors({});
+    }
+
     onSubmitSave() {
+        this.timerForm.controls['timerSelectedTopicInput'].setErrors({
+            required: true,
+        });
+
         if (this.timerForm.invalid) {
             return;
         }
@@ -162,17 +170,6 @@ export class TimerComponent implements OnDestroy, OnInit {
                     );
                 },
             });
-    }
-
-    onSubmitSaveOrStart(option: string) {
-        const control = this.timerForm.form.controls['timerSelectedTopicInput']; // Change this to your specific field name
-        if (control && control.errors) {
-            console.log(`Errors in timerSetHours:`, control.errors);
-        }
-
-        if (this.timerForm.invalid) {
-            return;
-        }
     }
 
     protected readonly AtLeastOneMessage = AtLeastOneMessage;
