@@ -7,6 +7,8 @@ import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopic;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -19,6 +21,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+// TODO finish validation
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -55,12 +58,18 @@ public class Person implements UserDetails {
     private String timerSelectedTopic;
 
     @NotNull
+    @Min(0)
+    @Max(99)
     @Builder.Default
     private Integer timerSetHours = 0;
     @NotNull
+    @Min(0)
+    @Max(59)
     @Builder.Default
     private Integer timerSetMinutes = 0;
     @NotNull
+    @Min(0)
+    @Max(59)
     @Builder.Default
     private Integer timerSetSeconds = 0;
 
