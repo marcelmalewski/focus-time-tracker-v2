@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-// TODO finish validation
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -39,12 +38,12 @@ public class Person implements UserDetails {
 
     @Column(unique = true)
     @NotNull
-    private String login;
+    private String login; // TODO validation
     @NotNull
-    private String password;
+    private String password; // TODO validation
     @Column(unique = true)
     @NotNull
-    private String email;
+    private String email; // TODO validation
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDate createdAt;
@@ -74,9 +73,13 @@ public class Person implements UserDetails {
     private Integer timerSetSeconds = 0;
 
     @NotNull
+    @Min(1)
+    @Max(99)
     @Builder.Default
     private Integer timerShortBreak = 5;
     @NotNull
+    @Min(1)
+    @Max(99)
     @Builder.Default
     private Integer timerLongBreak = 10;
 
@@ -84,12 +87,14 @@ public class Person implements UserDetails {
     @Builder.Default
     private Boolean timerAutoBreak = false;
     @NotNull
+    @Min(1)
+    @Max(99)
     @Builder.Default
     private Integer timerInterval = 1;
     @Nullable
     private Integer timerRemainingTime;
 
-    // Stopwatch settings
+    // TODO Stopwatch settings
     @NotNull
     @Builder.Default
     private Boolean stopWatchAutoBreak = true;
