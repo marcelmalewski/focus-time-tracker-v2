@@ -96,7 +96,7 @@ public class PersonService {
 
         numberOfAffectedRows = personRepository.updateTimerSettings(
             principalId,
-            Stage.FOCUS,
+            dto.timerStage(),
             dto.timerSelectedTopic(),
             dto.timerSetHours(),
             dto.timerSetMinutes(),
