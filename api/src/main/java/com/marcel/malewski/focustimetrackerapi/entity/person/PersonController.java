@@ -6,6 +6,7 @@ import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.Principa
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -55,7 +56,7 @@ public class PersonController {
     @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/settings")
     public ResponseEntity<Void> updateTimerSettings(Principal principal, HttpServletRequest request,
                                                     HttpServletResponse response,
-                                                    @RequestBody TimerSettingsDto timerSettingsDto) {
+                                                    @RequestBody @Valid TimerSettingsDto timerSettingsDto) {
         personService.updatePrincipalTimerSettings(principal, timerSettingsDto, request, response);
         return new ResponseEntity<>(HttpStatus.OK);
     }
