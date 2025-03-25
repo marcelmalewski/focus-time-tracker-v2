@@ -19,6 +19,7 @@ import {
     LessThanOrEqual59Message,
     LessThanOrEqual99Message,
     LoggedOutMessage,
+    NotImplementedYet,
     TimerSettingsUpdated,
     UnknownServerErrorMessage,
     UnknownServerErrorMessageRefreshPage,
@@ -65,6 +66,12 @@ import { TimerService } from '../../service/timer.service';
 export class TimerComponent implements OnDestroy, OnInit {
     @ViewChild('timerForm') private timerForm!: NgForm;
     private componentDestroyed$ = new Subject<void>();
+
+    protected readonly AtLeastOneMessage = AtLeastOneMessage;
+    protected readonly LessThanOrEqual99Message = LessThanOrEqual99Message;
+    protected readonly AtLeastZeroMessage = AtLeastZeroMessage;
+    protected readonly LessThanOrEqual59Message = LessThanOrEqual59Message;
+
     mainTopicsBasicData: MainTopicBasicData[] | undefined;
 
     timerSettings: TimerSettings = {
@@ -130,15 +137,9 @@ export class TimerComponent implements OnDestroy, OnInit {
             });
     }
 
-    onSubmitStart() {
-        this.timerForm.controls['timerSelectedTopicInput'].setErrors({});
-    }
+    onSubmitStart() {}
 
     onSubmitSave() {
-        this.timerForm.controls['timerSelectedTopicInput'].setErrors({
-            required: true,
-        });
-
         if (this.timerForm.invalid) {
             return;
         }
@@ -172,8 +173,7 @@ export class TimerComponent implements OnDestroy, OnInit {
             });
     }
 
-    protected readonly AtLeastOneMessage = AtLeastOneMessage;
-    protected readonly LessThanOrEqual99Message = LessThanOrEqual99Message;
-    protected readonly AtLeastZeroMessage = AtLeastZeroMessage;
-    protected readonly LessThanOrEqual59Message = LessThanOrEqual59Message;
+    onChangeToStopwatch() {
+        this.notificationService.openErrorNotification(NotImplementedYet);
+    }
 }
