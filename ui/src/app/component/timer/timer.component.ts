@@ -99,6 +99,8 @@ export class TimerComponent implements OnDestroy, OnInit {
             this.principalDataService.getPrincipalMainTopicsBasicData();
         this.mainTopicsBasicData = mainTopicsBasicData;
 
+        this.timerSettings.timerSelectedTopic =
+            principalBasicData.timerSelectedTopic;
         this.timerSettings.timerSetHours = principalBasicData.timerSetHours;
         this.timerSettings.timerSetMinutes = principalBasicData.timerSetMinutes;
         this.timerSettings.timerSetSeconds = principalBasicData.timerSetSeconds;

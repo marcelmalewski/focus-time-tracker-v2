@@ -56,48 +56,40 @@ public class Person implements UserDetails {
     @Nullable
     private String timerSelectedTopic;
 
-    @NotNull
     @Min(0)
     @Max(99)
     @Builder.Default
-    private Integer timerSetHours = 0;
-    @NotNull
+    private int timerSetHours = 0;
     @Min(0)
     @Max(59)
     @Builder.Default
-    private Integer timerSetMinutes = 0;
-    @NotNull
+    private int timerSetMinutes = 0;
     @Min(0)
     @Max(59)
     @Builder.Default
-    private Integer timerSetSeconds = 0;
+    private int timerSetSeconds = 0;
 
-    @NotNull
     @Min(1)
     @Max(99)
     @Builder.Default
-    private Integer timerShortBreak = 5;
-    @NotNull
+    private int timerShortBreak = 5;
     @Min(1)
     @Max(99)
     @Builder.Default
-    private Integer timerLongBreak = 10;
+    private int timerLongBreak = 10;
 
-    @NotNull
     @Builder.Default
-    private Boolean timerAutoBreak = false;
-    @NotNull
+    private boolean timerAutoBreak = false;
     @Min(1)
     @Max(99)
     @Builder.Default
-    private Integer timerInterval = 1;
+    private int timerInterval = 1;
     @Nullable
     private Integer timerRemainingTime;
 
     // TODO Stopwatch settings
-    @NotNull
     @Builder.Default
-    private Boolean stopWatchAutoBreak = true;
+    private boolean stopWatchAutoBreak = true;
 
     @OneToMany(mappedBy = "owner")
     @ToString.Exclude

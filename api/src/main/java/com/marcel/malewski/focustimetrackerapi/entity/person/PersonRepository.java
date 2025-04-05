@@ -53,6 +53,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
         "person.timerSetSeconds = :timerSetSeconds," +
         "person.timerShortBreak = :timerShortBreak," +
         "person.timerLongBreak = :timerLongBreak," +
+        "person.timerAutoBreak = :timerAutoBreak," +
         "person.timerInterval = :timerInterval," +
         "person.timerRemainingTime = :timerRemainingTime " +
         "WHERE person.id = :id")
@@ -61,12 +62,13 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
         @Param(value = "id") long id,
         @Param(value = "timerStage") Stage timerStage,
         @Param(value = "timerSelectedTopic") String timerSelectedTopic,
-        @Param(value = "timerSetHours") Integer hours,
-        @Param(value = "timerSetMinutes") Integer minutes,
-        @Param(value = "timerSetSeconds") Integer seconds,
-        @Param(value = "timerShortBreak") Integer shortBreak,
-        @Param(value = "timerLongBreak") Integer longBreak,
-        @Param(value = "timerInterval") Integer interval,
-        @Param(value = "timerRemainingTime") Integer remainingTime
+        @Param(value = "timerSetHours") int hours,
+        @Param(value = "timerSetMinutes") int minutes,
+        @Param(value = "timerSetSeconds") int seconds,
+        @Param(value = "timerShortBreak") int shortBreak,
+        @Param(value = "timerLongBreak") int longBreak,
+        @Param(value = "timerAutoBreak") boolean timerAutoBreak,
+        @Param(value = "timerInterval") int interval,
+        @Param(value = "timerRemainingTime") int remainingTime
     );
 }
