@@ -5,7 +5,7 @@ import { NgIf } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { HttpParams, HttpResponse } from '@angular/common/http';
 import { Pages } from '../../other/typesAndConsts';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { GeneralActionsService } from '../../service/general-actions.service';
 import { UnknownServerErrorMessageRefreshPage } from '../../other/message';
 import { NotificationService } from '../../service/notification.service';
@@ -13,7 +13,7 @@ import { NotificationService } from '../../service/notification.service';
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [FormsModule, NgIf],
+    imports: [FormsModule, NgIf, RouterLink],
     templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnDestroy {
