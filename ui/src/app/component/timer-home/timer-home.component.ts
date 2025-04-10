@@ -60,10 +60,10 @@ import { TimerService } from '../../service/timer.service';
         MatCardContent,
         MatSlideToggle,
     ],
-    templateUrl: './timer.component.html',
+    templateUrl: './timer-home.component.html',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class TimerComponent implements OnDestroy, OnInit {
+export class TimerHomeComponent implements OnDestroy, OnInit {
     @ViewChild('timerForm') private timerForm!: NgForm;
     private componentDestroyed$ = new Subject<void>();
 
@@ -142,9 +142,9 @@ export class TimerComponent implements OnDestroy, OnInit {
     onSubmitStart() {}
 
     onSubmitSave() {
-        // if (this.timerForm.invalid) {
-        //     return;
-        // }
+        if (this.timerForm.invalid) {
+            return;
+        }
 
         const body = {
             timerStage: this.timerSettings.timerStage,

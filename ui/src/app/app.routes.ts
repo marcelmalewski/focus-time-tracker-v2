@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './component/login/login.component';
-import { TimerComponent } from './component/timer/timer.component';
+import { TimerHomeComponent } from './component/timer-home/timer-home.component';
 import { RegisterComponent } from './component/register/register.component';
 import { SettingsComponent } from './component/settings/settings.component';
 import { PrincipalBasicDataGuard } from './guard/principal-basic-data.guard';
@@ -26,7 +26,7 @@ export const routes: Routes = [
     {
         path: 'timer',
         title: 'timer',
-        component: TimerComponent,
+        component: TimerHomeComponent,
         canActivate: [PrincipalWithMainTopicsGuard],
     },
     {
