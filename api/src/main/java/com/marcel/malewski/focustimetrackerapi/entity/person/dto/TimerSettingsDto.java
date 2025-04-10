@@ -22,10 +22,10 @@ public record TimerSettingsDto(
     @Max(59)
     int timerSetSeconds,
     @Min(1)
-    @Max(99)
+    @Max(59)
     int timerShortBreak,
     @Min(1)
-    @Max(99)
+    @Max(59)
     int timerLongBreak,
     boolean timerAutoBreak,
     @Min(1)

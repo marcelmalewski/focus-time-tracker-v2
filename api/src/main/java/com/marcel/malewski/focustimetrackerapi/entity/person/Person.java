@@ -70,11 +70,11 @@ public class Person implements UserDetails {
     private int timerSetSeconds = 0;
 
     @Min(1)
-    @Max(99)
+    @Max(59)
     @Builder.Default
     private int timerShortBreak = 5;
     @Min(1)
-    @Max(99)
+    @Max(59)
     @Builder.Default
     private int timerLongBreak = 10;
 
