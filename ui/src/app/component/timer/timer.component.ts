@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { CommandLineComponent } from '../command-line/command-line.component';
 import { MatFormField, MatInput } from '@angular/material/input';
-import { HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
 import { Pages, Stages } from '../../other/typesAndConsts';
 import { GeneralActionsService } from '../../service/general-actions.service';
@@ -67,10 +67,10 @@ export class TimerComponent implements OnDestroy, OnInit {
     @ViewChild('timerForm') private timerForm!: NgForm;
     private componentDestroyed$ = new Subject<void>();
 
-    protected readonly AtLeastOneMessage = AtLeastOneMessage;
-    protected readonly LessThanOrEqual99Message = LessThanOrEqual99Message;
-    protected readonly AtLeastZeroMessage = AtLeastZeroMessage;
-    protected readonly LessThanOrEqual59Message = LessThanOrEqual59Message;
+    readonly AtLeastOneMessage = AtLeastOneMessage;
+    readonly LessThanOrEqual99Message = LessThanOrEqual99Message;
+    readonly AtLeastZeroMessage = AtLeastZeroMessage;
+    readonly LessThanOrEqual59Message = LessThanOrEqual59Message;
 
     mainTopicsBasicData: MainTopicBasicData[] | undefined;
 
@@ -142,9 +142,9 @@ export class TimerComponent implements OnDestroy, OnInit {
     onSubmitStart() {}
 
     onSubmitSave() {
-        if (this.timerForm.invalid) {
-            return;
-        }
+        // if (this.timerForm.invalid) {
+        //     return;
+        // }
 
         const body = {
             timerStage: this.timerSettings.timerStage,

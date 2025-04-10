@@ -131,7 +131,7 @@
                     name="timerShortBreakInput"
                     required
                     [min]="1"
-                    [max]="99"
+                    [max]="59"
                     #timerShortBreakInput="ngModel"
                     [(ngModel)]="timerSettings.timerShortBreak" />
                 <span matTextSuffix class="text-black">minutes</span>
@@ -141,10 +141,10 @@
                         timerShortBreakInput.hasError('required') ||
                         timerShortBreakInput.hasError('min')
                     ">
-                    Must be at least 1
+                    {{ AtLeastOneMessage }}
                 </mat-error>
                 <mat-error *ngIf="timerShortBreakInput.hasError('max')">
-                    Must be less than or equal to 99
+                    {{ LessThanOrEqual59Message }}
                 </mat-error>
             </mat-form-field>
 
@@ -156,7 +156,7 @@
                     name="timerLongBreakInput"
                     required
                     [min]="1"
-                    [max]="99"
+                    [max]="59"
                     #timerLongBreakInput="ngModel"
                     [(ngModel)]="timerSettings.timerLongBreak" />
                 <span matTextSuffix class="text-black">minutes</span>
@@ -169,7 +169,7 @@
                     {{ AtLeastOneMessage }}
                 </mat-error>
                 <mat-error *ngIf="timerLongBreakInput.hasError('max')">
-                    {{ LessThanOrEqual99Message }}
+                    {{ LessThanOrEqual59Message }}
                 </mat-error>
             </mat-form-field>
 
