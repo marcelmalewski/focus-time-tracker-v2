@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-timer-focus',
-  standalone: true,
-  imports: [],
-  templateUrl: './timer-focus.component.html',
-  styleUrl: './timer-focus.component.css'
+    selector: 'app-timer-focus',
+    standalone: true,
+    templateUrl: './timer-focus.component.html',
 })
-export class TimerFocusComponent {
-
-}
+export class TimerFocusComponent {}

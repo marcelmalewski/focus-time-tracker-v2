@@ -8,6 +8,7 @@ import { UnknownErrorComponent } from './component/unknown-error/unknown-error.c
 import { NotLoggedInMessage } from './other/message';
 import { LoggedOutGuard } from './guard/logged-out-guard';
 import { PrincipalWithMainTopicsGuard } from './guard/principal-with-main-topics.guard';
+import { TimerFocusComponent } from './component/timer-focus/timer-focus.component';
 
 export const routes: Routes = [
     {
@@ -22,11 +23,16 @@ export const routes: Routes = [
         component: RegisterComponent,
         canActivate: [LoggedOutGuard],
     },
-
     {
         path: 'timer',
-        title: 'timer',
+        title: 'timer-home',
         component: TimerHomeComponent,
+        canActivate: [PrincipalWithMainTopicsGuard],
+    },
+    {
+        path: 'timer/focus',
+        title: 'timer-focus',
+        component: TimerFocusComponent,
         canActivate: [PrincipalWithMainTopicsGuard],
     },
     {

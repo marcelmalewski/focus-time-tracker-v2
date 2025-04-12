@@ -9,8 +9,11 @@
     .dash-animation {
         @apply cursor-pointer after:block after:h-0.5 after:w-0 after:bg-base-line after:duration-200 hover:after:w-full;
     }
-    .screen-box {
+    .screen-box-center {
         @apply flex h-screen w-screen flex-col items-center justify-center bg-base-bg text-base-text;
+    }
+    .screen-box-between {
+        @apply flex h-screen w-screen flex-col justify-between bg-base-bg text-base-text;
     }
     .test {
         @apply border border-black;
