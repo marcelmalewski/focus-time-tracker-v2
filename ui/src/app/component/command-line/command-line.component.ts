@@ -94,7 +94,7 @@ export class CommandLineComponent implements OnInit {
         if (commandValue === Commands.GO_TO_SETTINGS) {
             this.router.navigateByUrl(Pages.SETTINGS);
         } else if (commandValue === Commands.GO_TO_TIMER) {
-            this.router.navigateByUrl(Pages.TIMER);
+            this.router.navigateByUrl(Pages.TIMER_HOME);
         } else if (commandValue === Commands.LOGOUT) {
             // TODO
         }

@@ -52,7 +52,7 @@ export class LoginComponent implements OnDestroy {
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: () => {
-                    this.router.navigateByUrl(Pages.TIMER);
+                    this.router.navigateByUrl(Pages.TIMER_HOME);
                 },
                 error: (response: HttpResponse<any>) => {
                     if (response.status === 401) {

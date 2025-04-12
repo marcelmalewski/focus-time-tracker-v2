@@ -26,7 +26,7 @@ export class LoggedOutGuard implements CanActivate {
             retry(3),
             map(loggedIn => {
                 if (loggedIn) {
-                    this.router.navigateByUrl(Pages.TIMER);
+                    this.router.navigateByUrl(Pages.TIMER_HOME);
                     return true;
                 }
 

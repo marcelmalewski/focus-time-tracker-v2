@@ -139,25 +139,33 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             });
     }
 
-    onSubmitStart() {}
+    onSubmitStart() {
+        if (this.timerForm.invalid) {
+            return;
+        }
+
+        const body = this.prepareBodyForTimerSettingsUpdate();
+        this.timerService
+            .updatePrincipalTimerSettings(body)
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe({
+                next: () => {
+                    this.router.navigateByUrl(Pages.TIMER_FOCUS);
+                },
+                error: (_: HttpResponse<any>) => {
+                    this.notificationService.openErrorNotification(
+                        UnknownServerErrorMessage
+                    );
+                },
+            });
+    }
 
     onSubmitSave() {
         if (this.timerForm.invalid) {
             return;
         }
 
-        const body = {
-            timerStage: this.timerSettings.timerStage,
-            timerSelectedTopic: this.timerSettings.timerSelectedTopic,
-            timerSetHours: this.timerSettings.timerSetHours,
-            timerSetMinutes: this.timerSettings.timerSetMinutes,
-            timerSetSeconds: this.timerSettings.timerSetSeconds,
-            timerShortBreak: this.timerSettings.timerShortBreak,
-            timerLongBreak: this.timerSettings.timerLongBreak,
-            timerAutoBreak: this.timerSettings.timerAutoBreak,
-            timerInterval: this.timerSettings.timerInterval,
-        };
-
+        const body = this.prepareBodyForTimerSettingsUpdate();
         this.timerService
             .updatePrincipalTimerSettings(body)
             .pipe(takeUntil(this.componentDestroyed$))
@@ -173,6 +181,20 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
                     );
                 },
             });
+    }
+
+    private prepareBodyForTimerSettingsUpdate() {
+        return {
+            timerStage: this.timerSettings.timerStage,
+            timerSelectedTopic: this.timerSettings.timerSelectedTopic,
+            timerSetHours: this.timerSettings.timerSetHours,
+            timerSetMinutes: this.timerSettings.timerSetMinutes,
+            timerSetSeconds: this.timerSettings.timerSetSeconds,
+            timerShortBreak: this.timerSettings.timerShortBreak,
+            timerLongBreak: this.timerSettings.timerLongBreak,
+            timerAutoBreak: this.timerSettings.timerAutoBreak,
+            timerInterval: this.timerSettings.timerInterval,
+        };
     }
 
     onChangeToStopwatch() {
