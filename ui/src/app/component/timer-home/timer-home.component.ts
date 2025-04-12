@@ -73,18 +73,7 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
     protected readonly LessThanOrEqual59Message = LessThanOrEqual59Message;
 
     mainTopicsBasicData: MainTopicBasicData[] | undefined;
-
-    timerSettings: TimerSettings = {
-        timerStage: Stages.HOME,
-        timerSelectedTopic: '',
-        timerSetHours: 0,
-        timerSetMinutes: 0,
-        timerSetSeconds: 0,
-        timerShortBreak: 0,
-        timerLongBreak: 0,
-        timerAutoBreak: false,
-        timerInterval: 0,
-    };
+    timerSettings: TimerSettings = TimerService.prepareDefaultTimerSettings();
 
     constructor(
         private router: Router,
@@ -96,17 +85,12 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
     ngOnInit(): void {
         const { principalBasicData, mainTopicsBasicData } =
             this.principalDataService.getPrincipalMainTopicsBasicData();
-        this.mainTopicsBasicData = mainTopicsBasicData;
 
-        this.timerSettings.timerSelectedTopic =
-            principalBasicData.timerSelectedTopic;
-        this.timerSettings.timerSetHours = principalBasicData.timerSetHours;
-        this.timerSettings.timerSetMinutes = principalBasicData.timerSetMinutes;
-        this.timerSettings.timerSetSeconds = principalBasicData.timerSetSeconds;
-        this.timerSettings.timerShortBreak = principalBasicData.timerShortBreak;
-        this.timerSettings.timerLongBreak = principalBasicData.timerLongBreak;
-        this.timerSettings.timerAutoBreak = principalBasicData.timerAutoBreak;
-        this.timerSettings.timerInterval = principalBasicData.timerInterval;
+        this.mainTopicsBasicData = mainTopicsBasicData;
+        this.timerSettings = TimerService.mapPrincipalBasicDataToTimerSettings(
+            principalBasicData,
+            Stages.HOME
+        );
     }
 
     ngOnDestroy(): void {
