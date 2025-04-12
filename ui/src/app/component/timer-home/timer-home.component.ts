@@ -18,11 +18,9 @@ import {
     AtLeastZeroMessage,
     LessThanOrEqual59Message,
     LessThanOrEqual99Message,
-    LoggedOutMessage,
     NotImplementedYet,
     TimerSettingsUpdated,
     UnknownServerErrorMessage,
-    UnknownServerErrorMessageRefreshPage,
 } from '../../other/message';
 import { NotificationService } from '../../service/notification.service';
 import {
@@ -41,6 +39,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { TimerService } from '../../service/timer.service';
+import { BottomMenuComponent } from '../bottom-menu/bottom-menu.component';
 
 @Component({
     selector: 'app-home',
@@ -59,6 +58,7 @@ import { TimerService } from '../../service/timer.service';
         MatCard,
         MatCardContent,
         MatSlideToggle,
+        BottomMenuComponent,
     ],
     templateUrl: './timer-home.component.html',
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -67,10 +67,10 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
     @ViewChild('timerForm') private timerForm!: NgForm;
     private componentDestroyed$ = new Subject<void>();
 
-    readonly AtLeastOneMessage = AtLeastOneMessage;
-    readonly LessThanOrEqual99Message = LessThanOrEqual99Message;
-    readonly AtLeastZeroMessage = AtLeastZeroMessage;
-    readonly LessThanOrEqual59Message = LessThanOrEqual59Message;
+    protected readonly AtLeastOneMessage = AtLeastOneMessage;
+    protected readonly LessThanOrEqual99Message = LessThanOrEqual99Message;
+    protected readonly AtLeastZeroMessage = AtLeastZeroMessage;
+    protected readonly LessThanOrEqual59Message = LessThanOrEqual59Message;
 
     mainTopicsBasicData: MainTopicBasicData[] | undefined;
 
@@ -88,7 +88,6 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
 
     constructor(
         private router: Router,
-        private generalActionsService: GeneralActionsService,
         private timerService: TimerService,
         private principalDataService: PrincipalDataService,
         private notificationService: NotificationService
@@ -113,30 +112,6 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
     ngOnDestroy(): void {
         this.componentDestroyed$.next();
         this.componentDestroyed$.complete();
-    }
-
-    submitLogout() {
-        this.generalActionsService
-            .logout()
-            .pipe(takeUntil(this.componentDestroyed$))
-            .subscribe({
-                error: (response: HttpResponse<any>) => {
-                    if (response.status === 401) {
-                        this.principalDataService.clearPrincipalData();
-                        this.router.navigateByUrl(Pages.LOGIN);
-                        this.notificationService.openSuccessNotification(
-                            LoggedOutMessage
-                        );
-                    } else {
-                        this.notificationService.openErrorNotification(
-                            UnknownServerErrorMessageRefreshPage
-                        );
-                        this.router.navigateByUrl(Pages.UNKNOWN_ERROR, {
-                            skipLocationChange: true,
-                        });
-                    }
-                },
-            });
     }
 
     onSubmitStart() {
@@ -200,4 +175,6 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
     onChangeToStopwatch() {
         this.notificationService.openErrorNotification(NotImplementedYet);
     }
+
+    protected readonly Pages = Pages;
 }

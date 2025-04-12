@@ -1,16 +1,4 @@
 <div class="screen-box-between">
     <p>timer focus</p>
-    <div>
-        <div id="actions" class="mb-4 flex gap-2 p-2">
-            <button
-                class="mt-6 rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov">
-                Settings
-            </button>
-            <button
-                class="mt-6 rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov">
-                Logout
-            </button>
-        </div>
-        <app-command-line [commandContext]="'st'"></app-command-line>
-    </div>
+    <bottom-menu [commandContext]="Pages.TIMER_FOCUS"></bottom-menu>
 </div>
