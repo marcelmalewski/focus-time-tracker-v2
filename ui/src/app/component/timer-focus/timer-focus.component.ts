@@ -28,6 +28,7 @@ import { TimerService } from '../../service/timer.service';
 import { Router } from '@angular/router';
 import { PrincipalDataService } from '../../service/principal-data.service';
 import { NotificationService } from '../../service/notification.service';
+import { MatCard, MatCardContent } from '@angular/material/card';
 
 @Component({
     selector: 'app-timer-focus',
@@ -47,6 +48,8 @@ import { NotificationService } from '../../service/notification.service';
         MatSuffix,
         NgIf,
         ReactiveFormsModule,
+        MatCard,
+        MatCardContent,
     ],
 })
 export class TimerFocusComponent implements OnInit {
