@@ -9,8 +9,7 @@ import { CommandLineComponent } from '../command-line/command-line.component';
 import { MatFormField, MatInput } from '@angular/material/input';
 import { HttpResponse } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
-import { Pages, Stages } from '../../other/typesAndConsts';
-import { GeneralActionsService } from '../../service/general-actions.service';
+import { Pages, Stage, Stages } from '../../other/typesAndConsts';
 import { Router } from '@angular/router';
 import { PrincipalDataService } from '../../service/principal-data.service';
 import {
@@ -103,7 +102,7 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             return;
         }
 
-        const body = this.prepareBodyForTimerSettingsUpdate();
+        const body = this.prepareBodyForTimerSettingsUpdate(Stages.FOCUS);
         this.timerService
             .updatePrincipalTimerSettings(body)
             .pipe(takeUntil(this.componentDestroyed$))
@@ -124,7 +123,7 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             return;
         }
 
-        const body = this.prepareBodyForTimerSettingsUpdate();
+        const body = this.prepareBodyForTimerSettingsUpdate(Stages.HOME);
         this.timerService
             .updatePrincipalTimerSettings(body)
             .pipe(takeUntil(this.componentDestroyed$))
@@ -142,9 +141,9 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             });
     }
 
-    private prepareBodyForTimerSettingsUpdate() {
+    private prepareBodyForTimerSettingsUpdate(stage: Stage) {
         return {
-            timerStage: this.timerSettings.timerStage,
+            timerStage: stage,
             timerSelectedTopic: this.timerSettings.timerSelectedTopic,
             timerSetHours: this.timerSettings.timerSetHours,
             timerSetMinutes: this.timerSettings.timerSetMinutes,
