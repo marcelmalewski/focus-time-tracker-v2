@@ -114,20 +114,6 @@ public class PersonService {
         }
     }
 
-    public void updatePrincipalTimerStage(
-        long principalId,
-        Stage timerStage,
-        HttpServletRequest request,
-        HttpServletResponse response
-    ) throws AuthenticatedPersonNotFoundException {
-        int numberOfAffectedRows = personRepository.updateTimerStage(principalId, timerStage);
-
-        if (numberOfAffectedRows == 0) {
-            securityHelper.logoutManually(request, response);
-            throw new AuthenticatedPersonNotFoundException();
-        }
-    }
-
     public void updatePrincipalTimerStageAndRemainingTime(
         long principalId,
         Stage timerStage,
