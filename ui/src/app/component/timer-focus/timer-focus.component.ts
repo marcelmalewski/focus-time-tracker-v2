@@ -29,6 +29,7 @@ import { Router } from '@angular/router';
 import { PrincipalDataService } from '../../service/principal-data.service';
 import { NotificationService } from '../../service/notification.service';
 import { MatCard, MatCardContent } from '@angular/material/card';
+import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
 
 @Component({
     selector: 'app-timer-focus',
@@ -50,6 +51,7 @@ import { MatCard, MatCardContent } from '@angular/material/card';
         ReactiveFormsModule,
         MatCard,
         MatCardContent,
+        TimerFieldPipe,
     ],
 })
 export class TimerFocusComponent implements OnInit {
