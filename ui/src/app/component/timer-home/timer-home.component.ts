@@ -102,12 +102,16 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             return;
         }
 
-        const body = this.prepareBodyForTimerSettingsUpdate(Stages.FOCUS);
+        const body = TimerService.prepareBodyForTimerSettingsUpdate(
+            this.timerSettings,
+            Stages.FOCUS
+        );
         this.timerService
             .updatePrincipalTimerSettings(body)
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: () => {
+                    this.principalDataService.updateTimerSettings(body);
                     this.router.navigateByUrl(Pages.TIMER_FOCUS);
                 },
                 error: (_: HttpResponse<any>) => {
@@ -123,12 +127,16 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             return;
         }
 
-        const body = this.prepareBodyForTimerSettingsUpdate(Stages.HOME);
+        const body = TimerService.prepareBodyForTimerSettingsUpdate(
+            this.timerSettings,
+            Stages.HOME
+        );
         this.timerService
             .updatePrincipalTimerSettings(body)
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: () => {
+                    this.principalDataService.updateTimerSettings(body);
                     this.notificationService.openSuccessNotification(
                         TimerSettingsUpdated
                     );
@@ -139,20 +147,6 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
                     );
                 },
             });
-    }
-
-    private prepareBodyForTimerSettingsUpdate(stage: Stage) {
-        return {
-            timerStage: stage,
-            timerSelectedTopic: this.timerSettings.timerSelectedTopic,
-            timerSetHours: this.timerSettings.timerSetHours,
-            timerSetMinutes: this.timerSettings.timerSetMinutes,
-            timerSetSeconds: this.timerSettings.timerSetSeconds,
-            timerShortBreak: this.timerSettings.timerShortBreak,
-            timerLongBreak: this.timerSettings.timerLongBreak,
-            timerAutoBreak: this.timerSettings.timerAutoBreak,
-            timerInterval: this.timerSettings.timerInterval,
-        };
     }
 
     onChangeToStopwatch() {
