@@ -15,12 +15,6 @@ import { MatSelect } from '@angular/material/select';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { NgIf } from '@angular/common';
 import {
-    AtLeastOneMessage,
-    AtLeastZeroMessage,
-    LessThanOrEqual59Message,
-    LessThanOrEqual99Message,
-} from '../../other/message';
-import {
     MainTopicBasicData,
     TimerSettings,
 } from '../../interface/person.interface';
@@ -56,10 +50,6 @@ import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
 })
 export class TimerFocusComponent implements OnInit {
     protected readonly Pages = Pages;
-    protected readonly LessThanOrEqual99Message = LessThanOrEqual99Message;
-    protected readonly AtLeastOneMessage = AtLeastOneMessage;
-    protected readonly LessThanOrEqual59Message = LessThanOrEqual59Message;
-    protected readonly AtLeastZeroMessage = AtLeastZeroMessage;
 
     mainTopicsBasicData: MainTopicBasicData[] | undefined;
     timerSettings: TimerSettings = TimerService.prepareDefaultTimerSettings();
