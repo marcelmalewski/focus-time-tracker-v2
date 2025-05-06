@@ -5,6 +5,7 @@ import {
     MainTopicBasicData,
     PrincipalBasicData,
     PrincipalWithMainTopics,
+    TimerSettings,
 } from '../interface/person.interface';
 import {
     NotLoggedInMessage,
@@ -36,6 +37,17 @@ export class PrincipalDataService {
         );
     }
 
+    setPrincipalBasicData(data: PrincipalBasicData) {
+        this.principalBasicData = data;
+    }
+
+    getPrincipalMainTopicsBasicData(): PrincipalWithMainTopics {
+        return {
+            principalBasicData: this.principalBasicData!,
+            mainTopicsBasicData: this.mainTopicsBasicData!,
+        };
+    }
+
     getOrLoadPrincipalWithMainTopics(): Observable<PrincipalWithMainTopics> {
         if (this.mainTopicsBasicData !== undefined)
             return of({
@@ -46,6 +58,32 @@ export class PrincipalDataService {
         return this.http.get<PrincipalWithMainTopics>(
             '/api/v1/persons/principal/with-main-topics'
         );
+    }
+
+    setPrincipalDataWithMainTopics(data: PrincipalWithMainTopics) {
+        this.principalBasicData = data.principalBasicData;
+        this.mainTopicsBasicData = data.mainTopicsBasicData;
+    }
+
+    updateTimerSettings(timerSettings: TimerSettings) {
+        this.principalBasicData!.timerStage = timerSettings.timerStage;
+        this.principalBasicData!.timerSelectedTopic =
+            timerSettings.timerSelectedTopic;
+        this.principalBasicData!.timerSetHours = timerSettings.timerSetHours;
+        this.principalBasicData!.timerSetMinutes =
+            timerSettings.timerSetMinutes;
+        this.principalBasicData!.timerSetSeconds =
+            timerSettings.timerSetSeconds;
+        this.principalBasicData!.timerShortBreak =
+            timerSettings.timerShortBreak;
+        this.principalBasicData!.timerLongBreak = timerSettings.timerLongBreak;
+        this.principalBasicData!.timerAutoBreak = timerSettings.timerAutoBreak;
+        this.principalBasicData!.timerInterval = timerSettings.timerInterval;
+    }
+
+    clearPrincipalData() {
+        this.principalBasicData = undefined;
+        this.mainTopicsBasicData = undefined;
     }
 
     handleLoadPrincipalDataError(err: any) {
@@ -62,30 +100,5 @@ export class PrincipalDataService {
         }
 
         return of(false);
-    }
-
-    getPrincipalBasicData(): PrincipalBasicData {
-        return this.principalBasicData!;
-    }
-
-    setPrincipalBasicData(data: PrincipalBasicData) {
-        this.principalBasicData = data;
-    }
-
-    getPrincipalMainTopicsBasicData(): PrincipalWithMainTopics {
-        return {
-            principalBasicData: this.principalBasicData!,
-            mainTopicsBasicData: this.mainTopicsBasicData!,
-        };
-    }
-
-    setPrincipalDataWithMainTopics(data: PrincipalWithMainTopics) {
-        this.principalBasicData = data.principalBasicData;
-        this.mainTopicsBasicData = data.mainTopicsBasicData;
-    }
-
-    clearPrincipalData() {
-        this.principalBasicData = undefined;
-        this.mainTopicsBasicData = undefined;
     }
 }
