@@ -15,7 +15,7 @@ export class TimerService {
 
     constructor(private http: HttpClient) {}
 
-    updatePrincipalTimerSettings(body: Object): Observable<any> {
+    updatePrincipalTimerSettings(body: TimerSettings): Observable<any> {
         return this.http.put('/api/v1/persons/principal/timer/settings', body, {
             headers: this.headers,
         });
@@ -49,6 +49,23 @@ export class TimerService {
             timerLongBreak: principalBasicData.timerLongBreak,
             timerAutoBreak: principalBasicData.timerAutoBreak,
             timerInterval: principalBasicData.timerInterval,
+        };
+    }
+
+    static prepareBodyForTimerSettingsUpdate(
+        timerSettings: TimerSettings,
+        stage: Stage
+    ) {
+        return {
+            timerStage: stage,
+            timerSelectedTopic: timerSettings.timerSelectedTopic,
+            timerSetHours: timerSettings.timerSetHours,
+            timerSetMinutes: timerSettings.timerSetMinutes,
+            timerSetSeconds: timerSettings.timerSetSeconds,
+            timerShortBreak: timerSettings.timerShortBreak,
+            timerLongBreak: timerSettings.timerLongBreak,
+            timerAutoBreak: timerSettings.timerAutoBreak,
+            timerInterval: timerSettings.timerInterval,
         };
     }
 }
