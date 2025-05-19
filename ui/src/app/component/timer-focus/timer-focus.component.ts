@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommandLineComponent } from '../command-line/command-line.component';
 import { BottomMenuComponent } from '../bottom-menu/bottom-menu.component';
 import { Pages, Stages } from '../../other/typesAndConsts';
@@ -48,11 +48,12 @@ import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
         TimerFieldPipe,
     ],
 })
-export class TimerFocusComponent implements OnInit {
+export class TimerFocusComponent implements OnInit, OnDestroy {
     protected readonly Pages = Pages;
 
-    mainTopicsBasicData: MainTopicBasicData[] | undefined;
-    timerSettings: TimerSettings = TimerService.prepareDefaultTimerSettings();
+    mainTopicsBasicData!: MainTopicBasicData[];
+    timerSettings!: TimerSettings;
+    countDownId: any | undefined;
 
     constructor(
         private router: Router,
@@ -70,5 +71,43 @@ export class TimerFocusComponent implements OnInit {
             principalBasicData,
             Stages.FOCUS
         );
+
+        this.countDownId = setInterval(() => {
+            this.countDownLogic();
+        }, 1000);
+    }
+
+    ngOnDestroy() {
+        if (this.countDownId) {
+            clearInterval(this.countDownId);
+        }
+    }
+
+    private countDownLogic() {
+        if (this.timerSettings.timerSetSeconds > 0) {
+            this.timerSettings.timerSetSeconds =
+                this.timerSettings.timerSetSeconds - 1;
+        } else {
+            this.countDownLogicOnTimerSetSecondsIsZero();
+        }
+    }
+
+    private countDownLogicOnTimerSetSecondsIsZero() {
+        if (this.timerSettings.timerSetMinutes > 0) {
+            this.timerSettings.timerSetMinutes =
+                this.timerSettings.timerSetMinutes - 1;
+            this.timerSettings.timerSetSeconds = 59;
+        } else {
+            this.countDownLogicOnTimerSetMinutesIsZero();
+        }
+    }
+
+    private countDownLogicOnTimerSetMinutesIsZero() {
+        if (this.timerSettings.timerSetHours > 0) {
+            this.timerSettings.timerSetHours =
+                this.timerSettings.timerSetHours - 1;
+            this.timerSettings.timerSetMinutes = 59;
+            this.timerSettings.timerSetSeconds = 59;
+        }
     }
 }
