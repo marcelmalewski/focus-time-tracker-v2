@@ -115,12 +115,13 @@ public class PersonService {
     }
 
     public void updatePrincipalTimerStageAndRemainingTime(
-        long principalId,
+        Principal principal,
         Stage timerStage,
         int timerRemainingTime,
         HttpServletRequest request,
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
+        long principalId = securityHelper.extractIdFromPrincipal(principal);
         int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingTime(
             principalId,
             timerStage,
