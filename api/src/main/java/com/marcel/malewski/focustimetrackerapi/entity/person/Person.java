@@ -1,7 +1,6 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
 import com.marcel.malewski.focustimetrackerapi.converter.StageConverter;
-import com.marcel.malewski.focustimetrackerapi.entity.alarmsettings.AlarmSettings;
 import com.marcel.malewski.focustimetrackerapi.entity.dailyfocusSummary.DailyFocusSummary;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopic;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
@@ -102,10 +101,6 @@ public class Person implements UserDetails {
     @Builder.Default
     @NotNull
     private List<MainTopic> mainTopics = new ArrayList<>();
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "alarmsettings_id")
-    private AlarmSettings alarmSettings;
 
     @Override
     public String toString() {
