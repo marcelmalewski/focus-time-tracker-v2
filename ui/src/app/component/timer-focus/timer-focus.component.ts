@@ -69,7 +69,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
         this.mainTopicsBasicData = mainTopicsBasicData;
         this.timerSettings = TimerService.mapPrincipalBasicDataToTimerSettings(
             principalBasicData,
-            Stages.FOCUS
+            principalBasicData.timerStage
         );
 
         this.countDownId = setInterval(() => {
