@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Stage, Stages } from '../other/typesAndConsts';
 import {
     PrincipalBasicData,
     TimerSettings,
+    TimerStageAndRemainingDto,
 } from '../interface/person.interface';
 
 @Injectable({
@@ -17,6 +18,14 @@ export class TimerService {
 
     updatePrincipalTimerSettings(body: TimerSettings): Observable<any> {
         return this.http.put('/api/v1/persons/principal/timer/settings', body, {
+            headers: this.headers,
+        });
+    }
+
+    updatePrincipalTimerStageAndRemainingTime(
+        body: TimerStageAndRemainingDto
+    ): Observable<any> {
+        return this.http.put('/api/v1/persons/principal/timer/pause', body, {
             headers: this.headers,
         });
     }
