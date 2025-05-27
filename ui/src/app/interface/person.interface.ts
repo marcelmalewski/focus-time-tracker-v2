@@ -29,6 +29,11 @@ export interface TimerSettings {
     timerInterval: number;
 }
 
+export interface TimerStageAndRemainingDto {
+    timerStage: Stage;
+    timerRemainingTime: number;
+}
+
 export interface PrincipalWithMainTopics {
     principalBasicData: PrincipalBasicData;
     mainTopicsBasicData: MainTopicBasicData[];
