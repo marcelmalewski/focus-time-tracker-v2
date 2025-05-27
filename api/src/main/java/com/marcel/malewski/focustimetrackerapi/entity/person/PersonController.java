@@ -1,6 +1,7 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerSettingsDto;
+import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageAndRemainingDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalBasicData;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalWithMainTopics;
 import io.swagger.v3.oas.annotations.Operation;
@@ -54,10 +55,18 @@ public class PersonController {
     }
 
     @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/settings")
-    public ResponseEntity<Void> updateTimerSettings(Principal principal, HttpServletRequest request,
-                                                    HttpServletResponse response,
-                                                    @RequestBody @Valid TimerSettingsDto timerSettingsDto) {
-        personService.updatePrincipalTimerSettings(principal, timerSettingsDto, request, response);
+    public ResponseEntity<Void> updatePrincipalTimerSettings(Principal principal, HttpServletRequest request,
+                                                             HttpServletResponse response,
+                                                             @RequestBody @Valid TimerSettingsDto dto) {
+        personService.updatePrincipalTimerSettings(principal, dto, request, response);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/pause")
+    public ResponseEntity<Void> updatePrincipalTimerStageAndRemainingTime(Principal principal, HttpServletRequest request,
+                                                                          HttpServletResponse response,
+                                                                          @RequestBody @Valid TimerStageAndRemainingDto dto) {
+        personService.updatePrincipalTimerStageAndRemainingTime(principal, dto, request, response);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
