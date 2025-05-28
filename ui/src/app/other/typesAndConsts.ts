@@ -2,6 +2,7 @@ export const Pages = {
     LOGIN: 'login',
     TIMER_HOME: 'timer',
     TIMER_FOCUS: 'timer/focus',
+    TIMER_PAUSE: 'timer/pause',
     TIMER_EDIT: 'timer/edit',
     SETTINGS: 'settings',
     UNKNOWN_ERROR: 'unknown-error',
