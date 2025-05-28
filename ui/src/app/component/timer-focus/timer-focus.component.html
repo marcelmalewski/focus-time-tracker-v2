@@ -5,9 +5,16 @@
 
             <div class="flex items-center justify-center gap-12">
                 <button
+                    *ngIf="timerSettings.timerStage === Stages.FOCUS"
                     class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov"
                     (click)="onPause()">
                     Pause
+                </button>
+
+                <button
+                    *ngIf="timerSettings.timerStage === Stages.PAUSE"
+                    class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov">
+                    Resume
                 </button>
 
                 <button
@@ -22,11 +29,11 @@
             <p class="text-2xl">Timer</p>
 
             <div class="flex justify-center gap-1 text-6xl">
-                <p>{{ timerSettings.timerSetHours | timerField }}</p>
+                <p>{{ timerCurrentTime.timerCurrentHour | timerField }}</p>
                 <p>:</p>
-                <p>{{ timerSettings.timerSetMinutes | timerField }}</p>
+                <p>{{ timerCurrentTime.timerCurrentMinute | timerField }}</p>
                 <p>:</p>
-                <p>{{ timerSettings.timerSetSeconds | timerField }}</p>
+                <p>{{ timerCurrentTime.timerCurrentSecond | timerField }}</p>
             </div>
         </div>
 
