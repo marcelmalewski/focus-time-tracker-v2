@@ -5,7 +5,7 @@ import { Stage, Stages } from '../other/typesAndConsts';
 import {
     PrincipalBasicData,
     TimerSettings,
-    TimerStageAndRemainingDto,
+    TimerStageAndRemaining,
 } from '../interface/person.interface';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class TimerService {
     }
 
     updatePrincipalTimerStageAndRemainingTime(
-        body: TimerStageAndRemainingDto
+        body: TimerStageAndRemaining
     ): Observable<any> {
         return this.http.put('/api/v1/persons/principal/timer/pause', body, {
             headers: this.headers,
