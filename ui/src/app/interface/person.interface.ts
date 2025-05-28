@@ -29,7 +29,13 @@ export interface TimerSettings {
     timerInterval: number;
 }
 
-export interface TimerStageAndRemainingDto {
+export interface TimerCurrentTime {
+    timerCurrentHour: number;
+    timerCurrentMinute: number;
+    timerCurrentSecond: number;
+}
+
+export interface TimerStageAndRemaining {
     timerStage: Stage;
     timerRemainingTime: number;
 }
