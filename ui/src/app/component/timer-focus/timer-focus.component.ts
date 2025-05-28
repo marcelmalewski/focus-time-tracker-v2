@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommandLineComponent } from '../command-line/command-line.component';
 import { BottomMenuComponent } from '../bottom-menu/bottom-menu.component';
-import { Pages, Stages } from '../../other/typesAndConsts';
+import { Pages, Stage, Stages } from '../../other/typesAndConsts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     MatError,
@@ -16,7 +16,9 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { NgIf } from '@angular/common';
 import {
     MainTopicBasicData,
+    TimerCurrentTime,
     TimerSettings,
+    TimerStageAndRemaining,
 } from '../../interface/person.interface';
 import { TimerService } from '../../service/timer.service';
 import { Router } from '@angular/router';
@@ -24,6 +26,9 @@ import { PrincipalDataService } from '../../service/principal-data.service';
 import { NotificationService } from '../../service/notification.service';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
+import { Subject, takeUntil } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
+import { UnknownServerErrorMessage } from '../../other/message';
 
 @Component({
     selector: 'app-timer-focus',
@@ -49,10 +54,11 @@ import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
     ],
 })
 export class TimerFocusComponent implements OnInit, OnDestroy {
+    private componentDestroyed$ = new Subject<void>();
     protected readonly Pages = Pages;
 
-    mainTopicsBasicData!: MainTopicBasicData[];
     timerSettings!: TimerSettings;
+    timerCurrentTime!: TimerCurrentTime;
     countDownId: any | undefined;
 
     constructor(
@@ -63,51 +69,106 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        const { principalBasicData, mainTopicsBasicData } =
+        const { principalBasicData } =
             this.principalDataService.getPrincipalMainTopicsBasicData();
 
-        this.mainTopicsBasicData = mainTopicsBasicData;
         this.timerSettings = TimerService.mapPrincipalBasicDataToTimerSettings(
             principalBasicData,
             principalBasicData.timerStage
         );
 
-        this.countDownId = setInterval(() => {
-            this.countDownLogic();
-        }, 1000);
+        if (this.timerSettings.timerStage === Stages.FOCUS) {
+            // trzeba uzyc remainig time
+            this.timerCurrentTime = {
+                timerCurrentHour: this.timerSettings.timerSetHours,
+                timerCurrentMinute: this.timerSettings.timerSetMinutes,
+                timerCurrentSecond: this.timerSettings.timerSetSeconds,
+            };
+
+            this.countDownId = setInterval(() => {
+                this.countDownLogic();
+            }, 1000);
+        } else {
+            // trzeba uzyc remainig time
+            this.timerCurrentTime = {
+                timerCurrentHour: this.timerSettings.timerSetHours,
+                timerCurrentMinute: this.timerSettings.timerSetMinutes,
+                timerCurrentSecond: this.timerSettings.timerSetSeconds,
+            };
+        }
     }
 
     ngOnDestroy() {
         if (this.countDownId) {
             clearInterval(this.countDownId);
         }
+        this.componentDestroyed$.next();
+        this.componentDestroyed$.complete();
     }
 
     private countDownLogic() {
-        if (this.timerSettings.timerSetSeconds > 0) {
-            this.timerSettings.timerSetSeconds =
-                this.timerSettings.timerSetSeconds - 1;
+        if (this.timerCurrentTime.timerCurrentSecond > 0) {
+            this.timerCurrentTime.timerCurrentSecond =
+                this.timerCurrentTime.timerCurrentSecond - 1;
         } else {
             this.countDownLogicOnTimerSetSecondsIsZero();
         }
     }
 
     private countDownLogicOnTimerSetSecondsIsZero() {
-        if (this.timerSettings.timerSetMinutes > 0) {
-            this.timerSettings.timerSetMinutes =
-                this.timerSettings.timerSetMinutes - 1;
-            this.timerSettings.timerSetSeconds = 59;
+        if (this.timerCurrentTime.timerCurrentMinute > 0) {
+            this.timerCurrentTime.timerCurrentMinute =
+                this.timerCurrentTime.timerCurrentMinute - 1;
+            this.timerCurrentTime.timerCurrentSecond = 59;
         } else {
             this.countDownLogicOnTimerSetMinutesIsZero();
         }
     }
 
     private countDownLogicOnTimerSetMinutesIsZero() {
-        if (this.timerSettings.timerSetHours > 0) {
-            this.timerSettings.timerSetHours =
-                this.timerSettings.timerSetHours - 1;
-            this.timerSettings.timerSetMinutes = 59;
-            this.timerSettings.timerSetSeconds = 59;
+        if (this.timerCurrentTime.timerCurrentHour > 0) {
+            this.timerCurrentTime.timerCurrentHour =
+                this.timerCurrentTime.timerCurrentHour - 1;
+            this.timerCurrentTime.timerCurrentMinute = 59;
+            this.timerCurrentTime.timerCurrentSecond = 59;
         }
     }
+
+    onPause() {
+        clearInterval(this.countDownId);
+
+        const timerRemainingTime =
+            this.timerCurrentTime.timerCurrentHour * 60 * 60 +
+            this.timerCurrentTime.timerCurrentMinute * 60 +
+            this.timerCurrentTime.timerCurrentSecond;
+        const body: TimerStageAndRemaining = {
+            timerStage: Stages.PAUSE,
+            timerRemainingTime: timerRemainingTime,
+        };
+
+        this.timerService
+            .updatePrincipalTimerStageAndRemainingTime(body)
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe({
+                next: () => {
+                    this.principalDataService.updateTimerStageAndRemainingTime(
+                        body
+                    );
+                    this.timerSettings.timerStage = Stages.PAUSE;
+                },
+                error: (_: HttpResponse<any>) => {
+                    this.notificationService.openErrorNotification(
+                        UnknownServerErrorMessage
+                    );
+
+                    this.countDownId = setInterval(() => {
+                        this.countDownLogic();
+                    }, 1000);
+                },
+            });
+    }
+
+    onHome() {}
+
+    protected readonly Stages = Stages;
 }
