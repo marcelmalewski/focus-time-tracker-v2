@@ -6,12 +6,13 @@ import {
     PrincipalBasicData,
     PrincipalWithMainTopics,
     TimerSettings,
+    TimerStageAndRemaining,
 } from '../interface/person.interface';
 import {
     NotLoggedInMessage,
     UnknownServerErrorMessageRefreshPage,
 } from '../other/message';
-import { Pages } from '../other/typesAndConsts';
+import { Pages, Stage } from '../other/typesAndConsts';
 import { NotificationService } from './notification.service';
 import { Router } from '@angular/router';
 
@@ -79,6 +80,14 @@ export class PrincipalDataService {
         this.principalBasicData!.timerLongBreak = timerSettings.timerLongBreak;
         this.principalBasicData!.timerAutoBreak = timerSettings.timerAutoBreak;
         this.principalBasicData!.timerInterval = timerSettings.timerInterval;
+    }
+
+    updateTimerStageAndRemainingTime(
+        timerStageAndRemaining: TimerStageAndRemaining
+    ) {
+        this.principalBasicData!.timerStage = timerStageAndRemaining.timerStage;
+        this.principalBasicData!.timerRemainingTime =
+            timerStageAndRemaining.timerRemainingTime;
     }
 
     clearPrincipalData() {
