@@ -20,4 +20,6 @@ public interface TimerSettings {
     boolean timerAutoBreak();
 
     int timerInterval();
+
+    int timerRemainingTime();
 }
