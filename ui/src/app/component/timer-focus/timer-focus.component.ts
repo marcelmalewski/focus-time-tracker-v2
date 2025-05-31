@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommandLineComponent } from '../command-line/command-line.component';
 import { BottomMenuComponent } from '../bottom-menu/bottom-menu.component';
-import { Pages, Stage, Stages } from '../../other/typesAndConsts';
+import { Pages, Stages } from '../../other/typesAndConsts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     MatError,
@@ -15,7 +15,6 @@ import { MatSelect } from '@angular/material/select';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { NgIf } from '@angular/common';
 import {
-    MainTopicBasicData,
     TimerCurrentTime,
     TimerSettings,
     TimerStageAndRemaining,
@@ -77,25 +76,33 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
             principalBasicData.timerStage
         );
 
-        if (this.timerSettings.timerStage === Stages.FOCUS) {
-            // trzeba uzyc remainig time
-            this.timerCurrentTime = {
-                timerCurrentHour: this.timerSettings.timerSetHours,
-                timerCurrentMinute: this.timerSettings.timerSetMinutes,
-                timerCurrentSecond: this.timerSettings.timerSetSeconds,
-            };
+        const { timerCurrentHour, timerCurrentMinute, timerCurrentSecond } =
+            this.extractCurrentTime(this.timerSettings.timerRemainingTime);
+        this.timerCurrentTime = {
+            timerCurrentHour,
+            timerCurrentMinute,
+            timerCurrentSecond,
+        };
 
+        if (this.timerSettings.timerStage === Stages.FOCUS) {
             this.countDownId = setInterval(() => {
                 this.countDownLogic();
             }, 1000);
-        } else {
-            // trzeba uzyc remainig time
-            this.timerCurrentTime = {
-                timerCurrentHour: this.timerSettings.timerSetHours,
-                timerCurrentMinute: this.timerSettings.timerSetMinutes,
-                timerCurrentSecond: this.timerSettings.timerSetSeconds,
-            };
         }
+    }
+
+    private extractCurrentTime(remainingTime: number) {
+        const allMinutes = Math.floor(remainingTime / 60);
+        const timerCurrentSecond = remainingTime - allMinutes * 60;
+
+        const timerCurrentHour = Math.floor(allMinutes / 60);
+        const timerCurrentMinute = allMinutes - timerCurrentHour * 60;
+
+        return {
+            timerCurrentSecond,
+            timerCurrentMinute,
+            timerCurrentHour,
+        };
     }
 
     ngOnDestroy() {
@@ -137,13 +144,14 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
     onPause() {
         clearInterval(this.countDownId);
 
-        const timerRemainingTime =
-            this.timerCurrentTime.timerCurrentHour * 60 * 60 +
-            this.timerCurrentTime.timerCurrentMinute * 60 +
-            this.timerCurrentTime.timerCurrentSecond;
+        const remainingTime = TimerService.calculateRemainingTime(
+            this.timerCurrentTime.timerCurrentHour,
+            this.timerCurrentTime.timerCurrentMinute,
+            this.timerCurrentTime.timerCurrentSecond
+        );
         const body: TimerStageAndRemaining = {
             timerStage: Stages.PAUSE,
-            timerRemainingTime: timerRemainingTime,
+            timerRemainingTime: remainingTime,
         };
 
         this.timerService
