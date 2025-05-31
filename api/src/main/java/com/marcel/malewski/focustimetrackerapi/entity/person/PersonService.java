@@ -7,7 +7,6 @@ import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.Principa
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.TimerSettings;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.interfaces.TopicBasicData;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopicMapper;
-import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 import com.marcel.malewski.focustimetrackerapi.security.exception.AuthenticatedPersonNotFoundException;
 import com.marcel.malewski.focustimetrackerapi.security.util.SecurityHelper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -92,7 +91,6 @@ public class PersonService {
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         long principalId = securityHelper.extractIdFromPrincipal(principal);
-        int remainingTime = (timerSettings.timerSetHours() * 60 * 60) + (timerSettings.timerSetMinutes() * 60) + timerSettings.timerSetSeconds();
         int numberOfAffectedRows;
 
         numberOfAffectedRows = personRepository.updateTimerSettings(
@@ -106,7 +104,7 @@ public class PersonService {
             timerSettings.timerLongBreak(),
             timerSettings.timerAutoBreak(),
             timerSettings.timerInterval(),
-            remainingTime
+            timerSettings.timerRemainingTime()
         );
 
         if (numberOfAffectedRows == 0) {
