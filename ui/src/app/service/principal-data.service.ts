@@ -80,6 +80,8 @@ export class PrincipalDataService {
         this.principalBasicData!.timerLongBreak = timerSettings.timerLongBreak;
         this.principalBasicData!.timerAutoBreak = timerSettings.timerAutoBreak;
         this.principalBasicData!.timerInterval = timerSettings.timerInterval;
+        this.principalBasicData!.timerRemainingTime =
+            timerSettings.timerRemainingTime;
     }
 
     updateTimerStageAndRemainingTime(
