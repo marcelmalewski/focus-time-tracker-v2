@@ -176,6 +176,13 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
             });
     }
 
+    onResume() {
+        this.timerSettings.timerStage = Stages.FOCUS;
+        this.countDownId = setInterval(() => {
+            this.countDownLogic();
+        }, 1000);
+    }
+
     onHome() {}
 
     protected readonly Stages = Stages;
