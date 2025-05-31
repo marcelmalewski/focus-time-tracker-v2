@@ -102,10 +102,17 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             return;
         }
 
+        const remainingTime = TimerService.calculateRemainingTime(
+            this.timerSettings.timerSetHours,
+            this.timerSettings.timerSetMinutes,
+            this.timerSettings.timerSetSeconds
+        );
         const body = TimerService.prepareBodyForTimerSettingsUpdate(
             this.timerSettings,
-            Stages.FOCUS
+            Stages.FOCUS,
+            remainingTime
         );
+
         this.timerService
             .updatePrincipalTimerSettings(body)
             .pipe(takeUntil(this.componentDestroyed$))
@@ -127,10 +134,17 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             return;
         }
 
+        const remainingTime = TimerService.calculateRemainingTime(
+            this.timerSettings.timerSetHours,
+            this.timerSettings.timerSetMinutes,
+            this.timerSettings.timerSetSeconds
+        );
         const body = TimerService.prepareBodyForTimerSettingsUpdate(
             this.timerSettings,
-            Stages.HOME
+            Stages.HOME,
+            remainingTime
         );
+
         this.timerService
             .updatePrincipalTimerSettings(body)
             .pipe(takeUntil(this.componentDestroyed$))
