@@ -30,7 +30,7 @@ export const routes: Routes = [
         canActivate: [PrincipalWithMainTopicsGuard],
     },
     {
-        path: 'timer/focus',
+        path: 'timer/session',
         title: 'timer-focus',
         component: TimerFocusComponent,
         canActivate: [PrincipalWithMainTopicsGuard],
