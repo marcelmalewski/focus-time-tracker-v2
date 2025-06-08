@@ -177,10 +177,23 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
     }
 
     onResume() {
-        this.timerSettings.timerStage = Stages.FOCUS;
-        this.countDownId = setInterval(() => {
-            this.countDownLogic();
-        }, 1000);
+        this.timerService
+            .updatePrincipalTimerStage(Stages.FOCUS)
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe({
+                next: () => {
+                    this.principalDataService.updateTimerStage(Stages.FOCUS);
+                    this.timerSettings.timerStage = Stages.FOCUS;
+                    this.countDownId = setInterval(() => {
+                        this.countDownLogic();
+                    }, 1000);
+                },
+                error: (_: HttpResponse<any>) => {
+                    this.notificationService.openErrorNotification(
+                        UnknownServerErrorMessage
+                    );
+                },
+            });
     }
 
     onHome() {}
