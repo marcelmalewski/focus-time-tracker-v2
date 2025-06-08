@@ -92,6 +92,10 @@ export class PrincipalDataService {
             timerStageAndRemaining.timerRemainingTime;
     }
 
+    updateTimerStage(timerStage: Stage) {
+        this.principalBasicData!.timerStage = timerStage;
+    }
+
     clearPrincipalData() {
         this.principalBasicData = undefined;
         this.mainTopicsBasicData = undefined;
