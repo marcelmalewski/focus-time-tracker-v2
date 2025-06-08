@@ -17,7 +17,7 @@ export class TimerService {
     constructor(private http: HttpClient) {}
 
     updatePrincipalTimerSettings(body: TimerSettings): Observable<any> {
-        return this.http.put('/api/v1/persons/principal/timer/settings', body, {
+        return this.http.put('/api/v1/persons/principal/timer', body, {
             headers: this.headers,
         });
     }
@@ -25,9 +25,23 @@ export class TimerService {
     updatePrincipalTimerStageAndRemainingTime(
         body: TimerStageAndRemaining
     ): Observable<any> {
-        return this.http.put('/api/v1/persons/principal/timer/pause', body, {
-            headers: this.headers,
-        });
+        return this.http.put(
+            '/api/v1/persons/principal/timer/stage-and-remaining-time',
+            body,
+            {
+                headers: this.headers,
+            }
+        );
+    }
+
+    updatePrincipalTimerStage(timerStage: Stage): Observable<any> {
+        return this.http.put(
+            '/api/v1/persons/principal/timer/stage',
+            { timerStage },
+            {
+                headers: this.headers,
+            }
+        );
     }
 
     static prepareDefaultTimerSettings(): TimerSettings {
