@@ -2,6 +2,7 @@ package com.marcel.malewski.focustimetrackerapi.entity.person;
 
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerSettingsDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageAndRemainingDto;
+import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalBasicData;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalWithMainTopics;
 import io.swagger.v3.oas.annotations.Operation;
@@ -54,7 +55,7 @@ public class PersonController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/settings")
+    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer")
     public ResponseEntity<Void> updatePrincipalTimerSettings(Principal principal, HttpServletRequest request,
                                                              HttpServletResponse response,
                                                              @RequestBody @Valid TimerSettingsDto dto) {
@@ -62,11 +63,19 @@ public class PersonController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/pause")
+    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/stage-and-remaining-time")
     public ResponseEntity<Void> updatePrincipalTimerStageAndRemainingTime(Principal principal, HttpServletRequest request,
                                                                           HttpServletResponse response,
                                                                           @RequestBody @Valid TimerStageAndRemainingDto dto) {
         personService.updatePrincipalTimerStageAndRemainingTime(principal, dto, request, response);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/stage")
+    public ResponseEntity<Void> updatePrincipalTimerStage(Principal principal, HttpServletRequest request,
+                                                          HttpServletResponse response,
+                                                          @RequestBody @Valid TimerStageDto dto) {
+        personService.updatePrincipalTimerStage(principal, dto, request, response);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
