@@ -2,6 +2,7 @@ package com.marcel.malewski.focustimetrackerapi.entity.person;
 
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalWithMainTopicsDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageAndRemainingDto;
+import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalBasicData;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalWithMainTopics;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.TimerSettings;
@@ -124,6 +125,24 @@ public class PersonService {
             principalId,
             dto.timerStage(),
             dto.timerRemainingTime()
+        );
+
+        if (numberOfAffectedRows == 0) {
+            securityHelper.logoutManually(request, response);
+            throw new AuthenticatedPersonNotFoundException();
+        }
+    }
+
+    public void updatePrincipalTimerStage(
+        Principal principal,
+        TimerStageDto dto,
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws AuthenticatedPersonNotFoundException {
+        long principalId = securityHelper.extractIdFromPrincipal(principal);
+        int numberOfAffectedRows = personRepository.updateTimerStage(
+            principalId,
+            dto.timerStage()
         );
 
         if (numberOfAffectedRows == 0) {
