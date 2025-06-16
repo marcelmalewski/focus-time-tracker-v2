@@ -1,7 +1,8 @@
 export const Pages = {
     LOGIN: 'login',
     TIMER_HOME: 'timer',
-    TIMER_FOCUS: 'timer/session',
+    TIMER_FOCUS: 'timer/focus',
+    TIMER_BREAK: 'timer/break',
     TIMER_EDIT: 'timer/edit',
     SETTINGS: 'settings',
     UNKNOWN_ERROR: 'unknown-error',
