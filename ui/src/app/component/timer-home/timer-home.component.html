@@ -113,9 +113,9 @@
                     #timerSelectedTopicInput="ngModel"
                     [(ngModel)]="timerSettings.timerSelectedTopic">
                     @for (topic of mainTopicsBasicData; track topic) {
-                        <mat-option [value]="topic.name">{{
-                            topic.name
-                        }}</mat-option>
+                        <mat-option [value]="topic.name"
+                            >{{ topic.name }}
+                        </mat-option>
                     }
                 </mat-select>
 
