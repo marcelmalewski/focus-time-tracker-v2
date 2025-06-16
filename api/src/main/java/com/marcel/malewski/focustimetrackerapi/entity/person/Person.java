@@ -83,8 +83,15 @@ public class Person implements UserDetails {
     @Max(99)
     @Builder.Default
     private int timerInterval = 1;
+
     @Nullable
     private Integer timerRemainingTime;
+    @Nullable
+    private Integer timerRemainingInterval;
+    @Nullable
+    private Integer nextBreak;
+    @Nullable
+    private Integer timerRemainingBreak;
 
     // TODO Stopwatch settings
     @Builder.Default
