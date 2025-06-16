@@ -5,7 +5,6 @@ import { RegisterComponent } from './component/register/register.component';
 import { SettingsComponent } from './component/settings/settings.component';
 import { PrincipalBasicDataGuard } from './guard/principal-basic-data.guard';
 import { UnknownErrorComponent } from './component/unknown-error/unknown-error.component';
-import { NotLoggedInMessage } from './other/message';
 import { LoggedOutGuard } from './guard/logged-out-guard';
 import { PrincipalWithMainTopicsGuard } from './guard/principal-with-main-topics.guard';
 import { TimerFocusComponent } from './component/timer-focus/timer-focus.component';
@@ -30,7 +29,7 @@ export const routes: Routes = [
         canActivate: [PrincipalWithMainTopicsGuard],
     },
     {
-        path: 'timer/session',
+        path: 'timer/focus',
         title: 'timer-focus',
         component: TimerFocusComponent,
         canActivate: [PrincipalWithMainTopicsGuard],
