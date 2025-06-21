@@ -30,9 +30,9 @@ import { HttpResponse } from '@angular/common/http';
 import { UnknownServerErrorMessage } from '../../other/message';
 
 @Component({
-    selector: 'app-timer-focus',
+    selector: 'app-timer-break',
     standalone: true,
-    templateUrl: './timer-focus.component.html',
+    templateUrl: './timer-break.component.html',
     imports: [
         CommandLineComponent,
         BottomMenuComponent,
@@ -52,10 +52,9 @@ import { UnknownServerErrorMessage } from '../../other/message';
         TimerFieldPipe,
     ],
 })
-export class TimerFocusComponent implements OnInit, OnDestroy {
+export class TimerBreakComponent implements OnInit, OnDestroy {
     private componentDestroyed$ = new Subject<void>();
     protected readonly Pages = Pages;
-    protected readonly Stages = Stages;
 
     timerSettings!: TimerSettings;
     timerCurrentTime!: TimerCurrentTime;
@@ -142,80 +141,5 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
         }
     }
 
-    onPause() {
-        clearInterval(this.countDownId);
-
-        const remainingTime = TimerService.calculateRemainingTime(
-            this.timerCurrentTime.timerCurrentHour,
-            this.timerCurrentTime.timerCurrentMinute,
-            this.timerCurrentTime.timerCurrentSecond
-        );
-        const body: TimerPause = {
-            timerStage: Stages.PAUSE,
-            timerRemainingFocus: remainingTime,
-        };
-
-        this.timerService
-            .principalTimerPause(body)
-            .pipe(takeUntil(this.componentDestroyed$))
-            .subscribe({
-                next: () => {
-                    this.principalDataService.updateTimerStageAndRemainingTime(
-                        body
-                    );
-                    this.timerSettings.timerStage = Stages.PAUSE;
-                },
-                error: (_: HttpResponse<any>) => {
-                    this.notificationService.openErrorNotification(
-                        UnknownServerErrorMessage
-                    );
-
-                    this.countDownId = setInterval(() => {
-                        this.countDownLogic();
-                    }, 1000);
-                },
-            });
-    }
-
-    onResume() {
-        this.timerService
-            .updatePrincipalTimerStage(Stages.FOCUS)
-            .pipe(takeUntil(this.componentDestroyed$))
-            .subscribe({
-                next: () => {
-                    this.principalDataService.updateTimerStage(Stages.FOCUS);
-                    this.timerSettings.timerStage = Stages.FOCUS;
-                    this.countDownId = setInterval(() => {
-                        this.countDownLogic();
-                    }, 1000);
-                },
-                error: (_: HttpResponse<any>) => {
-                    this.notificationService.openErrorNotification(
-                        UnknownServerErrorMessage
-                    );
-                },
-            });
-    }
-
-    onShortBreak() {
-        this.timerService
-            .updatePrincipalTimerStage(Stages.FOCUS)
-            .pipe(takeUntil(this.componentDestroyed$))
-            .subscribe({
-                next: () => {
-                    this.principalDataService.updateTimerStage(Stages.FOCUS);
-                    this.timerSettings.timerStage = Stages.FOCUS;
-                    this.countDownId = setInterval(() => {
-                        this.countDownLogic();
-                    }, 1000);
-                },
-                error: (_: HttpResponse<any>) => {
-                    this.notificationService.openErrorNotification(
-                        UnknownServerErrorMessage
-                    );
-                },
-            });
-    }
-
-    onHome() {}
+    protected readonly Stages = Stages;
 }

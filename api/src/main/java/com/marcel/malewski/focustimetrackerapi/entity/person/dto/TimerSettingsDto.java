@@ -1,6 +1,5 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person.dto;
 
-import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.TimerSettings;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Max;
@@ -31,7 +30,7 @@ public record TimerSettingsDto(
     @Min(1)
     @Max(99)
     int timerInterval,
-    int timerRemainingTime
-) implements TimerSettings {
+    int timerRemainingFocus
+) {
 }
 

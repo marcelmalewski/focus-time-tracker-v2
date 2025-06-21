@@ -1,13 +1,9 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
-import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalWithMainTopicsDto;
-import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageAndRemainingTimeDto;
-import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageDto;
-import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalBasicData;
-import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalWithMainTopics;
-import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.TimerSettings;
+import com.marcel.malewski.focustimetrackerapi.entity.person.dto.*;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.interfaces.TopicBasicData;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopicMapper;
+import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 import com.marcel.malewski.focustimetrackerapi.security.exception.AuthenticatedPersonNotFoundException;
 import com.marcel.malewski.focustimetrackerapi.security.util.SecurityHelper;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,9 +32,9 @@ public class PersonService {
         this.mainTopicMapper = mainTopicMapper;
     }
 
-    public PrincipalBasicData getPrincipalBasicData(Principal principal,
-                                                    HttpServletRequest request,
-                                                    HttpServletResponse response) {
+    public PrincipalBasicDataDto getPrincipalBasicData(Principal principal,
+                                                       HttpServletRequest request,
+                                                       HttpServletResponse response) {
         long principalId = securityHelper.extractIdFromPrincipal(principal);
         Optional<Person> optionalPerson = personRepository.findById(principalId);
 
@@ -51,9 +47,9 @@ public class PersonService {
         };
     }
 
-    public PrincipalWithMainTopics getPrincipalWithMainTopics(Principal principal,
-                                                              HttpServletRequest request,
-                                                              HttpServletResponse response) {
+    public PrincipalWithMainTopicsDto getPrincipalWithMainTopics(Principal principal,
+                                                                 HttpServletRequest request,
+                                                                 HttpServletResponse response) {
         long principalId = securityHelper.extractIdFromPrincipal(principal);
         Optional<Person> optionalPerson = personRepository.findByIdWithFetchedMainTopics(principalId);
 
@@ -63,7 +59,7 @@ public class PersonService {
                 throw new AuthenticatedPersonNotFoundException();
             }
             case Person person -> {
-                PrincipalBasicData principalBasicData = personMapper.toPrincipalBasicDataDto(person);
+                PrincipalBasicDataDto principalBasicData = personMapper.toPrincipalBasicDataDto(person);
                 List<TopicBasicData> topicBasicDataList = person.getMainTopics().stream()
                     .map(mainTopic -> (TopicBasicData) mainTopicMapper.toMainTopicsBasicDataDto(mainTopic))
                     .toList();
@@ -87,7 +83,7 @@ public class PersonService {
 
     public void updatePrincipalTimerSettings(
         Principal principal,
-        TimerSettings timerSettings,
+        TimerSettingsDto timerSettings,
         HttpServletRequest request,
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
@@ -105,7 +101,7 @@ public class PersonService {
             timerSettings.timerLongBreak(),
             timerSettings.timerAutoBreak(),
             timerSettings.timerInterval(),
-            timerSettings.timerRemainingTime()
+            timerSettings.timerRemainingFocus()
         );
 
         if (numberOfAffectedRows == 0) {
@@ -114,16 +110,16 @@ public class PersonService {
         }
     }
 
-    public void updatePrincipalTimerStageAndRemainingFocus(
+    public void principalTimerPause(
         Principal principal,
-        TimerStageAndRemainingTimeDto dto,
+        TimerRemainingTimeDto dto,
         HttpServletRequest request,
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         long principalId = securityHelper.extractIdFromPrincipal(principal);
         int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingFocus(
             principalId,
-            dto.timerStage(),
+            Stage.PAUSE,
             dto.timerRemainingTime()
         );
 
@@ -133,23 +129,23 @@ public class PersonService {
         }
     }
 
-    public void updatePrincipalTimerStageAndRemainingBreak(
+    public void principalTimerBreak(
         Principal principal,
-        TimerStageAndRemainingTimeDto dto,
+        TimerBreakDto dto,
         HttpServletRequest request,
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         long principalId = securityHelper.extractIdFromPrincipal(principal);
-        int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingBreak(
-            principalId,
-            dto.timerStage(),
-            dto.timerRemainingTime()
-        );
+//        int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingBreak(
+//            principalId,
+//            dto.timerStage(),
+//            dto.timerRemainingFocus()
+//        );
 
-        if (numberOfAffectedRows == 0) {
-            securityHelper.logoutManually(request, response);
-            throw new AuthenticatedPersonNotFoundException();
-        }
+//        if (numberOfAffectedRows == 0) {
+//            securityHelper.logoutManually(request, response);
+//            throw new AuthenticatedPersonNotFoundException();
+//        }
     }
 
     public void updatePrincipalTimerStage(

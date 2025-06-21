@@ -1,6 +1,5 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person.dto;
 
-import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalBasicData;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 
 public record PrincipalBasicDataDto(
@@ -16,7 +15,7 @@ public record PrincipalBasicDataDto(
     Integer timerLongBreak,
     Boolean timerAutoBreak,
     Boolean stopWatchAutoBreak,
-    Integer timerRemainingTime,
+    Integer timerBreakTime,
     Integer timerInterval
-) implements PrincipalBasicData {
+) {
 }

@@ -14,7 +14,7 @@ public abstract class PersonDtoMapper {
 //            principalWithMainTopicsDto.timerSetMinutes() + "m " +
 //            principalWithMainTopicsDto.timerSetSeconds() + "s";
 //
-//        int remainingTime = principalWithMainTopicsDto.timerRemainingTime();
+//        int remainingTime = principalWithMainTopicsDto.timerRemainingFocus();
 //        int remainingTimeSeconds = remainingTime % 60;
 //        int remainingTimeMinutes = (remainingTime / 60) % 60;
 //        int remainingTimeHours = remainingTime / 60 / 60;
@@ -27,7 +27,7 @@ public abstract class PersonDtoMapper {
 //        return new TimerPauseDto(
 //            setTimePretty,
 //            remainingTimePretty,
-//            principalWithMainTopicsDto.timerRemainingTime(),
+//            principalWithMainTopicsDto.timerRemainingFocus(),
 //            principalWithMainTopicsDto.timerSelectedTopic(),
 //            principalWithMainTopicsDto.timerShortBreak(),
 //            principalWithMainTopicsDto.timerLongBreak(),
