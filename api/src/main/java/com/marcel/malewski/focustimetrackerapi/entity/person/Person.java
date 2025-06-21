@@ -91,10 +91,6 @@ public class Person implements UserDetails {
     @Nullable
     private Integer timerRemainingBreak;
 
-    // TODO Stopwatch settings
-    @Builder.Default
-    private boolean stopWatchAutoBreak = true;
-
     @OneToMany(mappedBy = "owner")
     @ToString.Exclude
     @Builder.Default
