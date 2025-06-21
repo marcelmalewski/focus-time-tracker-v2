@@ -85,11 +85,9 @@ public class Person implements UserDetails {
     private int timerInterval = 1;
 
     @Nullable
-    private Integer timerRemainingTime;
+    private Integer timerRemainingFocus;
     @Nullable
     private Integer timerRemainingInterval;
-    @Nullable
-    private Integer nextBreak;
     @Nullable
     private Integer timerRemainingBreak;
 
