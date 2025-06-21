@@ -36,8 +36,14 @@ export interface TimerCurrentTime {
     timerCurrentSecond: number;
 }
 
-export interface TimerStageAndRemainingTime {
+export interface TimerPause {
     timerStage: Stage;
+    timerRemainingFocus: number;
+}
+
+export interface TimerBreak {
+    timerStage: Stage;
+    timerBreak: string;
     timerRemainingTime: number;
 }
 
