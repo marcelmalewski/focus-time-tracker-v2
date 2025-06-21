@@ -17,7 +17,6 @@ import { NgIf } from '@angular/common';
 import {
     TimerCurrentTime,
     TimerSettings,
-    TimerPause,
 } from '../../interface/person.interface';
 import { TimerService } from '../../service/timer.service';
 import { Router } from '@angular/router';
@@ -25,9 +24,7 @@ import { PrincipalDataService } from '../../service/principal-data.service';
 import { NotificationService } from '../../service/notification.service';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
-import { Subject, takeUntil } from 'rxjs';
-import { HttpResponse } from '@angular/common/http';
-import { UnknownServerErrorMessage } from '../../other/message';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-timer-break',
