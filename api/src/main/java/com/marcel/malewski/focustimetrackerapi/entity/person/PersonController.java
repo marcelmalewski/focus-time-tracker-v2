@@ -1,7 +1,7 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerSettingsDto;
-import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageAndRemainingDto;
+import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageAndRemainingTimeDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalBasicData;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalWithMainTopics;
@@ -63,11 +63,19 @@ public class PersonController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/stage-and-remaining-time")
+    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/stage-and-remaining-focus")
     public ResponseEntity<Void> updatePrincipalTimerStageAndRemainingTime(Principal principal, HttpServletRequest request,
                                                                           HttpServletResponse response,
-                                                                          @RequestBody @Valid TimerStageAndRemainingDto dto) {
-        personService.updatePrincipalTimerStageAndRemainingTime(principal, dto, request, response);
+                                                                          @RequestBody @Valid TimerStageAndRemainingTimeDto dto) {
+        personService.updatePrincipalTimerStageAndRemainingFocus(principal, dto, request, response);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/stage-and-remaining-break")
+    public ResponseEntity<Void> updatePrincipalTimerStageAndRemainingBreak(Principal principal, HttpServletRequest request,
+                                                                           HttpServletResponse response,
+                                                                           @RequestBody @Valid TimerStageAndRemainingTimeDto dto) {
+        personService.updatePrincipalTimerStageAndRemainingBreak(principal, dto, request, response);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
