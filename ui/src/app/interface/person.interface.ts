@@ -36,7 +36,7 @@ export interface TimerCurrentTime {
     timerCurrentSecond: number;
 }
 
-export interface TimerStageAndRemaining {
+export interface TimerStageAndRemainingTime {
     timerStage: Stage;
     timerRemainingTime: number;
 }
