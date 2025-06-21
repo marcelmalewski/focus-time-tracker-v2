@@ -9,17 +9,18 @@ import org.springframework.stereotype.Component;
 
 import java.security.Principal;
 
+//TODO to mogą być statyczne metody
 @Component
 public class SecurityHelper {
-  public long extractIdFromPrincipal(Principal principal) {
-    String personIdAsString = principal.getName();
-    return Long.parseLong(personIdAsString);
-  }
+    public long extractIdFromPrincipal(Principal principal) {
+        String personIdAsString = principal.getName();
+        return Long.parseLong(personIdAsString);
+    }
 
-  public void logoutManually(HttpServletRequest request,
-                             HttpServletResponse response) {
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
-    securityContextLogoutHandler.logout(request, response, auth);
-  }
+    public void logoutManually(HttpServletRequest request,
+                               HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
+        securityContextLogoutHandler.logout(request, response, auth);
+    }
 }
