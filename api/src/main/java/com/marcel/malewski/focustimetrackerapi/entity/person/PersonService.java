@@ -1,7 +1,7 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.PrincipalWithMainTopicsDto;
-import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageAndRemainingDto;
+import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageAndRemainingTimeDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageDto;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalBasicData;
 import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalWithMainTopics;
@@ -114,14 +114,33 @@ public class PersonService {
         }
     }
 
-    public void updatePrincipalTimerStageAndRemainingTime(
+    public void updatePrincipalTimerStageAndRemainingFocus(
         Principal principal,
-        TimerStageAndRemainingDto dto,
+        TimerStageAndRemainingTimeDto dto,
         HttpServletRequest request,
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         long principalId = securityHelper.extractIdFromPrincipal(principal);
-        int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingTime(
+        int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingFocus(
+            principalId,
+            dto.timerStage(),
+            dto.timerRemainingTime()
+        );
+
+        if (numberOfAffectedRows == 0) {
+            securityHelper.logoutManually(request, response);
+            throw new AuthenticatedPersonNotFoundException();
+        }
+    }
+
+    public void updatePrincipalTimerStageAndRemainingBreak(
+        Principal principal,
+        TimerStageAndRemainingTimeDto dto,
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws AuthenticatedPersonNotFoundException {
+        long principalId = securityHelper.extractIdFromPrincipal(principal);
+        int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingBreak(
             principalId,
             dto.timerStage(),
             dto.timerRemainingTime()
