@@ -1,10 +1,6 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
-import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerSettingsDto;
-import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageAndRemainingTimeDto;
-import com.marcel.malewski.focustimetrackerapi.entity.person.dto.TimerStageDto;
-import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalBasicData;
-import com.marcel.malewski.focustimetrackerapi.entity.person.interfaces.PrincipalWithMainTopics;
+import com.marcel.malewski.focustimetrackerapi.entity.person.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -41,17 +37,17 @@ public class PersonController {
 
     @GetMapping(value = PERSON_PATH_V1 + "/principal/basic-data")
     @Operation(summary = "Get principal basic data")
-    public ResponseEntity<PrincipalBasicData> getPrincipalBasicData(Principal principal, HttpServletRequest request,
-                                                                    HttpServletResponse response) {
-        PrincipalBasicData dto = personService.getPrincipalBasicData(principal, request, response);
+    public ResponseEntity<PrincipalBasicDataDto> getPrincipalBasicData(Principal principal, HttpServletRequest request,
+                                                                       HttpServletResponse response) {
+        PrincipalBasicDataDto dto = personService.getPrincipalBasicData(principal, request, response);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @GetMapping(value = PERSON_PATH_V1 + "/principal/with-main-topics")
     @Operation(summary = "Get principal basic data with main topics")
-    public ResponseEntity<PrincipalWithMainTopics> getPrincipalWithMainTopics(Principal principal, HttpServletRequest request,
-                                                                              HttpServletResponse response) {
-        PrincipalWithMainTopics dto = personService.getPrincipalWithMainTopics(principal, request, response);
+    public ResponseEntity<PrincipalWithMainTopicsDto> getPrincipalWithMainTopics(Principal principal, HttpServletRequest request,
+                                                                                 HttpServletResponse response) {
+        PrincipalWithMainTopicsDto dto = personService.getPrincipalWithMainTopics(principal, request, response);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -63,19 +59,19 @@ public class PersonController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/stage-and-remaining-focus")
-    public ResponseEntity<Void> updatePrincipalTimerStageAndRemainingTime(Principal principal, HttpServletRequest request,
-                                                                          HttpServletResponse response,
-                                                                          @RequestBody @Valid TimerStageAndRemainingTimeDto dto) {
-        personService.updatePrincipalTimerStageAndRemainingFocus(principal, dto, request, response);
+    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/pause")
+    public ResponseEntity<Void> principalTimerPause(Principal principal, HttpServletRequest request,
+                                                    HttpServletResponse response,
+                                                    @RequestBody @Valid TimerRemainingTimeDto dto) {
+        personService.principalTimerPause(principal, dto, request, response);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/stage-and-remaining-break")
-    public ResponseEntity<Void> updatePrincipalTimerStageAndRemainingBreak(Principal principal, HttpServletRequest request,
-                                                                           HttpServletResponse response,
-                                                                           @RequestBody @Valid TimerStageAndRemainingTimeDto dto) {
-        personService.updatePrincipalTimerStageAndRemainingBreak(principal, dto, request, response);
+    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/break")
+    public ResponseEntity<Void> principalTimerBreak(Principal principal, HttpServletRequest request,
+                                                    HttpServletResponse response,
+                                                    @RequestBody @Valid TimerBreakDto dto) {
+        personService.principalTimerBreak(principal, dto, request, response);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
