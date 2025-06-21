@@ -38,10 +38,22 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
         "person.timerRemainingTime = :timerRemainingTime " +
         "WHERE person.id = :id")
     @Transactional
-    int updateTimerStageAndRemainingTime(
+    int updateTimerStageAndRemainingFocus(
         @Param(value = "id") long id,
         @Param(value = "timerStage") Stage timerStage,
         @Param(value = "timerRemainingTime") int timerRemainingTime
+    );
+
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE Person person " +
+        "SET person.timerStage = :timerStage," +
+        "person.timerRemainingBreak = :timerRemainingBreak " +
+        "WHERE person.id = :id")
+    @Transactional
+    int updateTimerStageAndRemainingBreak(
+        @Param(value = "id") long id,
+        @Param(value = "timerStage") Stage timerStage,
+        @Param(value = "timerRemainingBreak") int timerRemainingBreak
     );
 
     @Modifying(clearAutomatically = true)
