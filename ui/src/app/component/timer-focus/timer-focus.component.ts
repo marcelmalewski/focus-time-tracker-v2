@@ -17,7 +17,7 @@ import { NgIf } from '@angular/common';
 import {
     TimerCurrentTime,
     TimerSettings,
-    TimerPause,
+    TimerRemainingTime,
 } from '../../interface/person.interface';
 import { TimerService } from '../../service/timer.service';
 import { Router } from '@angular/router';
@@ -150,8 +150,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
             this.timerCurrentTime.timerCurrentMinute,
             this.timerCurrentTime.timerCurrentSecond
         );
-        const body: TimerPause = {
-            timerStage: Stages.PAUSE,
+        const body: TimerRemainingTime = {
             timerRemainingFocus: remainingTime,
         };
 
@@ -160,9 +159,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: () => {
-                    this.principalDataService.updateTimerStageAndRemainingTime(
-                        body
-                    );
+                    this.principalDataService.updateTimerAfterPause(body);
                     this.timerSettings.timerStage = Stages.PAUSE;
                 },
                 error: (_: HttpResponse<any>) => {
