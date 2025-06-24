@@ -1,7 +1,7 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.*;
-import com.marcel.malewski.focustimetrackerapi.entity.topic.interfaces.TopicBasicData;
+import com.marcel.malewski.focustimetrackerapi.entity.topic.dto.TopicBasicDataDto;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopicMapper;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 import com.marcel.malewski.focustimetrackerapi.security.exception.AuthenticatedPersonNotFoundException;
@@ -60,8 +60,8 @@ public class PersonService {
             }
             case Person person -> {
                 PrincipalBasicDataDto principalBasicData = personMapper.toPrincipalBasicDataDto(person);
-                List<TopicBasicData> topicBasicDataList = person.getMainTopics().stream()
-                    .map(mainTopic -> (TopicBasicData) mainTopicMapper.toMainTopicsBasicDataDto(mainTopic))
+                List<TopicBasicDataDto> topicBasicDataList = person.getMainTopics().stream()
+                    .map(mainTopicMapper::toMainTopicsBasicDataDto)
                     .toList();
 
                 yield new PrincipalWithMainTopicsDto(principalBasicData, topicBasicDataList);
@@ -100,8 +100,7 @@ public class PersonService {
             timerSettings.timerShortBreak(),
             timerSettings.timerLongBreak(),
             timerSettings.timerAutoBreak(),
-            timerSettings.timerInterval(),
-            timerSettings.timerRemainingFocus()
+            timerSettings.timerInterval()
         );
 
         if (numberOfAffectedRows == 0) {
@@ -159,20 +158,6 @@ public class PersonService {
             principalId,
             dto.timerStage()
         );
-
-        if (numberOfAffectedRows == 0) {
-            securityHelper.logoutManually(request, response);
-            throw new AuthenticatedPersonNotFoundException();
-        }
-    }
-
-    public void updatePrincipalTimerAutoBreak(
-        long principalId,
-        boolean timerAutoBreak,
-        HttpServletRequest request,
-        HttpServletResponse response
-    ) throws AuthenticatedPersonNotFoundException {
-        int numberOfAffectedRows = personRepository.updateTimerAutoBreak(principalId, timerAutoBreak);
 
         if (numberOfAffectedRows == 0) {
             securityHelper.logoutManually(request, response);
