@@ -12,9 +12,10 @@ export interface PrincipalBasicData {
     timerShortBreak: number;
     timerLongBreak: number;
     timerAutoBreak: boolean;
-    stopWatchAutoBreak: boolean;
-    timerRemainingTime: number;
     timerInterval: number;
+    timerRemainingFocus: number;
+    timerRemainingInterval: number;
+    timerRemainingBreak: number;
 }
 
 export interface TimerSettings {
@@ -27,7 +28,9 @@ export interface TimerSettings {
     timerLongBreak: number;
     timerAutoBreak: boolean;
     timerInterval: number;
-    timerRemainingTime: number;
+    timerRemainingFocus: number;
+    timerRemainingInterval: number;
+    timerRemainingBreak: number;
 }
 
 export interface TimerCurrentTime {
@@ -36,16 +39,11 @@ export interface TimerCurrentTime {
     timerCurrentSecond: number;
 }
 
-export interface TimerPause {
-    timerStage: Stage;
+export interface TimerRemainingTime {
     timerRemainingFocus: number;
 }
 
-export interface TimerBreak {
-    timerStage: Stage;
-    timerBreak: string;
-    timerRemainingTime: number;
-}
+export interface TimerBreak {}
 
 export interface PrincipalWithMainTopics {
     principalBasicData: PrincipalBasicData;
