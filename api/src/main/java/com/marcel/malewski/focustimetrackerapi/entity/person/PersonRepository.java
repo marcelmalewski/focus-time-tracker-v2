@@ -44,18 +44,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
         @Param(value = "timerRemainingFocus") int timerRemainingTime
     );
 
-//    @Modifying(clearAutomatically = true)
-//    @Query("UPDATE Person person " +
-//        "SET person.timerStage = :timerStage," +
-//        "person.timerRemainingBreak = :timerRemainingBreak " +
-//        "WHERE person.id = :id")
-//    @Transactional
-//    int updateTimerStageAndRemainingBreak(
-//        @Param(value = "id") long id,
-//        @Param(value = "timerStage") Stage timerStage,
-//        @Param(value = "timerRemainingBreak") int timerRemainingBreak
-//    );
-
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Person person " +
         "SET person.timerStage = :timerStage," +
@@ -66,8 +54,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
         "person.timerShortBreak = :timerShortBreak," +
         "person.timerLongBreak = :timerLongBreak," +
         "person.timerAutoBreak = :timerAutoBreak," +
-        "person.timerInterval = :timerInterval," +
-        "person.timerRemainingFocus = :timerRemainingFocus " +
+        "person.timerInterval = :timerInterval " +
         "WHERE person.id = :id")
     @Transactional
     int updateTimerSettings(
@@ -80,7 +67,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
         @Param(value = "timerShortBreak") int shortBreak,
         @Param(value = "timerLongBreak") int longBreak,
         @Param(value = "timerAutoBreak") boolean timerAutoBreak,
-        @Param(value = "timerInterval") int interval,
-        @Param(value = "timerRemainingFocus") int remainingFocus
+        @Param(value = "timerInterval") int interval
     );
 }
