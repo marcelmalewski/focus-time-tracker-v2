@@ -5,7 +5,7 @@ import { Stage, Stages } from '../other/typesAndConsts';
 import {
     PrincipalBasicData,
     TimerSettings,
-    TimerPause,
+    TimerRemainingTime,
 } from '../interface/person.interface';
 
 @Injectable({
@@ -22,13 +22,13 @@ export class TimerService {
         });
     }
 
-    principalTimerPause(body: TimerPause): Observable<any> {
+    principalTimerPause(body: TimerRemainingTime): Observable<any> {
         return this.http.put('/api/v1/persons/principal/timer/pause', body, {
             headers: this.headers,
         });
     }
 
-    principalTimerBreak(body: TimerPause): Observable<any> {
+    principalTimerBreak(body: TimerRemainingTime): Observable<any> {
         return this.http.put('/api/v1/persons/principal/timer/break', body, {
             headers: this.headers,
         });
