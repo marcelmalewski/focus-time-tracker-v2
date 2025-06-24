@@ -8,4 +8,3 @@ public record TimerStageDto(
     Stage timerStage
 ) {
 }
-
