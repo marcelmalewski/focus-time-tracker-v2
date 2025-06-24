@@ -29,8 +29,7 @@ public record TimerSettingsDto(
     boolean timerAutoBreak,
     @Min(1)
     @Max(99)
-    int timerInterval,
-    int timerRemainingFocus
+    int timerInterval
 ) {
 }
 
