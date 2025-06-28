@@ -20,14 +20,11 @@ import java.util.Optional;
 @Validated
 public class PersonService {
     private final PersonRepository personRepository;
-    private final SecurityHelper securityHelper;
     private final PersonMapper personMapper;
     private final MainTopicMapper mainTopicMapper;
 
-    public PersonService(PersonRepository personRepository, SecurityHelper securityHelper,
-                         PersonMapper personMapper, MainTopicMapper mainTopicMapper) {
+    public PersonService(PersonRepository personRepository, PersonMapper personMapper, MainTopicMapper mainTopicMapper) {
         this.personRepository = personRepository;
-        this.securityHelper = securityHelper;
         this.personMapper = personMapper;
         this.mainTopicMapper = mainTopicMapper;
     }
@@ -35,12 +32,12 @@ public class PersonService {
     public PrincipalBasicDataDto getPrincipalBasicData(Principal principal,
                                                        HttpServletRequest request,
                                                        HttpServletResponse response) {
-        long principalId = securityHelper.extractIdFromPrincipal(principal);
+        long principalId = SecurityHelper.extractIdFromPrincipal(principal);
         Optional<Person> optionalPerson = personRepository.findById(principalId);
 
         return switch (optionalPerson.orElse(null)) {
             case null -> {
-                securityHelper.logoutManually(request, response);
+                SecurityHelper.logoutManually(request, response);
                 throw new AuthenticatedPersonNotFoundException();
             }
             case Person person -> personMapper.toPrincipalBasicDataDto(person);
@@ -50,12 +47,12 @@ public class PersonService {
     public PrincipalWithMainTopicsDto getPrincipalWithMainTopics(Principal principal,
                                                                  HttpServletRequest request,
                                                                  HttpServletResponse response) {
-        long principalId = securityHelper.extractIdFromPrincipal(principal);
+        long principalId = SecurityHelper.extractIdFromPrincipal(principal);
         Optional<Person> optionalPerson = personRepository.findByIdWithFetchedMainTopics(principalId);
 
         return switch (optionalPerson.orElse(null)) {
             case null -> {
-                securityHelper.logoutManually(request, response);
+                SecurityHelper.logoutManually(request, response);
                 throw new AuthenticatedPersonNotFoundException();
             }
             case Person person -> {
@@ -87,7 +84,7 @@ public class PersonService {
         HttpServletRequest request,
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
-        long principalId = securityHelper.extractIdFromPrincipal(principal);
+        long principalId = SecurityHelper.extractIdFromPrincipal(principal);
         int numberOfAffectedRows;
 
         numberOfAffectedRows = personRepository.updateTimerSettings(
@@ -104,7 +101,7 @@ public class PersonService {
         );
 
         if (numberOfAffectedRows == 0) {
-            securityHelper.logoutManually(request, response);
+            SecurityHelper.logoutManually(request, response);
             throw new AuthenticatedPersonNotFoundException();
         }
     }
@@ -115,7 +112,7 @@ public class PersonService {
         HttpServletRequest request,
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
-        long principalId = securityHelper.extractIdFromPrincipal(principal);
+        long principalId = SecurityHelper.extractIdFromPrincipal(principal);
         int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingFocus(
             principalId,
             Stage.PAUSE,
@@ -123,7 +120,7 @@ public class PersonService {
         );
 
         if (numberOfAffectedRows == 0) {
-            securityHelper.logoutManually(request, response);
+            SecurityHelper.logoutManually(request, response);
             throw new AuthenticatedPersonNotFoundException();
         }
     }
@@ -134,7 +131,7 @@ public class PersonService {
         HttpServletRequest request,
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
-        long principalId = securityHelper.extractIdFromPrincipal(principal);
+        long principalId = SecurityHelper.extractIdFromPrincipal(principal);
 //        int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingBreak(
 //            principalId,
 //            dto.timerStage(),
@@ -153,17 +150,17 @@ public class PersonService {
         HttpServletRequest request,
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
-        long principalId = securityHelper.extractIdFromPrincipal(principal);
+        long principalId = SecurityHelper.extractIdFromPrincipal(principal);
         int numberOfAffectedRows = personRepository.updateTimerStage(
             principalId,
             dto.timerStage()
         );
 
         if (numberOfAffectedRows == 0) {
-            securityHelper.logoutManually(request, response);
+            SecurityHelper.logoutManually(request, response);
             throw new AuthenticatedPersonNotFoundException();
         }
     }
 
-    //TODO when user is deleted, session is also deleted
+    //TODO when user is deleted, session is also deleted, admin feature
 }
