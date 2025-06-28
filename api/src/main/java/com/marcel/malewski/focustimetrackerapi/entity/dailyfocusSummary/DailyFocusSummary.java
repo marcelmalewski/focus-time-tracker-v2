@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.util.List;
 
+// TODO użyć albo skasować
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
