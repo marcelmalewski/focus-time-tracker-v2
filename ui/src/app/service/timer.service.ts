@@ -55,7 +55,6 @@ export class TimerService {
             timerLongBreak: 0,
             timerAutoBreak: false,
             timerInterval: 0,
-            timerRemainingTime: 0,
         };
     }
 
@@ -73,14 +72,12 @@ export class TimerService {
             timerLongBreak: principalBasicData.timerLongBreak,
             timerAutoBreak: principalBasicData.timerAutoBreak,
             timerInterval: principalBasicData.timerInterval,
-            timerRemainingTime: principalBasicData.timerRemainingTime,
         };
     }
 
     static prepareBodyForTimerSettingsUpdate(
         timerSettings: TimerSettings,
-        stage: Stage,
-        timerRemainingTime: number
+        stage: Stage
     ) {
         return {
             timerStage: stage,
@@ -92,7 +89,6 @@ export class TimerService {
             timerLongBreak: timerSettings.timerLongBreak,
             timerAutoBreak: timerSettings.timerAutoBreak,
             timerInterval: timerSettings.timerInterval,
-            timerRemainingTime: timerRemainingTime,
         };
     }
 
