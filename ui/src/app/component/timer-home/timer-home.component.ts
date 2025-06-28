@@ -141,8 +141,7 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
         );
         const body = TimerService.prepareBodyForTimerSettingsUpdate(
             this.timerSettings,
-            Stages.HOME,
-            remainingTime
+            Stages.HOME
         );
 
         this.timerService
