@@ -81,7 +81,7 @@ public class SecurityConfiguration {
         return new CustomAccessDeniedHandler();
     }
 
-    //TODO dodać role?
+    //TODO na potem, role na potem
 //	@Bean
 //	public RoleHierarchy roleHierarchy() {
 //		RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
