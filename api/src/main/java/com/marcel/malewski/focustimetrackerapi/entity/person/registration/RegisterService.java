@@ -7,6 +7,7 @@ import com.marcel.malewski.focustimetrackerapi.entity.person.exception.LoginAlre
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+// TODO branch test, rejestracja
 @Service
 public class RegisterService {
     private final PersonService personService;
