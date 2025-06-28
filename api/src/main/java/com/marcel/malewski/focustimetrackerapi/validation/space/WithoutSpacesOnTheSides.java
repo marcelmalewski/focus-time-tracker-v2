@@ -5,15 +5,16 @@ import jakarta.validation.Payload;
 
 import java.lang.annotation.*;
 
+// TODO użyć przy dodawaniu nazwy dla sesji albo skasować
 @Documented
 @Constraint(validatedBy = SpaceOnTheSidesValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface WithoutSpacesOnTheSides {
-  String message() default "must not contain spaces on the sides";
+    String message() default "must not contain spaces on the sides";
 
-  Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-  Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 }
 

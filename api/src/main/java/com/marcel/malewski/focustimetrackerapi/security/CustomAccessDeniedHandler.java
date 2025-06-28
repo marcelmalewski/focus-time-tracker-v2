@@ -12,7 +12,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 import java.util.stream.Collectors;
 
-//TODO role na potem
+//TODO czy to sie wykona? wywalić tylko wypisywanie roli?
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     public static final Logger LOG = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
 
@@ -30,8 +30,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(", "));
             LOG.warn("User roles: {}", userRolesAString);
-
-            //TODO dodać wypisywanie wymaganych ról i ich przekazanie jako message
+            
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
     }

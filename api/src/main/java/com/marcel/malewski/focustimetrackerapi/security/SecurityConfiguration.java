@@ -80,29 +80,4 @@ public class SecurityConfiguration {
     public AccessDeniedHandler accessDeniedHandler() {
         return new CustomAccessDeniedHandler();
     }
-
-    //TODO na potem, role na potem
-//	@Bean
-//	public RoleHierarchy roleHierarchy() {
-//		RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-//		String hierarchy =
-//			GAMER_ANALYSE_PRIVILEGE + " > " + GAMER_VIEW_PRIVILEGE + "\n" +
-//			GAMER_MANAGE_PRIVILEGE + " > " + GAMER_ANALYSE_PRIVILEGE + "\n" +
-//			GAMER_MANAGE_PRIVILEGE + " > " + GAMER_CREATE_PRIVILEGE + "\n" +
-//			GAMER_MANAGE_PRIVILEGE + " > " + GAMER_EDIT_PRIVILEGE + "\n" +
-//			GAMER_MANAGE_PRIVILEGE + " > " + GAMER_DELETE_PRIVILEGE + "\n" +
-//			GAMER_MANAGE_PRIVILEGE + " > " + GAMER_PRIVATE_DATA_VIEW_PRIVILEGE + "\n" +
-//
-//			MODERATOR_MANAGE_PRIVILEGE + " > " + MODERATOR_CREATE_PRIVILEGE + "\n" +
-//			MODERATOR_MANAGE_PRIVILEGE + " > " + MODERATOR_DELETE_PRIVILEGE;
-//		roleHierarchy.setHierarchy(hierarchy);
-//		return roleHierarchy;
-//	}
-
-//	@Bean
-//	static MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
-//		DefaultMethodSecurityExpressionHandler handler = new DefaultMethodSecurityExpressionHandler();
-//		handler.setRoleHierarchy(roleHierarchy);
-//		return handler;
-//	}
 }
