@@ -28,11 +28,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     int updateTimerStage(@Param(value = "id") long id, @Param(value = "timerStage") Stage timerStage);
 
     @Modifying(clearAutomatically = true)
-    @Query("UPDATE Person person SET person.timerAutoBreak = :timerAutoBreak WHERE person.id = :id")
-    @Transactional
-    int updateTimerAutoBreak(@Param(value = "id") long id, @Param(value = "timerAutoBreak") boolean timerAutoBreak);
-
-    @Modifying(clearAutomatically = true)
     @Query("UPDATE Person person " +
         "SET person.timerStage = :timerStage," +
         "person.timerRemainingFocus = :timerRemainingFocus " +
