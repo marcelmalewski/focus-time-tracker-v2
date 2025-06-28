@@ -7,7 +7,10 @@ import { HttpParams, HttpResponse } from '@angular/common/http';
 import { Pages } from '../../other/typesAndConsts';
 import { Router, RouterLink } from '@angular/router';
 import { GeneralActionsService } from '../../service/general-actions.service';
-import { UnknownServerErrorMessageRefreshPage } from '../../other/message';
+import {
+    NotImplementedYet,
+    UnknownServerErrorMessageRefreshPage,
+} from '../../other/message';
 import { NotificationService } from '../../service/notification.service';
 
 @Component({
@@ -67,5 +70,9 @@ export class LoginComponent implements OnDestroy {
                     }
                 },
             });
+    }
+
+    onGoToRegister() {
+        this.notificationService.openErrorNotification(NotImplementedYet);
     }
 }

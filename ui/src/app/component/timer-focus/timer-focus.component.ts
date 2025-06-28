@@ -78,7 +78,9 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
         );
 
         const { timerCurrentHour, timerCurrentMinute, timerCurrentSecond } =
-            this.extractCurrentTime(this.timerSettings.timerRemainingTime);
+            this.extractCurrentFocusTime(
+                principalBasicData.timerRemainingFocus
+            );
         this.timerCurrentTime = {
             timerCurrentHour,
             timerCurrentMinute,
@@ -92,7 +94,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
         }
     }
 
-    private extractCurrentTime(remainingTime: number) {
+    private extractCurrentFocusTime(remainingTime: number) {
         const allMinutes = Math.floor(remainingTime / 60);
         const timerCurrentSecond = remainingTime - allMinutes * 60;
 
@@ -159,7 +161,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: () => {
-                    this.principalDataService.updateTimerAfterPause(body);
+                    this.principalDataService.localUpdateTimerAfterPause(body);
                     this.timerSettings.timerStage = Stages.PAUSE;
                 },
                 error: (_: HttpResponse<any>) => {
@@ -180,7 +182,9 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: () => {
-                    this.principalDataService.updateTimerStage(Stages.FOCUS);
+                    this.principalDataService.localUpdateTimerStage(
+                        Stages.FOCUS
+                    );
                     this.timerSettings.timerStage = Stages.FOCUS;
                     this.countDownId = setInterval(() => {
                         this.countDownLogic();
@@ -200,7 +204,9 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: () => {
-                    this.principalDataService.updateTimerStage(Stages.FOCUS);
+                    this.principalDataService.localUpdateTimerStage(
+                        Stages.FOCUS
+                    );
                     this.timerSettings.timerStage = Stages.FOCUS;
                     this.countDownId = setInterval(() => {
                         this.countDownLogic();

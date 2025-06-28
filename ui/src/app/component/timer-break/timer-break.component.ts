@@ -72,34 +72,6 @@ export class TimerBreakComponent implements OnInit, OnDestroy {
             principalBasicData,
             principalBasicData.timerStage
         );
-
-        const { timerCurrentHour, timerCurrentMinute, timerCurrentSecond } =
-            this.extractCurrentTime(this.timerSettings.timerRemainingTime);
-        this.timerCurrentTime = {
-            timerCurrentHour,
-            timerCurrentMinute,
-            timerCurrentSecond,
-        };
-
-        if (this.timerSettings.timerStage === Stages.FOCUS) {
-            this.countDownId = setInterval(() => {
-                this.countDownLogic();
-            }, 1000);
-        }
-    }
-
-    private extractCurrentTime(remainingTime: number) {
-        const allMinutes = Math.floor(remainingTime / 60);
-        const timerCurrentSecond = remainingTime - allMinutes * 60;
-
-        const timerCurrentHour = Math.floor(allMinutes / 60);
-        const timerCurrentMinute = allMinutes - timerCurrentHour * 60;
-
-        return {
-            timerCurrentSecond,
-            timerCurrentMinute,
-            timerCurrentHour,
-        };
     }
 
     ngOnDestroy() {

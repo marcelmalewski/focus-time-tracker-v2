@@ -1,25 +1,19 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './component/login/login.component';
 import { TimerHomeComponent } from './component/timer-home/timer-home.component';
-import { RegisterComponent } from './component/register/register.component';
 import { SettingsComponent } from './component/settings/settings.component';
 import { PrincipalBasicDataGuard } from './guard/principal-basic-data.guard';
 import { UnknownErrorComponent } from './component/unknown-error/unknown-error.component';
 import { LoggedOutGuard } from './guard/logged-out-guard';
 import { PrincipalWithMainTopicsGuard } from './guard/principal-with-main-topics.guard';
 import { TimerFocusComponent } from './component/timer-focus/timer-focus.component';
+import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 
 export const routes: Routes = [
     {
         path: 'login',
         title: 'login',
         component: LoginComponent,
-        canActivate: [LoggedOutGuard],
-    },
-    {
-        path: 'register',
-        title: 'register',
-        component: RegisterComponent,
         canActivate: [LoggedOutGuard],
     },
     {
@@ -46,5 +40,5 @@ export const routes: Routes = [
         component: UnknownErrorComponent,
     },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
-    { path: '**', component: LoginComponent }, //TODO add page not found
+    { path: '**', component: PageNotFoundComponent },
 ];

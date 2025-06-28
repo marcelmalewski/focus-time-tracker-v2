@@ -66,33 +66,6 @@ export class PrincipalDataService {
         this.mainTopicsBasicData = data.mainTopicsBasicData;
     }
 
-    updateTimerSettings(timerSettings: TimerSettings) {
-        this.principalBasicData!.timerStage = timerSettings.timerStage;
-        this.principalBasicData!.timerSelectedTopic =
-            timerSettings.timerSelectedTopic;
-        this.principalBasicData!.timerSetHours = timerSettings.timerSetHours;
-        this.principalBasicData!.timerSetMinutes =
-            timerSettings.timerSetMinutes;
-        this.principalBasicData!.timerSetSeconds =
-            timerSettings.timerSetSeconds;
-        this.principalBasicData!.timerShortBreak =
-            timerSettings.timerShortBreak;
-        this.principalBasicData!.timerLongBreak = timerSettings.timerLongBreak;
-        this.principalBasicData!.timerAutoBreak = timerSettings.timerAutoBreak;
-        this.principalBasicData!.timerInterval = timerSettings.timerInterval;
-        this.principalBasicData!.timerRemainingTime =
-            timerSettings.timerRemainingTime;
-    }
-
-    updateTimerAfterPause(timerStageAndRemaining: TimerRemainingTime) {
-        this.principalBasicData!.timerRemainingFocus =
-            timerStageAndRemaining.timerRemainingFocus;
-    }
-
-    updateTimerStage(timerStage: Stage) {
-        this.principalBasicData!.timerStage = timerStage;
-    }
-
     clearPrincipalData() {
         this.principalBasicData = undefined;
         this.mainTopicsBasicData = undefined;
@@ -112,5 +85,30 @@ export class PrincipalDataService {
         }
 
         return of(false);
+    }
+
+    localUpdateTimerSettings(timerSettings: TimerSettings) {
+        this.principalBasicData!.timerStage = timerSettings.timerStage;
+        this.principalBasicData!.timerSelectedTopic =
+            timerSettings.timerSelectedTopic;
+        this.principalBasicData!.timerSetHours = timerSettings.timerSetHours;
+        this.principalBasicData!.timerSetMinutes =
+            timerSettings.timerSetMinutes;
+        this.principalBasicData!.timerSetSeconds =
+            timerSettings.timerSetSeconds;
+        this.principalBasicData!.timerShortBreak =
+            timerSettings.timerShortBreak;
+        this.principalBasicData!.timerLongBreak = timerSettings.timerLongBreak;
+        this.principalBasicData!.timerAutoBreak = timerSettings.timerAutoBreak;
+        this.principalBasicData!.timerInterval = timerSettings.timerInterval;
+    }
+
+    localUpdateTimerAfterPause(timerRemainingTime: TimerRemainingTime) {
+        this.principalBasicData!.timerRemainingFocus =
+            timerRemainingTime.timerRemainingFocus;
+    }
+
+    localUpdateTimerStage(timerStage: Stage) {
+        this.principalBasicData!.timerStage = timerStage;
     }
 }

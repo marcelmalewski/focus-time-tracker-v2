@@ -7,8 +7,10 @@ export const Pages = {
     SETTINGS: 'settings',
     UNKNOWN_ERROR: 'unknown-error',
 } as const;
-type PagesKeys = keyof typeof Pages;
-export type Page = (typeof Pages)[PagesKeys];
+
+export const PageLinks = {
+    TIMER_HOME: '/timer',
+} as const;
 
 export const Commands = {
     GO_TO_TIMER: 'go to timer',

@@ -9,7 +9,7 @@ import { CommandLineComponent } from '../command-line/command-line.component';
 import { MatFormField, MatInput } from '@angular/material/input';
 import { HttpResponse } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
-import { Pages, Stage, Stages } from '../../other/typesAndConsts';
+import { Pages, Stages } from '../../other/typesAndConsts';
 import { Router } from '@angular/router';
 import { PrincipalDataService } from '../../service/principal-data.service';
 import {
@@ -102,15 +102,9 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             return;
         }
 
-        const remainingTime = TimerService.calculateRemainingTime(
-            this.timerSettings.timerSetHours,
-            this.timerSettings.timerSetMinutes,
-            this.timerSettings.timerSetSeconds
-        );
         const body = TimerService.prepareBodyForTimerSettingsUpdate(
             this.timerSettings,
-            Stages.FOCUS,
-            remainingTime
+            Stages.FOCUS
         );
 
         this.timerService
@@ -118,7 +112,7 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: () => {
-                    this.principalDataService.updateTimerSettings(body);
+                    this.principalDataService.localUpdateTimerSettings(body);
                     this.router.navigateByUrl(Pages.TIMER_FOCUS);
                 },
                 error: (_: HttpResponse<any>) => {
@@ -134,11 +128,6 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             return;
         }
 
-        const remainingTime = TimerService.calculateRemainingTime(
-            this.timerSettings.timerSetHours,
-            this.timerSettings.timerSetMinutes,
-            this.timerSettings.timerSetSeconds
-        );
         const body = TimerService.prepareBodyForTimerSettingsUpdate(
             this.timerSettings,
             Stages.HOME
@@ -149,7 +138,7 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: () => {
-                    this.principalDataService.updateTimerSettings(body);
+                    this.principalDataService.localUpdateTimerSettings(body);
                     this.notificationService.openSuccessNotification(
                         TimerSettingsUpdated
                     );
