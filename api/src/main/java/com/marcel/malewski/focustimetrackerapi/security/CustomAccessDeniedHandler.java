@@ -12,27 +12,27 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 
 import java.util.stream.Collectors;
 
-//TODO przetestowac
+//TODO role na potem
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
-  public static final Logger LOG = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
+    public static final Logger LOG = LoggerFactory.getLogger(CustomAccessDeniedHandler.class);
 
-  @Override
-  public void handle(HttpServletRequest request, HttpServletResponse response,
-                     AccessDeniedException exc) {
-    Authentication auth = SecurityContextHolder.getContext()
-      .getAuthentication();
-    if (auth != null) {
-      LOG.warn("User: {} attempted to access the protected URL: {}", auth.getName(),
-        request.getRequestURI());
+    @Override
+    public void handle(HttpServletRequest request, HttpServletResponse response,
+                       AccessDeniedException exc) {
+        Authentication auth = SecurityContextHolder.getContext()
+            .getAuthentication();
+        if (auth != null) {
+            LOG.warn("User: {} attempted to access the protected URL: {}", auth.getName(),
+                request.getRequestURI());
 
-      String userRolesAString = auth.getAuthorities()
-        .stream()
-        .map(GrantedAuthority::getAuthority)
-        .collect(Collectors.joining(", "));
-      LOG.warn("User roles: {}", userRolesAString);
+            String userRolesAString = auth.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(", "));
+            LOG.warn("User roles: {}", userRolesAString);
 
-      //TODO dodać wypisywanie wymaganych ról i ich przekazanie jako message
-      response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            //TODO dodać wypisywanie wymaganych ról i ich przekazanie jako message
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
     }
-  }
 }
