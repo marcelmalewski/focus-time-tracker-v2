@@ -17,7 +17,7 @@ public class StageConverter implements AttributeConverter<Stage, String> {
         };
     }
 
-    // TODO słaby exception
+    // TODO Konkretniejszy exception
     @Override
     public Stage convertToEntityAttribute(String maybeStageName) {
         return switch (maybeStageName) {
