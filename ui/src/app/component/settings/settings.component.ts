@@ -3,7 +3,7 @@ import { CommandLineComponent } from '../command-line/command-line.component';
 import { BottomMenuComponent } from '../bottom-menu/bottom-menu.component';
 import { Pages } from '../../other/typesAndConsts';
 
-// TODO settings na potem
+// TODO dodać notyfikacje not implemented i skasować
 @Component({
     selector: 'app-settings',
     standalone: true,

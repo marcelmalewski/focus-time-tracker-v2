@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-// TODO rejestracja na potem
+// TODO dodać notyfikacje not implemented i skasować
 @Component({
     selector: 'app-register',
     standalone: true,
