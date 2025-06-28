@@ -28,9 +28,6 @@ export interface TimerSettings {
     timerLongBreak: number;
     timerAutoBreak: boolean;
     timerInterval: number;
-    timerRemainingFocus: number;
-    timerRemainingInterval: number;
-    timerRemainingBreak: number;
 }
 
 export interface TimerCurrentTime {
