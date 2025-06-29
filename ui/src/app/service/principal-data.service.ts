@@ -6,7 +6,6 @@ import {
     PrincipalBasicData,
     PrincipalWithMainTopics,
     TimerSettings,
-    TimerRemainingTime,
 } from '../interface/person.interface';
 import {
     NotLoggedInMessage,
@@ -90,9 +89,8 @@ export class PrincipalDataService {
         this.principalBasicData!.timerInterval = timerSettings.timerInterval;
     }
 
-    localUpdateTimerAfterPause(timerRemainingTime: TimerRemainingTime) {
-        this.principalBasicData!.timerRemainingFocus =
-            timerRemainingTime.timerRemainingFocus;
+    localUpdateTimerRemainingFocus(timerRemainingFocus: number) {
+        this.principalBasicData!.timerRemainingFocus = timerRemainingFocus;
     }
 
     localUpdateTimerStage(timerStage: Stage) {
