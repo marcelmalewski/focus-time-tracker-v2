@@ -106,11 +106,14 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
         body.timerStage = Stages.FOCUS;
 
         this.timerService
-            .updatePrincipalTimerSettings(body)
+            .principalTimerFocus(body)
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
-                next: () => {
+                next: timerRemainingFocus => {
                     this.principalDataService.localUpdateTimerSettings(body);
+                    this.principalDataService.localUpdateTimerRemainingFocus(
+                        timerRemainingFocus
+                    );
                     this.router.navigateByUrl(Pages.TIMER_FOCUS);
                 },
                 error: (_: HttpResponse<any>) => {
