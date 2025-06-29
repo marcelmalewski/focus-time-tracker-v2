@@ -36,10 +36,6 @@ export interface TimerCurrentTime {
     timerCurrentSecond: number;
 }
 
-export interface TimerRemainingTime {
-    timerRemainingFocus: number;
-}
-
 export interface TimerBreak {}
 
 export interface PrincipalWithMainTopics {
