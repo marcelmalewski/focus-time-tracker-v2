@@ -58,27 +58,10 @@ export class TimerService {
         };
     }
 
-    static mapPrincipalBasicDataToTimerSettings(
-        principalBasicData: PrincipalBasicData,
+    static mapToTimerSettings(
+        timerSettings: TimerSettings | PrincipalBasicData,
         stage: Stage
     ): TimerSettings {
-        return {
-            timerStage: stage,
-            timerSelectedTopic: principalBasicData.timerSelectedTopic,
-            timerSetHours: principalBasicData.timerSetHours,
-            timerSetMinutes: principalBasicData.timerSetMinutes,
-            timerSetSeconds: principalBasicData.timerSetSeconds,
-            timerShortBreak: principalBasicData.timerShortBreak,
-            timerLongBreak: principalBasicData.timerLongBreak,
-            timerAutoBreak: principalBasicData.timerAutoBreak,
-            timerInterval: principalBasicData.timerInterval,
-        };
-    }
-
-    static prepareBodyForTimerSettingsUpdate(
-        timerSettings: TimerSettings,
-        stage: Stage
-    ) {
         return {
             timerStage: stage,
             timerSelectedTopic: timerSettings.timerSelectedTopic,
