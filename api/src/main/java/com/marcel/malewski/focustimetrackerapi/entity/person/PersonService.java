@@ -80,6 +80,7 @@ public class PersonService {
 
     public void updatePrincipalTimerSettings(
         Principal principal,
+        @NotNull
         TimerSettingsDto timerSettings,
         HttpServletRequest request,
         HttpServletResponse response
@@ -108,6 +109,7 @@ public class PersonService {
 
     public void principalTimerPause(
         Principal principal,
+        @NotNull
         TimerRemainingTimeDto dto,
         HttpServletRequest request,
         HttpServletResponse response
@@ -127,6 +129,7 @@ public class PersonService {
 
     public void principalTimerBreak(
         Principal principal,
+        @NotNull
         TimerBreakDto dto,
         HttpServletRequest request,
         HttpServletResponse response
@@ -146,6 +149,7 @@ public class PersonService {
 
     public void updatePrincipalTimerStage(
         Principal principal,
+        @NotNull
         TimerStageDto dto,
         HttpServletRequest request,
         HttpServletResponse response
@@ -161,6 +165,4 @@ public class PersonService {
             throw new AuthenticatedPersonNotFoundException();
         }
     }
-
-    //TODO when user is deleted, session is also deleted, admin feature
 }
