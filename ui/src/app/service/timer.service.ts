@@ -5,7 +5,7 @@ import { Stage, Stages } from '../other/typesAndConsts';
 import {
     PrincipalBasicData,
     TimerSettings,
-    TimerRemainingTime,
+    TimerCurrentTime,
 } from '../interface/person.interface';
 
 @Injectable({
@@ -22,13 +22,27 @@ export class TimerService {
         });
     }
 
-    principalTimerPause(body: TimerRemainingTime): Observable<any> {
-        return this.http.put('/api/v1/persons/principal/timer/pause', body, {
-            headers: this.headers,
-        });
+    principalTimerFocus(body: TimerSettings): Observable<number> {
+        return this.http.put<number>(
+            '/api/v1/persons/principal/timer/focus',
+            body,
+            {
+                headers: this.headers,
+            }
+        );
     }
 
-    principalTimerBreak(body: TimerRemainingTime): Observable<any> {
+    principalTimerPause(body: TimerCurrentTime): Observable<number> {
+        return this.http.put<number>(
+            '/api/v1/persons/principal/timer/pause',
+            body,
+            {
+                headers: this.headers,
+            }
+        );
+    }
+
+    principalTimerBreak(body: any): Observable<any> {
         return this.http.put('/api/v1/persons/principal/timer/break', body, {
             headers: this.headers,
         });
@@ -73,13 +87,5 @@ export class TimerService {
             timerAutoBreak: timerSettings.timerAutoBreak,
             timerInterval: timerSettings.timerInterval,
         };
-    }
-
-    static calculateRemainingTime(
-        hours: number,
-        minutes: number,
-        seconds: number
-    ) {
-        return hours * 60 * 60 + minutes * 60 + seconds;
     }
 }
