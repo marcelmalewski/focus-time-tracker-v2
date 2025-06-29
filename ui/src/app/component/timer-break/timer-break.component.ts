@@ -68,7 +68,7 @@ export class TimerBreakComponent implements OnInit, OnDestroy {
         const { principalBasicData } =
             this.principalDataService.getPrincipalMainTopicsBasicData();
 
-        this.timerSettings = TimerService.mapPrincipalBasicDataToTimerSettings(
+        this.timerSettings = TimerService.mapToTimerSettings(
             principalBasicData,
             principalBasicData.timerStage
         );
