@@ -10,16 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
-//TODO dodać profile
-//TODO dodac specjalna permisje dostepu do swaggera
-//TODO co to dokladnie stateless session
-//TODO jaki powinien byc dostep do dokumentacji
-//TODO obargnac sesjie co to znaczy
-//			.sessionManagement()
-//				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -42,13 +34,6 @@ public class SecurityConfiguration {
                 .permitAll()
 
                 .requestMatchers(
-                    HttpMethod.POST,
-                    "/v1/registration/persons",
-                    "/v1/registration/moderators"
-                )
-                .permitAll()
-
-                .requestMatchers(
                     "/error"
                 )
                 .permitAll()
@@ -65,7 +50,6 @@ public class SecurityConfiguration {
 
             .exceptionHandling(exceptionHandling -> exceptionHandling
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                .accessDeniedHandler(accessDeniedHandler())
             );
 
         return http.build();
@@ -74,10 +58,5 @@ public class SecurityConfiguration {
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return new CustomAccessDeniedHandler();
     }
 }

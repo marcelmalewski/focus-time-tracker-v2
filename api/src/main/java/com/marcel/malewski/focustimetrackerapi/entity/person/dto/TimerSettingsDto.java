@@ -26,6 +26,7 @@ public record TimerSettingsDto(
     @Min(1)
     @Max(59)
     int timerLongBreak,
+    @NotNull
     boolean timerAutoBreak,
     @Min(1)
     @Max(99)

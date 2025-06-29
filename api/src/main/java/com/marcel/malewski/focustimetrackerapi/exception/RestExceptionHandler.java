@@ -10,7 +10,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 import java.util.List;
 
-// TODO przetestować
 @RestControllerAdvice
 public class RestExceptionHandler {
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
@@ -36,11 +35,5 @@ public class RestExceptionHandler {
         String separator = globalErrorMessages.isEmpty() ? "" : ";";
         String allErrorMessages = String.join("; ", globalErrorMessages) + separator + String.join("; ", fieldErrorMessages);
         return new ExceptionResponse(allErrorMessages);
-    }
-
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ExceptionResponse handleMethodArgumentNotValidException(MethodArgumentTypeMismatchException exception) {
-        return new ExceptionResponse(exception.getCause().getCause().getMessage());
     }
 }
