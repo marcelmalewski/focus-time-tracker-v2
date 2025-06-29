@@ -107,6 +107,26 @@ public class PersonService {
         }
     }
 
+    public void principalTimerFocus(
+        Principal principal,
+        @NotNull
+        TimerRemainingTimeDto dto,
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws AuthenticatedPersonNotFoundException {
+        long principalId = SecurityHelper.extractIdFromPrincipal(principal);
+        int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingFocus(
+            principalId,
+            Stage.PAUSE,
+            dto.timerRemainingTime()
+        );
+
+        if (numberOfAffectedRows == 0) {
+            SecurityHelper.logoutManually(request, response);
+            throw new AuthenticatedPersonNotFoundException();
+        }
+    }
+
     public void principalTimerPause(
         Principal principal,
         @NotNull
