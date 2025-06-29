@@ -17,7 +17,6 @@ import { NgIf } from '@angular/common';
 import {
     TimerCurrentTime,
     TimerSettings,
-    TimerRemainingTime,
 } from '../../interface/person.interface';
 import { TimerService } from '../../service/timer.service';
 import { Router } from '@angular/router';
@@ -102,9 +101,9 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
         const timerCurrentMinute = allMinutes - timerCurrentHour * 60;
 
         return {
-            timerCurrentSecond,
-            timerCurrentMinute,
             timerCurrentHour,
+            timerCurrentMinute,
+            timerCurrentSecond,
         };
     }
 
@@ -146,22 +145,14 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
 
     onPause() {
         clearInterval(this.countDownId);
-
-        const remainingTime = TimerService.calculateRemainingTime(
-            this.timerCurrentTime.timerCurrentHour,
-            this.timerCurrentTime.timerCurrentMinute,
-            this.timerCurrentTime.timerCurrentSecond
-        );
-        const body: TimerRemainingTime = {
-            timerRemainingFocus: remainingTime,
-        };
-
         this.timerService
-            .principalTimerPause(body)
+            .principalTimerPause(this.timerCurrentTime)
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
-                next: () => {
-                    this.principalDataService.localUpdateTimerAfterPause(body);
+                next: timerRemainingFocus => {
+                    this.principalDataService.localUpdateTimerRemainingFocus(
+                        timerRemainingFocus
+                    );
                     this.timerSettings.timerStage = Stages.PAUSE;
                 },
                 error: (_: HttpResponse<any>) => {
@@ -198,27 +189,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
             });
     }
 
-    onShortBreak() {
-        this.timerService
-            .updatePrincipalTimerStage(Stages.FOCUS)
-            .pipe(takeUntil(this.componentDestroyed$))
-            .subscribe({
-                next: () => {
-                    this.principalDataService.localUpdateTimerStage(
-                        Stages.FOCUS
-                    );
-                    this.timerSettings.timerStage = Stages.FOCUS;
-                    this.countDownId = setInterval(() => {
-                        this.countDownLogic();
-                    }, 1000);
-                },
-                error: (_: HttpResponse<any>) => {
-                    this.notificationService.openErrorNotification(
-                        UnknownServerErrorMessage
-                    );
-                },
-            });
-    }
+    onShortBreak() {}
 
     onHome() {}
 }
