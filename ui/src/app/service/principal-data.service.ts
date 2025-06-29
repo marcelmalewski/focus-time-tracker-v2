@@ -29,19 +29,6 @@ export class PrincipalDataService {
         private notificationService: NotificationService
     ) {}
 
-    getOrLoadPrincipalBasicData(): Observable<PrincipalBasicData> {
-        if (this.principalBasicData !== undefined)
-            return of(this.principalBasicData);
-
-        return this.http.get<PrincipalBasicData>(
-            '/api/v1/persons/principal/basic-data'
-        );
-    }
-
-    setPrincipalBasicData(data: PrincipalBasicData) {
-        this.principalBasicData = data;
-    }
-
     getPrincipalMainTopicsBasicData(): PrincipalWithMainTopics {
         return {
             principalBasicData: this.principalBasicData!,
