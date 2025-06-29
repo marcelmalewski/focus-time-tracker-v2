@@ -60,19 +60,19 @@ public class PersonController {
     }
 
     @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/focus")
-    public ResponseEntity<Void> updatePrincipalTimerSettings(Principal principal, HttpServletRequest request,
-                                                             HttpServletResponse response,
-                                                             @RequestBody @Valid TimerSettingsDto dto) {
-        personService.updatePrincipalTimerSettings(principal, dto, request, response);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Integer> principalTimerFocus(Principal principal, HttpServletRequest request,
+                                                       HttpServletResponse response,
+                                                       @RequestBody @Valid TimerSettingsDto dto) {
+        int timerRemainingFocus = personService.principalTimerFocus(principal, dto, request, response);
+        return new ResponseEntity<>(timerRemainingFocus, HttpStatus.OK);
     }
 
     @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/pause")
-    public ResponseEntity<Void> principalTimerPause(Principal principal, HttpServletRequest request,
-                                                    HttpServletResponse response,
-                                                    @RequestBody @Valid TimerRemainingTimeDto dto) {
-        personService.principalTimerPause(principal, dto, request, response);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Integer> principalTimerPause(Principal principal, HttpServletRequest request,
+                                                       HttpServletResponse response,
+                                                       @RequestBody @Valid TimerCurrentTimeDto dto) {
+        int timerRemainingFocus = personService.principalTimerPause(principal, dto, request, response);
+        return new ResponseEntity<>(timerRemainingFocus, HttpStatus.OK);
     }
 
     @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/break")
