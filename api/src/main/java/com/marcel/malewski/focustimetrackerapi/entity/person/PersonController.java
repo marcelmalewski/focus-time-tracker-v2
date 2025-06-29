@@ -59,6 +59,14 @@ public class PersonController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/focus")
+    public ResponseEntity<Void> updatePrincipalTimerSettings(Principal principal, HttpServletRequest request,
+                                                             HttpServletResponse response,
+                                                             @RequestBody @Valid TimerSettingsDto dto) {
+        personService.updatePrincipalTimerSettings(principal, dto, request, response);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PutMapping(value = PERSON_PATH_V1 + "/principal/timer/pause")
     public ResponseEntity<Void> principalTimerPause(Principal principal, HttpServletRequest request,
                                                     HttpServletResponse response,
