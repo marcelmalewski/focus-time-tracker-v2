@@ -86,9 +86,7 @@ public class PersonService {
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         long principalId = SecurityHelper.extractIdFromPrincipal(principal);
-        int numberOfAffectedRows;
-
-        numberOfAffectedRows = personRepository.updateTimerSettings(
+        int numberOfAffectedRows = personRepository.updateTimerSettings(
             principalId,
             timerSettings.timerStage(),
             timerSettings.timerSelectedTopic(),
@@ -107,44 +105,60 @@ public class PersonService {
         }
     }
 
-    public void principalTimerFocus(
+    public int principalTimerFocus(
         Principal principal,
         @NotNull
-        TimerRemainingTimeDto dto,
+        TimerSettingsDto timerSettings,
         HttpServletRequest request,
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         long principalId = SecurityHelper.extractIdFromPrincipal(principal);
-        int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingFocus(
+        int timerRemainingFocus = this.calculateRemainingTime(
+            timerSettings.timerSetHours(), timerSettings.timerSetMinutes(), timerSettings.timerSetSeconds());
+        int numberOfAffectedRows = personRepository.updateTimerSettingsAndRemainingFocus(
             principalId,
-            Stage.PAUSE,
-            dto.timerRemainingTime()
+            timerSettings.timerStage(),
+            timerSettings.timerSelectedTopic(),
+            timerSettings.timerSetHours(),
+            timerSettings.timerSetMinutes(),
+            timerSettings.timerSetSeconds(),
+            timerSettings.timerShortBreak(),
+            timerSettings.timerLongBreak(),
+            timerSettings.timerAutoBreak(),
+            timerSettings.timerInterval(),
+            timerRemainingFocus
         );
 
         if (numberOfAffectedRows == 0) {
             SecurityHelper.logoutManually(request, response);
             throw new AuthenticatedPersonNotFoundException();
         }
+
+        return timerRemainingFocus;
     }
 
-    public void principalTimerPause(
+    public int principalTimerPause(
         Principal principal,
         @NotNull
-        TimerRemainingTimeDto dto,
+        TimerCurrentTimeDto dto,
         HttpServletRequest request,
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         long principalId = SecurityHelper.extractIdFromPrincipal(principal);
+        int timerRemainingFocus = this.calculateRemainingTime(
+            dto.timerCurrentHour(), dto.timerCurrentMinute(), dto.timerCurrentSecond());
         int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingFocus(
             principalId,
             Stage.PAUSE,
-            dto.timerRemainingTime()
+            timerRemainingFocus
         );
 
         if (numberOfAffectedRows == 0) {
             SecurityHelper.logoutManually(request, response);
             throw new AuthenticatedPersonNotFoundException();
         }
+
+        return timerRemainingFocus;
     }
 
     public void principalTimerBreak(
@@ -184,5 +198,9 @@ public class PersonService {
             SecurityHelper.logoutManually(request, response);
             throw new AuthenticatedPersonNotFoundException();
         }
+    }
+
+    private int calculateRemainingTime(int hours, int minutes, int seconds) {
+        return hours * 60 * 60 + minutes * 60 + seconds;
     }
 }
