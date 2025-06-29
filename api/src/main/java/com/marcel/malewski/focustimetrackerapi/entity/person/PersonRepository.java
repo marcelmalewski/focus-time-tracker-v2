@@ -64,4 +64,32 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
         @Param(value = "timerAutoBreak") boolean timerAutoBreak,
         @Param(value = "timerInterval") int interval
     );
+
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE Person person " +
+        "SET person.timerStage = :timerStage," +
+        "person.timerSelectedTopic = :timerSelectedTopic," +
+        "person.timerSetHours = :timerSetHours," +
+        "person.timerSetMinutes = :timerSetMinutes," +
+        "person.timerSetSeconds = :timerSetSeconds," +
+        "person.timerShortBreak = :timerShortBreak," +
+        "person.timerLongBreak = :timerLongBreak," +
+        "person.timerAutoBreak = :timerAutoBreak," +
+        "person.timerInterval = :timerInterval, " +
+        "person.timerRemainingFocus = :timerRemainingFocus " +
+        "WHERE person.id = :id")
+    @Transactional
+    int updateTimerSettingsAndRemainingFocus(
+        @Param(value = "id") long id,
+        @Param(value = "timerStage") Stage timerStage,
+        @Param(value = "timerSelectedTopic") String timerSelectedTopic,
+        @Param(value = "timerSetHours") int hours,
+        @Param(value = "timerSetMinutes") int minutes,
+        @Param(value = "timerSetSeconds") int seconds,
+        @Param(value = "timerShortBreak") int shortBreak,
+        @Param(value = "timerLongBreak") int longBreak,
+        @Param(value = "timerAutoBreak") boolean timerAutoBreak,
+        @Param(value = "timerInterval") int interval,
+        @Param(value = "timerRemainingFocus") int remainingFocus
+    );
 }
