@@ -86,7 +86,7 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             this.principalDataService.getPrincipalMainTopicsBasicData();
 
         this.mainTopicsBasicData = mainTopicsBasicData;
-        this.timerSettings = TimerService.mapPrincipalBasicDataToTimerSettings(
+        this.timerSettings = TimerService.mapToTimerSettings(
             principalBasicData,
             Stages.HOME
         );
@@ -102,10 +102,8 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             return;
         }
 
-        const body = TimerService.prepareBodyForTimerSettingsUpdate(
-            this.timerSettings,
-            Stages.FOCUS
-        );
+        const body: TimerSettings = this.timerSettings;
+        body.timerStage = Stages.FOCUS;
 
         this.timerService
             .updatePrincipalTimerSettings(body)
@@ -128,10 +126,8 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             return;
         }
 
-        const body = TimerService.prepareBodyForTimerSettingsUpdate(
-            this.timerSettings,
-            Stages.HOME
-        );
+        const body: TimerSettings = this.timerSettings;
+        body.timerStage = Stages.FOCUS;
 
         this.timerService
             .updatePrincipalTimerSettings(body)
