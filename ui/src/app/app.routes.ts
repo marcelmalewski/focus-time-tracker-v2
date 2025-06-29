@@ -1,8 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './component/login/login.component';
 import { TimerHomeComponent } from './component/timer-home/timer-home.component';
-import { SettingsComponent } from './component/settings/settings.component';
-import { PrincipalBasicDataGuard } from './guard/principal-basic-data.guard';
 import { UnknownErrorComponent } from './component/unknown-error/unknown-error.component';
 import { LoggedOutGuard } from './guard/logged-out-guard';
 import { PrincipalWithMainTopicsGuard } from './guard/principal-with-main-topics.guard';
@@ -27,12 +25,6 @@ export const routes: Routes = [
         title: 'timer-focus',
         component: TimerFocusComponent,
         canActivate: [PrincipalWithMainTopicsGuard],
-    },
-    {
-        path: 'settings',
-        title: 'settings',
-        component: SettingsComponent,
-        canActivate: [PrincipalBasicDataGuard],
     },
     {
         path: 'unknown-error',
