@@ -25,7 +25,6 @@ public record PrincipalBasicDataDto(
     @NotNull
     int timerInterval,
     Integer timerRemainingFocus,
-    Integer timerRemainingInterval,
-    Integer timerRemainingBreak
+    Integer timerRemainingInterval
 ) {
 }
