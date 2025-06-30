@@ -3,6 +3,7 @@ package com.marcel.malewski.focustimetrackerapi.entity.person;
 import com.marcel.malewski.focustimetrackerapi.converter.StageConverter;
 import com.marcel.malewski.focustimetrackerapi.entity.dailyfocusSummary.DailyFocusSummary;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopic;
+import com.marcel.malewski.focustimetrackerapi.enums.BreakType;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -87,9 +88,9 @@ public class Person implements UserDetails {
     @Nullable
     private Integer timerRemainingFocus;
     @Nullable
-    private Integer timerRemainingInterval;
+    private BreakType previousBreakType;
     @Nullable
-    private Integer timerRemainingBreak;
+    private Integer timerRemainingInterval;
 
     @OneToMany(mappedBy = "owner")
     @ToString.Exclude
