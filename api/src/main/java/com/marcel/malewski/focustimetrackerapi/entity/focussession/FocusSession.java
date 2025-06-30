@@ -1,6 +1,5 @@
 package com.marcel.malewski.focustimetrackerapi.entity.focussession;
 
-import com.marcel.malewski.focustimetrackerapi.entity.dailyfocusSummary.DailyFocusSummary;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -24,16 +23,11 @@ public class FocusSession {
 
     @NotNull
     private String sessionType; //TODO timer || stopwatch
-    private boolean finished;
 
     @OneToMany(mappedBy = "focusSession")
     @ToString.Exclude
     @NotNull
     private List<MainTopic> mainTopic;
-    @ManyToOne
-    @JoinColumn(name = "dailyfocussummary_id")
-    @NotNull
-    private DailyFocusSummary dailyFocusSummary;
 
     @Override
     public String toString() {
