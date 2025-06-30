@@ -169,6 +169,14 @@ public class PersonService {
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         long principalId = SecurityHelper.extractIdFromPrincipal(principal);
+
+        if (dto.timerAutoBreak()) {
+            // Jeżeli remaining interval jest zero, ustaw remaining na full i daj short break
+            // Jeżeli remaining interval jest na jeden, to teraz będzie long break, w innym wypadku short break
+            //      Zmniejsz remaining interval
+        } else {
+            // Użyj breakTypeToStart
+        }
 //        int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingBreak(
 //            principalId,
 //            dto.timerStage(),
@@ -179,6 +187,7 @@ public class PersonService {
 //            securityHelper.logoutManually(request, response);
 //            throw new AuthenticatedPersonNotFoundException();
 //        }
+        // Result: remaining interval, break type
     }
 
     public void updatePrincipalTimerStage(
