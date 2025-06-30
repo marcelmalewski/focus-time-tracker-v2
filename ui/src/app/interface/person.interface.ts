@@ -15,7 +15,6 @@ export interface PrincipalBasicData {
     timerInterval: number;
     timerRemainingFocus: number;
     timerRemainingInterval: number;
-    timerRemainingBreak: number;
 }
 
 export interface TimerSettings {
