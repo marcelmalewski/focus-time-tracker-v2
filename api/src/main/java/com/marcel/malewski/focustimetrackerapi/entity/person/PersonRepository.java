@@ -42,6 +42,18 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Modifying(clearAutomatically = true)
     @Query("UPDATE Person person " +
         "SET person.timerStage = :timerStage," +
+        "person.timerRemainingFocus = :timerRemainingFocus " +
+        "WHERE person.id = :id")
+    @Transactional
+    int updateTimerStageAndRemainingInterval(
+        @Param(value = "id") long id,
+        @Param(value = "timerStage") Stage timerStage,
+        @Param(value = "timerRemainingFocus") int timerRemainingTime
+    );
+
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE Person person " +
+        "SET person.timerStage = :timerStage," +
         "person.timerSelectedTopic = :timerSelectedTopic," +
         "person.timerSetHours = :timerSetHours," +
         "person.timerSetMinutes = :timerSetMinutes," +

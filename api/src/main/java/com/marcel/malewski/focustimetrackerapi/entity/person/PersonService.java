@@ -105,6 +105,25 @@ public class PersonService {
         }
     }
 
+    public void updatePrincipalTimerStage(
+        Principal principal,
+        @NotNull
+        TimerStageDto dto,
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws AuthenticatedPersonNotFoundException {
+        long principalId = SecurityHelper.extractIdFromPrincipal(principal);
+        int numberOfAffectedRows = personRepository.updateTimerStage(
+            principalId,
+            dto.timerStage()
+        );
+
+        if (numberOfAffectedRows == 0) {
+            SecurityHelper.logoutManually(request, response);
+            throw new AuthenticatedPersonNotFoundException();
+        }
+    }
+
     public int principalTimerFocus(
         Principal principal,
         @NotNull
@@ -161,6 +180,10 @@ public class PersonService {
         return timerRemainingFocus;
     }
 
+    private int calculateRemainingTime(int hours, int minutes, int seconds) {
+        return hours * 60 * 60 + minutes * 60 + seconds;
+    }
+
     public void principalTimerBreak(
         Principal principal,
         @NotNull
@@ -188,28 +211,5 @@ public class PersonService {
 //            throw new AuthenticatedPersonNotFoundException();
 //        }
         // Result: remaining interval, break type
-    }
-
-    public void updatePrincipalTimerStage(
-        Principal principal,
-        @NotNull
-        TimerStageDto dto,
-        HttpServletRequest request,
-        HttpServletResponse response
-    ) throws AuthenticatedPersonNotFoundException {
-        long principalId = SecurityHelper.extractIdFromPrincipal(principal);
-        int numberOfAffectedRows = personRepository.updateTimerStage(
-            principalId,
-            dto.timerStage()
-        );
-
-        if (numberOfAffectedRows == 0) {
-            SecurityHelper.logoutManually(request, response);
-            throw new AuthenticatedPersonNotFoundException();
-        }
-    }
-
-    private int calculateRemainingTime(int hours, int minutes, int seconds) {
-        return hours * 60 * 60 + minutes * 60 + seconds;
     }
 }

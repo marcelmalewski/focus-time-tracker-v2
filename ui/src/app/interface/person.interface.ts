@@ -1,4 +1,4 @@
-import { Stage } from '../other/typesAndConsts';
+import { BreakType, Stage } from '../other/typesAndConsts';
 
 export interface PrincipalBasicData {
     id: number;
@@ -35,7 +35,17 @@ export interface TimerCurrentTime {
     timerCurrentSecond: number;
 }
 
-export interface TimerBreak {}
+export interface TimerBreak {
+    breakTypeToStart: BreakType;
+    timerRemainingInterval: number;
+    timerAutoBreak?: boolean;
+}
+
+export interface TimerBreakResponse {
+    breakTypeToStart: BreakType;
+    timerRemainingInterval: number;
+    timerAutoBreak?: boolean;
+}
 
 export interface PrincipalWithMainTopics {
     principalBasicData: PrincipalBasicData;

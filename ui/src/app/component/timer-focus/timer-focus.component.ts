@@ -189,7 +189,28 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
             });
     }
 
-    onShortBreak() {}
+    onShortBreak() {
+        const body: TimerSettings = this.timerSettings;
+        body.timerStage = Stages.FOCUS;
+
+        this.timerService
+            .principalTimerFocus(body)
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe({
+                next: timerRemainingFocus => {
+                    this.principalDataService.localUpdateTimerSettings(body);
+                    this.principalDataService.localUpdateTimerRemainingFocus(
+                        timerRemainingFocus
+                    );
+                    this.router.navigateByUrl(Pages.TIMER_FOCUS);
+                },
+                error: (_: HttpResponse<any>) => {
+                    this.notificationService.openErrorNotification(
+                        UnknownServerErrorMessage
+                    );
+                },
+            });
+    }
 
     onHome() {}
 }
