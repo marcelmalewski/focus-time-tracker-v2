@@ -3,9 +3,6 @@ Official name is in progress :)
 
 ## Table of contents
 * [General info](#general-info)
-* [Technologies](#technologies)
-* [Features](#features)
-* [Links](#links)
 * [Launch Instructions](#launch-instructions)
 
 ## General Info
@@ -13,19 +10,6 @@ Design made in figma is in main directory: FocusTimeTrackerCoreDesign.png
 
 ### Inspiration
 Both Pomodoro and Flowtime techniques offer unique advantages. Sometimes, one is necessary, and other times, the other is preferred. Flowtime allows for long, uninterrupted work sessions, but too much sitting isn't good. On the other hand, strict adherence to Pomodoro intervals may feel limiting. Combining these methods can yield significant benefits. Additionally, presenting this hybrid approach with maximum simplicity and providing useful statistics is essential.
-
-### Description
-...
-
-## Technologies
-Angular and Spring
-...
-
-## Features
-...
-
-## Links
-...
 
 ## Launch Instructions
 ### Local Development Environment
@@ -60,11 +44,3 @@ The Docker setup will launch:
 
 #### Running the Local Backend with IntelliJ
 To start the application, execute `application bootRun` from the Gradle panel, using the variables specified in the `.env` file.
-
-#### Running the Backend with images
-1. Build the project: `./gradlew build`
-2. Build the Docker image: `docker build -t play-together-api .`
-3. Tag the image: `docker tag play-together-api 6745345/play-together-api:1.0`
-4. Push the image to Docker Hub: `docker push 6745345/play-together-api:1.0`
-5. Use the provided docker-compose-dev.yml.
-   In case push doesn't reflect changes, remove the local image and rerun the Docker Compose.
