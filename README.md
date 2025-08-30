@@ -22,25 +22,22 @@ Both Pomodoro and Flowtime techniques offer unique advantages. Sometimes, one is
     PORT=5000
     SPRING_PROFILES_ACTIVE=dev
     ```
-2. Initiate the services using `./local-dev/docker-compose-dev.yml` along with the `.env` file.
+2. Run configuration `local-dev` and it should use `.env` file automatically.
 
-You can either set up a run configuration in IntelliJ or start it manually.
-
-Example of manual start command: `docker-compose -f ./local-dev/docker-compose-dev.yml --env-file .env up`
-
-The Docker setup will launch:
+Configuration `local-dev` will launch:
 1. PostgreSQL database
 2. Development Proxy
+3. In dev setup you have one account created: admin/admin
 
 ### Frontend
 #### Before coding frontend
-1. Set prettier. In Intellij you can just set "Automatic Prettier configuration".
+1. Set prettier if "Automatic Prettier configuration" not working, use this path `/focus-time-tracker-v2/ui/node_modules/prettier`""
+2. Set "Run for files" `**/*.{js,ts,jsx,tsx,cjs,cts,mjs,mts,vue,astro,html}`
 
 #### Running the Local Frontend
-1. npm install
-2. Use intellij config or command: `ng start`
+1. Run `npm install`
+2. Run configuration `start front`
 
 ### Backend
-
 #### Running the Local Backend with IntelliJ
-To start the application, execute `application bootRun` from the Gradle panel, using the variables specified in the `.env` file.
+1. Run configuration `start backend``
