@@ -13,7 +13,7 @@ Both Pomodoro and Flowtime techniques offer unique advantages. Sometimes, one is
 
 ## Local Development
 ### Environment
-1. Create a `.env` file with the following example values:
+1. Create a `./local-dev/.env` file with the following example values:
     ```
     POSTGRES_USER=postgres
     POSTGRES_PASSWORD=postgres

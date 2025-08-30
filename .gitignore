@@ -21,4 +21,4 @@ out/
 .vscode/
 
 # Custom
-./local-dev/.env
+local-dev/.env
