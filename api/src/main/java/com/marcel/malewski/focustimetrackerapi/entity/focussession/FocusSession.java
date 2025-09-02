@@ -22,7 +22,7 @@ public class FocusSession {
     private Integer version;
 
     @NotNull
-    private String sessionType; //TODO timer || stopwatch
+    private Boolean finished;
 
     @OneToMany(mappedBy = "focusSession")
     @ToString.Exclude
