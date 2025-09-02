@@ -71,18 +71,21 @@ public class Person implements UserDetails {
     @Min(1)
     @Max(59)
     @Builder.Default
-    private int timerShortBreak = 5;
+    @NotNull
+    private Integer timerShortBreak = 5;
     @Min(1)
     @Max(59)
     @Builder.Default
-    private int timerLongBreak = 10;
+    @NotNull
+    private Integer timerLongBreak = 10;
 
     @Builder.Default
     private boolean timerAutoBreak = false;
     @Min(1)
     @Max(99)
     @Builder.Default
-    private int timerInterval = 1;
+    @NotNull
+    private Integer timerInterval = 1;
 
     @Nullable
     private Integer timerRemainingFocus;
