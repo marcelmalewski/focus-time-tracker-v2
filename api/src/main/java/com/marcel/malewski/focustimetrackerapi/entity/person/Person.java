@@ -1,7 +1,6 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
 import com.marcel.malewski.focustimetrackerapi.converter.StageConverter;
-import com.marcel.malewski.focustimetrackerapi.entity.dailyfocusSummary.DailyFocusSummary;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopic;
 import com.marcel.malewski.focustimetrackerapi.enums.BreakType;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
@@ -38,12 +37,12 @@ public class Person implements UserDetails {
 
     @Column(unique = true)
     @NotNull
-    private String login; // TODO validation
+    private String login;
     @NotNull
-    private String password; // TODO validation
+    private String password;
     @Column(unique = true)
     @NotNull
-    private String email; // TODO validation
+    private String email;
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDate createdAt;
@@ -91,12 +90,6 @@ public class Person implements UserDetails {
     private BreakType previousBreakType;
     @Nullable
     private Integer timerRemainingInterval;
-
-    @OneToMany(mappedBy = "owner")
-    @ToString.Exclude
-    @Builder.Default
-    @NotNull
-    private List<DailyFocusSummary> dailyFocusSummaries = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner")
     @ToString.Exclude

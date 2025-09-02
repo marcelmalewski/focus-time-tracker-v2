@@ -40,4 +40,4 @@ Configuration `local-dev` will launch:
 
 ### Backend
 #### Running the Local Backend with IntelliJ
-1. Run configuration `start backend``
+1. Run configuration `start backend`
