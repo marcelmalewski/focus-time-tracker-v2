@@ -25,7 +25,6 @@ public class FocusSession {
     private Boolean finished;
 
     @OneToMany(mappedBy = "focusSession")
-    @ToString.Exclude
     @NotNull
     private List<MainTopic> mainTopic;
 

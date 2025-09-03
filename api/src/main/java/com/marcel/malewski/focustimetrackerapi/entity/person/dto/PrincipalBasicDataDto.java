@@ -11,19 +11,19 @@ public record PrincipalBasicDataDto(
     Stage timerStage,
     String timerSelectedTopic,
     @NotNull
-    int timerSetHours,
+    Integer timerSetHours,
     @NotNull
-    int timerSetMinutes,
+    Integer timerSetMinutes,
     @NotNull
-    int timerSetSeconds,
+    Integer timerSetSeconds,
     @NotNull
-    int timerShortBreak,
+    Integer timerShortBreak,
     @NotNull
-    int timerLongBreak,
+    Integer timerLongBreak,
     @NotNull
-    boolean timerAutoBreak,
+    Boolean timerAutoBreak,
     @NotNull
-    int timerInterval,
+    Integer timerInterval,
     Integer timerRemainingFocus,
     Integer timerRemainingInterval
 ) {

@@ -48,9 +48,9 @@ public class Person implements UserDetails {
     private LocalDate createdAt;
 
     // Timer settings
-    @NotNull
     @Convert(converter = StageConverter.class)
     @Builder.Default
+    @NotNull
     private Stage timerStage = Stage.HOME;
     @Nullable
     private String timerSelectedTopic;
@@ -58,15 +58,18 @@ public class Person implements UserDetails {
     @Min(0)
     @Max(99)
     @Builder.Default
-    private int timerSetHours = 0;
+    @NotNull
+    private Integer timerSetHours = 0;
     @Min(0)
     @Max(59)
     @Builder.Default
-    private int timerSetMinutes = 0;
+    @NotNull
+    private Integer timerSetMinutes = 0;
     @Min(0)
     @Max(59)
     @Builder.Default
-    private int timerSetSeconds = 0;
+    @NotNull
+    private Integer timerSetSeconds = 0;
 
     @Min(1)
     @Max(59)
@@ -95,7 +98,6 @@ public class Person implements UserDetails {
     private Integer timerRemainingInterval;
 
     @OneToMany(mappedBy = "owner")
-    @ToString.Exclude
     @Builder.Default
     @NotNull
     private List<MainTopic> mainTopics = new ArrayList<>();

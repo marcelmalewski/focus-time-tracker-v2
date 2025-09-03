@@ -13,24 +13,31 @@ public record TimerSettingsDto(
     String timerSelectedTopic,
     @Min(0)
     @Max(99)
-    int timerSetHours,
-    @Min(0)
-    @Max(59)
-    int timerSetMinutes,
-    @Min(0)
-    @Max(59)
-    int timerSetSeconds,
-    @Min(1)
-    @Max(59)
-    int timerShortBreak,
-    @Min(1)
-    @Max(59)
-    int timerLongBreak,
     @NotNull
-    boolean timerAutoBreak,
+    Integer timerSetHours,
+    @Min(0)
+    @Max(59)
+    @NotNull
+    Integer timerSetMinutes,
+    @Min(0)
+    @Max(59)
+    @NotNull
+    Integer timerSetSeconds,
+    @Min(1)
+    @Max(59)
+    @NotNull
+    Integer timerShortBreak,
+    @Min(1)
+    @Max(59)
+    @NotNull
+    Integer timerLongBreak,
+    @NotNull
+    @NotNull
+    Boolean timerAutoBreak,
     @Min(1)
     @Max(99)
-    int timerInterval
+    @NotNull
+    Integer timerInterval
 ) {
 }
 

@@ -7,7 +7,7 @@ public record TimerBreakDto(
     BreakType breakTypeToStart,
     Integer timerRemainingInterval,
     @NotNull
-    boolean timerAutoBreak
+    Boolean timerAutoBreak
 ) {
 }
 

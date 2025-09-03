@@ -1,7 +1,6 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.*;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -25,7 +24,6 @@ public class PersonController {
     }
 
     @GetMapping(value = PERSON_PATH_V1 + "/principal/logged-in")
-    @Operation(summary = "Check if person is logged in")
     public ResponseEntity<Boolean> getLoggedIn() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean loggedIn = authentication != null
@@ -36,7 +34,6 @@ public class PersonController {
     }
 
     @GetMapping(value = PERSON_PATH_V1 + "/principal/basic-data")
-    @Operation(summary = "Get principal basic data")
     public ResponseEntity<PrincipalBasicDataDto> getPrincipalBasicData(Principal principal, HttpServletRequest request,
                                                                        HttpServletResponse response) {
         PrincipalBasicDataDto dto = personService.getPrincipalBasicData(principal, request, response);
@@ -44,7 +41,6 @@ public class PersonController {
     }
 
     @GetMapping(value = PERSON_PATH_V1 + "/principal/with-main-topics")
-    @Operation(summary = "Get principal basic data with main topics")
     public ResponseEntity<PrincipalWithMainTopicsDto> getPrincipalWithMainTopics(Principal principal, HttpServletRequest request,
                                                                                  HttpServletResponse response) {
         PrincipalWithMainTopicsDto dto = personService.getPrincipalWithMainTopics(principal, request, response);

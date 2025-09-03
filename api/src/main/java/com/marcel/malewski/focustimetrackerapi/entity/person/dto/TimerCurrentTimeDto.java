@@ -4,11 +4,11 @@ import jakarta.validation.constraints.NotNull;
 
 public record TimerCurrentTimeDto(
     @NotNull
-    int timerCurrentHour,
+    Integer timerCurrentHour,
     @NotNull
-    int timerCurrentMinute,
+    Integer timerCurrentMinute,
     @NotNull
-    int timerCurrentSecond
+    Integer timerCurrentSecond
 ) {
 }
 
