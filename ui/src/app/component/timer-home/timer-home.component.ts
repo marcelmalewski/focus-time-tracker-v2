@@ -9,23 +9,9 @@ import { CommandLineComponent } from '../command-line/command-line.component';
 import { MatFormField, MatInput } from '@angular/material/input';
 import { HttpResponse } from '@angular/common/http';
 import { Subject, takeUntil } from 'rxjs';
-import { Pages, Stages } from '../../other/typesAndConsts';
 import { Router } from '@angular/router';
 import { PrincipalDataService } from '../../service/principal-data.service';
-import {
-    AtLeastOneMessage,
-    AtLeastZeroMessage,
-    LessThanOrEqual59Message,
-    LessThanOrEqual99Message,
-    NotImplementedYet,
-    TimerSettingsUpdated,
-    UnknownServerErrorMessage,
-} from '../../other/message';
 import { NotificationService } from '../../service/notification.service';
-import {
-    MainTopicBasicData,
-    TimerSettings,
-} from '../../interface/person.interface';
 import {
     MatOption,
     MatSelect,
@@ -39,6 +25,17 @@ import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { TimerService } from '../../service/timer.service';
 import { BottomMenuComponent } from '../bottom-menu/bottom-menu.component';
+import { MainTopicBasicData, TimerSettings } from '../../spec/person-spec';
+import {
+    AtLeastOneMessage,
+    LessThanOrEqual99Message,
+    AtLeastZeroMessage,
+    LessThanOrEqual59Message,
+    UnknownServerErrorMessage,
+    TimerSettingsUpdated,
+    NotImplementedYet,
+} from '../../spec/message-spec';
+import { Pages, Stages } from '../../spec/common-spec';
 
 @Component({
     selector: 'app-home',
@@ -66,10 +63,10 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
     @ViewChild('timerForm') private timerForm!: NgForm;
     private componentDestroyed$ = new Subject<void>();
 
-    protected readonly AtLeastOneMessage = AtLeastOneMessage;
-    protected readonly LessThanOrEqual99Message = LessThanOrEqual99Message;
-    protected readonly AtLeastZeroMessage = AtLeastZeroMessage;
-    protected readonly LessThanOrEqual59Message = LessThanOrEqual59Message;
+    readonly AtLeastOneMessage = AtLeastOneMessage;
+    readonly LessThanOrEqual99Message = LessThanOrEqual99Message;
+    readonly AtLeastZeroMessage = AtLeastZeroMessage;
+    readonly LessThanOrEqual59Message = LessThanOrEqual59Message;
 
     mainTopicsBasicData: MainTopicBasicData[] | undefined;
     timerSettings: TimerSettings = TimerService.prepareDefaultTimerSettings();
@@ -86,10 +83,8 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             this.principalDataService.getPrincipalMainTopicsBasicData();
 
         this.mainTopicsBasicData = mainTopicsBasicData;
-        this.timerSettings = TimerService.mapToTimerSettings(
-            principalBasicData,
-            Stages.HOME
-        );
+        this.timerSettings =
+            TimerService.mapToTimerSettings(principalBasicData);
     }
 
     ngOnDestroy(): void {
@@ -103,16 +98,17 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
         }
 
         const body: TimerSettings = this.timerSettings;
-        body.timerStage = Stages.FOCUS;
-
         this.timerService
-            .principalTimerFocus(body)
+            .principalMoveTimerToStageFocus(body)
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: timerRemainingFocus => {
                     this.principalDataService.localUpdateTimerSettings(body);
                     this.principalDataService.localUpdateTimerRemainingFocus(
                         timerRemainingFocus
+                    );
+                    this.principalDataService.localUpdateTimerStage(
+                        Stages.FOCUS
                     );
                     this.router.navigateByUrl(Pages.TIMER_FOCUS);
                 },
@@ -130,8 +126,6 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
         }
 
         const body: TimerSettings = this.timerSettings;
-        body.timerStage = Stages.FOCUS;
-
         this.timerService
             .updatePrincipalTimerSettings(body)
             .pipe(takeUntil(this.componentDestroyed$))

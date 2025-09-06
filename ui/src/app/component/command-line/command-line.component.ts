@@ -15,7 +15,7 @@ import {
     MatAutocompleteTrigger,
     MatOption,
 } from '@angular/material/autocomplete';
-import { map, Observable, startWith, tap } from 'rxjs';
+import { map, Observable, startWith } from 'rxjs';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import {
@@ -23,7 +23,7 @@ import {
     Commands,
     CommandsValues,
     Pages,
-} from '../../other/typesAndConsts';
+} from '../../spec/common-spec';
 
 @Component({
     selector: 'app-command-line',

@@ -22,7 +22,17 @@ export class TimerService {
         });
     }
 
-    principalTimerFocus(body: TimerSettings): Observable<number> {
+    updatePrincipalTimerStage(timerStage: Stage): Observable<any> {
+        return this.http.put(
+            '/api/v1/persons/principal/timer/stage',
+            { timerStage },
+            {
+                headers: this.headers,
+            }
+        );
+    }
+
+    principalMoveTimerToStageFocus(body: TimerSettings): Observable<number> {
         return this.http.put<number>(
             '/api/v1/persons/principal/timer/focus',
             body,
@@ -32,7 +42,7 @@ export class TimerService {
         );
     }
 
-    principalTimerPause(body: TimerCurrentTime): Observable<number> {
+    principalMoveTimerToStagePause(body: TimerCurrentTime): Observable<number> {
         return this.http.put<number>(
             '/api/v1/persons/principal/timer/pause',
             body,
@@ -42,20 +52,10 @@ export class TimerService {
         );
     }
 
-    principalTimerBreak(body: any): Observable<any> {
+    principalMoveTimerToStageBreak(body: any): Observable<any> {
         return this.http.put('/api/v1/persons/principal/timer/break', body, {
             headers: this.headers,
         });
-    }
-
-    updatePrincipalTimerStage(timerStage: Stage): Observable<any> {
-        return this.http.put(
-            '/api/v1/persons/principal/timer/stage',
-            { timerStage },
-            {
-                headers: this.headers,
-            }
-        );
     }
 
     static prepareDefaultTimerSettings(): TimerSettings {
@@ -73,11 +73,10 @@ export class TimerService {
     }
 
     static mapToTimerSettings(
-        timerSettings: TimerSettings | PrincipalBasicData,
-        stage: Stage
+        timerSettings: TimerSettings | PrincipalBasicData
     ): TimerSettings {
         return {
-            timerStage: stage,
+            timerStage: timerSettings.timerStage,
             timerSelectedTopic: timerSettings.timerSelectedTopic,
             timerSetHours: timerSettings.timerSetHours,
             timerSetMinutes: timerSettings.timerSetMinutes,

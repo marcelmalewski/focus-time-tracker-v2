@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommandLineComponent } from '../command-line/command-line.component';
 import { BottomMenuComponent } from '../bottom-menu/bottom-menu.component';
-import { Pages, Stages } from '../../other/typesAndConsts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     MatError,
@@ -14,10 +13,6 @@ import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { NgIf } from '@angular/common';
-import {
-    TimerCurrentTime,
-    TimerSettings,
-} from '../../interface/person.interface';
 import { TimerService } from '../../service/timer.service';
 import { Router } from '@angular/router';
 import { PrincipalDataService } from '../../service/principal-data.service';
@@ -26,7 +21,9 @@ import { MatCard, MatCardContent } from '@angular/material/card';
 import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
 import { Subject, takeUntil } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
-import { UnknownServerErrorMessage } from '../../other/message';
+import { Pages, Stages } from '../../spec/common-spec';
+import { TimerCurrentTime, TimerSettings } from '../../spec/person-spec';
+import { UnknownServerErrorMessage } from '../../spec/message-spec';
 
 @Component({
     selector: 'app-timer-focus',
@@ -71,10 +68,8 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
         const { principalBasicData } =
             this.principalDataService.getPrincipalMainTopicsBasicData();
 
-        this.timerSettings = TimerService.mapToTimerSettings(
-            principalBasicData,
-            principalBasicData.timerStage
-        );
+        this.timerSettings =
+            TimerService.mapToTimerSettings(principalBasicData);
 
         const { timerCurrentHour, timerCurrentMinute, timerCurrentSecond } =
             this.extractCurrentFocusTime(
@@ -146,7 +141,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
     onPause() {
         clearInterval(this.countDownId);
         this.timerService
-            .principalTimerPause(this.timerCurrentTime)
+            .principalMoveTimerToStagePause(this.timerCurrentTime)
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: timerRemainingFocus => {
@@ -191,25 +186,23 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
 
     onShortBreak() {
         const body: TimerSettings = this.timerSettings;
-        body.timerStage = Stages.FOCUS;
-
-        this.timerService
-            .principalTimerFocus(body)
-            .pipe(takeUntil(this.componentDestroyed$))
-            .subscribe({
-                next: timerRemainingFocus => {
-                    this.principalDataService.localUpdateTimerSettings(body);
-                    this.principalDataService.localUpdateTimerRemainingFocus(
-                        timerRemainingFocus
-                    );
-                    this.router.navigateByUrl(Pages.TIMER_FOCUS);
-                },
-                error: (_: HttpResponse<any>) => {
-                    this.notificationService.openErrorNotification(
-                        UnknownServerErrorMessage
-                    );
-                },
-            });
+        // this.timerService
+        //     .principalMoveTimerToStageFocus(body)
+        //     .pipe(takeUntil(this.componentDestroyed$))
+        //     .subscribe({
+        //         next: timerRemainingFocus => {
+        //             this.principalDataService.localUpdateTimerSettings(body);
+        //             this.principalDataService.localUpdateTimerRemainingFocus(
+        //                 timerRemainingFocus
+        //             );
+        //             this.router.navigateByUrl(Pages.TIMER_FOCUS);
+        //         },
+        //         error: (_: HttpResponse<any>) => {
+        //             this.notificationService.openErrorNotification(
+        //                 UnknownServerErrorMessage
+        //             );
+        //         },
+        //     });
     }
 
     onHome() {}

@@ -1,3 +1,8 @@
+export interface AuthInterface {
+    loginOrEmail: string;
+    password: string;
+}
+
 export const Pages = {
     LOGIN: 'login',
     TIMER_HOME: 'timer',

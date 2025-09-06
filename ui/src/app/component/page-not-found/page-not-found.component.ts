@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
-import { PageLinks } from '../../other/typesAndConsts';
+import { PageLinks } from '../../spec/common-spec';
 
 @Component({
     selector: 'page-not-found',

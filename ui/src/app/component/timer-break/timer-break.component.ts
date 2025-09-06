@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommandLineComponent } from '../command-line/command-line.component';
 import { BottomMenuComponent } from '../bottom-menu/bottom-menu.component';
-import { Pages, Stages } from '../../other/typesAndConsts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import {
     MatError,
     MatFormField,
@@ -13,18 +14,14 @@ import { MatInput } from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { NgIf } from '@angular/common';
-import {
-    TimerCurrentTime,
-    TimerSettings,
-} from '../../interface/person.interface';
 import { TimerService } from '../../service/timer.service';
 import { Router } from '@angular/router';
 import { PrincipalDataService } from '../../service/principal-data.service';
 import { NotificationService } from '../../service/notification.service';
-import { MatCard, MatCardContent } from '@angular/material/card';
 import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
-import { Subject } from 'rxjs';
+import { TimerCurrentTime, TimerSettings } from '../../spec/person-spec';
+import { Pages } from '../../spec/common-spec';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-timer-break',
@@ -51,7 +48,7 @@ import { Subject } from 'rxjs';
 })
 export class TimerBreakComponent implements OnInit, OnDestroy {
     private componentDestroyed$ = new Subject<void>();
-    protected readonly Pages = Pages;
+    readonly Pages = Pages;
 
     timerSettings!: TimerSettings;
     timerCurrentTime!: TimerCurrentTime;
@@ -68,10 +65,8 @@ export class TimerBreakComponent implements OnInit, OnDestroy {
         const { principalBasicData } =
             this.principalDataService.getPrincipalMainTopicsBasicData();
 
-        this.timerSettings = TimerService.mapToTimerSettings(
-            principalBasicData,
-            principalBasicData.timerStage
-        );
+        this.timerSettings =
+            TimerService.mapToTimerSettings(principalBasicData);
     }
 
     ngOnDestroy() {
@@ -109,6 +104,4 @@ export class TimerBreakComponent implements OnInit, OnDestroy {
             this.timerCurrentTime.timerCurrentSecond = 59;
         }
     }
-
-    protected readonly Stages = Stages;
 }

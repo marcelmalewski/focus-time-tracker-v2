@@ -41,13 +41,11 @@ public class SecurityConfiguration {
                 .anyRequest()
                 .authenticated()
             )
-
             .formLogin(formLogin -> formLogin
                 .successHandler((request, response, authentication) -> {
                     // Do nothing upon successful login
                 })
             )
-
             .exceptionHandling(exceptionHandling -> exceptionHandling
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
             );

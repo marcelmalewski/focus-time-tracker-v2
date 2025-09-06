@@ -2,15 +2,15 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { CommandLineComponent } from '../command-line/command-line.component';
 import { Subject, takeUntil } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
-import { Pages } from '../../other/typesAndConsts';
-import {
-    LoggedOutMessage,
-    UnknownServerErrorMessageRefreshPage,
-} from '../../other/message';
 import { Router } from '@angular/router';
 import { GeneralActionsService } from '../../service/general-actions.service';
 import { PrincipalDataService } from '../../service/principal-data.service';
 import { NotificationService } from '../../service/notification.service';
+import {
+    LoggedOutMessage,
+    UnknownServerErrorMessageRefreshPage,
+} from '../../spec/message-spec';
+import { Pages } from '../../spec/common-spec';
 
 @Component({
     selector: 'bottom-menu',

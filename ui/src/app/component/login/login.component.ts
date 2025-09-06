@@ -1,17 +1,16 @@
 import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { AuthInterface } from '../../interface/auth.interface';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { HttpParams, HttpResponse } from '@angular/common/http';
-import { Pages } from '../../other/typesAndConsts';
 import { Router, RouterLink } from '@angular/router';
 import { GeneralActionsService } from '../../service/general-actions.service';
+import { NotificationService } from '../../service/notification.service';
+import { AuthInterface, Pages } from '../../spec/common-spec';
 import {
     NotImplementedYet,
     UnknownServerErrorMessageRefreshPage,
-} from '../../other/message';
-import { NotificationService } from '../../service/notification.service';
+} from '../../spec/message-spec';
 
 @Component({
     selector: 'app-login',

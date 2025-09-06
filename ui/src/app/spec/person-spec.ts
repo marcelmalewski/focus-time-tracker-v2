@@ -1,4 +1,4 @@
-import { BreakType, Stage } from '../other/typesAndConsts';
+import { BreakType, Stage } from './common-spec';
 
 export interface PrincipalBasicData {
     id: number;
