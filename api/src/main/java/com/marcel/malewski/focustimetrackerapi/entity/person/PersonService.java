@@ -66,21 +66,12 @@ public class PersonService {
         };
     }
 
-    public boolean existsByLogin(String login) {
-        return personRepository.existsByLogin(login);
-    }
-
-    public boolean existsByEmail(String email) {
-        return personRepository.existsByEmail(email);
-    }
-
     public Person create(@NotNull Person person) {
         return personRepository.save(person);
     }
 
     public void updatePrincipalTimerSettings(
         Principal principal,
-        @NotNull
         TimerSettingsDto timerSettings,
         HttpServletRequest request,
         HttpServletResponse response
@@ -88,7 +79,7 @@ public class PersonService {
         long principalId = SecurityHelper.extractIdFromPrincipal(principal);
         int numberOfAffectedRows = personRepository.updateTimerSettings(
             principalId,
-            timerSettings.timerStage(),
+            Stage.HOME,
             timerSettings.timerSelectedTopic(),
             timerSettings.timerSetHours(),
             timerSettings.timerSetMinutes(),
@@ -107,7 +98,6 @@ public class PersonService {
 
     public void updatePrincipalTimerStage(
         Principal principal,
-        @NotNull
         TimerStageDto dto,
         HttpServletRequest request,
         HttpServletResponse response
@@ -124,9 +114,8 @@ public class PersonService {
         }
     }
 
-    public int principalTimerFocus(
+    public int principalMoveTimerToStageFocus(
         Principal principal,
-        @NotNull
         TimerSettingsDto timerSettings,
         HttpServletRequest request,
         HttpServletResponse response
@@ -136,7 +125,7 @@ public class PersonService {
             timerSettings.timerSetHours(), timerSettings.timerSetMinutes(), timerSettings.timerSetSeconds());
         int numberOfAffectedRows = personRepository.updateTimerSettingsAndRemainingFocus(
             principalId,
-            timerSettings.timerStage(),
+            Stage.PAUSE,
             timerSettings.timerSelectedTopic(),
             timerSettings.timerSetHours(),
             timerSettings.timerSetMinutes(),
@@ -156,9 +145,8 @@ public class PersonService {
         return timerRemainingFocus;
     }
 
-    public int principalTimerPause(
+    public int principalMoveTimerToStagePause(
         Principal principal,
-        @NotNull
         TimerCurrentTimeDto dto,
         HttpServletRequest request,
         HttpServletResponse response
@@ -184,9 +172,8 @@ public class PersonService {
         return hours * 60 * 60 + minutes * 60 + seconds;
     }
 
-    public void principalTimerBreak(
+    public void principalMoveTimerToStageBreak(
         Principal principal,
-        @NotNull
         TimerBreakDto dto,
         HttpServletRequest request,
         HttpServletResponse response
