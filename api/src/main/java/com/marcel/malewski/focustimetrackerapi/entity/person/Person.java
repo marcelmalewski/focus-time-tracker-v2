@@ -4,6 +4,8 @@ import com.marcel.malewski.focustimetrackerapi.converter.StageConverter;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopic;
 import com.marcel.malewski.focustimetrackerapi.enums.BreakType;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
+import com.marcel.malewski.focustimetrackerapi.validation.space.WithoutSpacesOnTheSides;
+import com.marcel.malewski.focustimetrackerapi.validation.space.WithoutSpacesWithinAWord;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -37,11 +39,17 @@ public class Person implements UserDetails {
 
     @Column(unique = true)
     @NotNull
+    @WithoutSpacesWithinAWord
+    @WithoutSpacesOnTheSides
     private String login;
     @NotNull
+    @WithoutSpacesWithinAWord
+    @WithoutSpacesOnTheSides
     private String password;
     @Column(unique = true)
     @NotNull
+    @WithoutSpacesWithinAWord
+    @WithoutSpacesOnTheSides
     private String email;
     @CreationTimestamp
     @Column(updatable = false)
