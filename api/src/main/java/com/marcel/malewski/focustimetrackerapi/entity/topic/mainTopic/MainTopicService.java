@@ -2,7 +2,6 @@ package com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic;
 
 import org.springframework.stereotype.Service;
 
-// TODO użyć albo skasować
 @Service
 public class MainTopicService {
     private final MainTopicRepository mainTopicRepository;
