@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import { catchError, map, Observable, retry, tap } from 'rxjs';
 import { PrincipalDataService } from '../service/principal-data.service';
-import { PrincipalWithMainTopics } from '../interface/person.interface';
+import { PrincipalWithMainTopics } from '../spec/person-spec';
 
 @Injectable({
     providedIn: 'root',

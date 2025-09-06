@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Stage, Stages } from '../other/typesAndConsts';
 import {
     PrincipalBasicData,
-    TimerSettings,
     TimerCurrentTime,
-} from '../interface/person.interface';
+    TimerSettings,
+} from '../spec/person-spec';
+import { Stage, Stages } from '../spec/common-spec';
 
 @Injectable({
     providedIn: 'root',

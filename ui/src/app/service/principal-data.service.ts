@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { NotificationService } from './notification.service';
+import { Router } from '@angular/router';
 import {
     MainTopicBasicData,
     PrincipalBasicData,
     PrincipalWithMainTopics,
     TimerSettings,
-} from '../interface/person.interface';
+} from '../spec/person-spec';
 import {
     NotLoggedInMessage,
     UnknownServerErrorMessageRefreshPage,
-} from '../other/message';
-import { Pages, Stage } from '../other/typesAndConsts';
-import { NotificationService } from './notification.service';
-import { Router } from '@angular/router';
+} from '../spec/message-spec';
+import { Pages, Stage } from '../spec/common-spec';
 
 @Injectable({
     providedIn: 'root',

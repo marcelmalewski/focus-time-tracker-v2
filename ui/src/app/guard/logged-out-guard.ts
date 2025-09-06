@@ -6,8 +6,8 @@ import {
     RouterStateSnapshot,
 } from '@angular/router';
 import { catchError, map, Observable, of, retry } from 'rxjs';
-import { Pages } from '../other/typesAndConsts';
 import { GeneralActionsService } from '../service/general-actions.service';
+import { Pages } from '../spec/common-spec';
 
 @Injectable({
     providedIn: 'root',
