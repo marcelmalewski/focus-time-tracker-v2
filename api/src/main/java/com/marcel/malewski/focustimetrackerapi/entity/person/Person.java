@@ -105,7 +105,7 @@ public class Person implements UserDetails {
     @Nullable
     private Integer timerRemainingInterval;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     @Builder.Default
     @NotNull
     private List<MainTopic> mainTopics = new ArrayList<>();

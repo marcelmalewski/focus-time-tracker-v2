@@ -26,12 +26,12 @@ public class MainTopic {
     @NotNull
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id")
     @NotNull
     private Person owner;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "focussession_id")
     private FocusSession focusSession;
 

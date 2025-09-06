@@ -24,7 +24,7 @@ public class FocusSession {
     @NotNull
     private Boolean finished;
 
-    @OneToMany(mappedBy = "focusSession")
+    @OneToMany(mappedBy = "focusSession", fetch = FetchType.LAZY)
     @NotNull
     private List<MainTopic> mainTopic;
 
