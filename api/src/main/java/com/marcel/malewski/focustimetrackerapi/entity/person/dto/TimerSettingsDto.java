@@ -1,14 +1,11 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person.dto;
 
-import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 public record TimerSettingsDto(
-    @NotNull
-    Stage timerStage,
     @Nullable
     String timerSelectedTopic,
     @Min(0)
