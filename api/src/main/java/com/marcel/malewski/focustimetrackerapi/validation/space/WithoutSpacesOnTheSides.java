@@ -5,7 +5,6 @@ import jakarta.validation.Payload;
 
 import java.lang.annotation.*;
 
-// TODO użyć przy dodawaniu nazwy dla sesji albo skasować
 @Documented
 @Constraint(validatedBy = SpaceOnTheSidesValidator.class)
 @Target(ElementType.FIELD)
