@@ -88,7 +88,7 @@ public class Person implements UserDetails {
     @Max(59)
     @Builder.Default
     @NotNull
-    private Integer timerLongBreak = 10;
+    private Integer timerLongBreak = 20;
 
     @Builder.Default
     private boolean timerAutoBreak = false;
