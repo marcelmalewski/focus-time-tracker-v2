@@ -27,7 +27,7 @@
         </div>
 
         <div
-            class="flex w-1/3 flex-col items-center gap-4 border-r-2 border-black">
+            class="flex w-1/3 flex-col items-center gap-6 border-r-2 border-black">
             <p class="text-2xl">Timer</p>
 
             <mat-form-field class="w-40">
@@ -103,7 +103,7 @@
             </mat-form-field>
         </div>
 
-        <div class="flex w-1/3 flex-col items-start gap-4 pl-4 pt-4">
+        <div class="flex w-1/3 flex-col items-start gap-6 pl-4 pt-4">
             <label class="ml-2">Select a topic</label>
             <mat-form-field>
                 <mat-label>Topic</mat-label>
@@ -150,7 +150,7 @@
             </mat-form-field>
 
             <mat-form-field floatLabel="always" class="w-40">
-                <mat-label>Short break</mat-label>
+                <mat-label>Long break</mat-label>
                 <input
                     matInput
                     type="number"
@@ -179,7 +179,6 @@
                     class="custom-slide-toggle"
                     labelPosition="after"
                     name="timerAutoBreakInput"
-                    #timerAutoBreakInput="ngModel"
                     [(ngModel)]="timerSettings.timerAutoBreak">
                 </mat-slide-toggle>
                 <div class="text-xl">Enable auto break</div>
