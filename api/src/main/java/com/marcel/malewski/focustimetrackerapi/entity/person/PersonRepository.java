@@ -32,7 +32,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     int updateTimerStageAndRemainingFocus(
         @Param(value = "id") long id,
         @Param(value = "timerStage") Stage timerStage,
-        @Param(value = "timerRemainingFocus") int timerRemainingTime
+        @Param(value = "timerRemainingFocus") Integer timerRemainingTime
     );
 
     @Modifying(clearAutomatically = true)
