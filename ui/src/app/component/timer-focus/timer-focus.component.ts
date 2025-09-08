@@ -73,7 +73,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
 
         const { timerCurrentHour, timerCurrentMinute, timerCurrentSecond } =
             this.extractCurrentFocusTime(
-                principalBasicData.timerRemainingFocus
+                principalBasicData.timerRemainingFocus!
             );
         this.timerCurrentTime = {
             timerCurrentHour,
@@ -184,6 +184,29 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
             });
     }
 
+    onBackToHome() {
+        clearInterval(this.countDownId);
+        this.timerService
+            .principalMoveTimerBackToStageHome()
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe({
+                next: () => {
+                    this.principalDataService.localUpdateTimerStage(
+                        Stages.HOME
+                    );
+                    this.principalDataService.localUpdateTimerRemainingFocus(
+                        undefined
+                    );
+                    this.router.navigateByUrl(Pages.TIMER_HOME);
+                },
+                error: (_: HttpResponse<any>) => {
+                    this.notificationService.openErrorNotification(
+                        UnknownServerErrorMessage
+                    );
+                },
+            });
+    }
+
     onShortBreak() {
         const body: TimerSettings = this.timerSettings;
         // this.timerService
@@ -204,6 +227,4 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
         //         },
         //     });
     }
-
-    onHome() {}
 }
