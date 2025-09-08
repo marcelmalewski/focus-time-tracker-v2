@@ -42,6 +42,15 @@ export class TimerService {
         );
     }
 
+    principalMoveTimerBackToStageHome(): Observable<any> {
+        return this.http.put<number>(
+            '/api/v1/persons/principal/timer/home-after-focus',
+            {
+                headers: this.headers,
+            }
+        );
+    }
+
     principalMoveTimerToStagePause(body: TimerCurrentTime): Observable<number> {
         return this.http.put<number>(
             '/api/v1/persons/principal/timer/pause',
