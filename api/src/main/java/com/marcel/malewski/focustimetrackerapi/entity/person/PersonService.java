@@ -125,7 +125,7 @@ public class PersonService {
             timerSettings.timerSetHours(), timerSettings.timerSetMinutes(), timerSettings.timerSetSeconds());
         int numberOfAffectedRows = personRepository.updateTimerSettingsAndRemainingFocus(
             principalId,
-            Stage.PAUSE,
+            Stage.FOCUS,
             timerSettings.timerSelectedTopic(),
             timerSettings.timerSetHours(),
             timerSettings.timerSetMinutes(),

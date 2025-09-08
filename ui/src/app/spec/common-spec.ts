@@ -12,6 +12,8 @@ export const Pages = {
     SETTINGS: 'settings',
     UNKNOWN_ERROR: 'unknown-error',
 } as const;
+type PagesKeys = keyof typeof Pages;
+export type Page = (typeof Pages)[PagesKeys];
 
 export const PageLinks = {
     TIMER_HOME: '/timer',
@@ -42,3 +44,11 @@ export const BreakTypes = {
 } as const;
 type BreakTypesKeys = keyof typeof BreakTypes;
 export type BreakType = (typeof Stages)[BreakTypesKeys];
+
+export const StageToPage: Record<Stage, Page> = {
+    HOME: Pages.TIMER_HOME,
+    FOCUS: Pages.TIMER_FOCUS,
+    PAUSE: Pages.TIMER_FOCUS,
+    SHORT_BREAK: Pages.TIMER_BREAK,
+    LONG_BREAK: Pages.TIMER_BREAK,
+};

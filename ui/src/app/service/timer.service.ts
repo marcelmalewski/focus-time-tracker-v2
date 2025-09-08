@@ -6,7 +6,8 @@ import {
     TimerCurrentTime,
     TimerSettings,
 } from '../spec/person-spec';
-import { Stage, Stages } from '../spec/common-spec';
+import { Page, Stage, Stages, StageToPage } from '../spec/common-spec';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -14,7 +15,19 @@ import { Stage, Stages } from '../spec/common-spec';
 export class TimerService {
     headers = new HttpHeaders().set('content-type', 'application/json');
 
-    constructor(private http: HttpClient) {}
+    constructor(
+        private http: HttpClient,
+        private router: Router
+    ) {}
+
+    matchPageWithStage(currentPage: Page, currentStage: Stage) {
+        const expectedCurrentPage = StageToPage[currentStage];
+        if (currentPage === expectedCurrentPage) {
+            return;
+        }
+
+        this.router.navigateByUrl(expectedCurrentPage);
+    }
 
     updatePrincipalTimerSettings(body: TimerSettings): Observable<any> {
         return this.http.put('/api/v1/persons/principal/timer', body, {

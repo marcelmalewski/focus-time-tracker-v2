@@ -66,7 +66,12 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         const { principalBasicData } =
-            this.principalDataService.getPrincipalMainTopicsBasicData();
+            this.principalDataService.getPrincipalWithMainTopics();
+
+        this.timerService.matchPageWithStage(
+            Pages.TIMER_FOCUS,
+            principalBasicData.timerStage
+        );
 
         this.timerSettings =
             TimerService.mapToTimerSettings(principalBasicData);

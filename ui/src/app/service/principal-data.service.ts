@@ -28,7 +28,7 @@ export class PrincipalDataService {
         private notificationService: NotificationService
     ) {}
 
-    getPrincipalMainTopicsBasicData(): PrincipalWithMainTopics {
+    getPrincipalWithMainTopics(): PrincipalWithMainTopics {
         return {
             principalBasicData: this.principalBasicData!,
             mainTopicsBasicData: this.mainTopicsBasicData!,

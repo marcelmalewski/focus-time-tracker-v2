@@ -80,7 +80,12 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
 
     ngOnInit(): void {
         const { principalBasicData, mainTopicsBasicData } =
-            this.principalDataService.getPrincipalMainTopicsBasicData();
+            this.principalDataService.getPrincipalWithMainTopics();
+
+        this.timerService.matchPageWithStage(
+            Pages.TIMER_HOME,
+            principalBasicData.timerStage
+        );
 
         this.mainTopicsBasicData = mainTopicsBasicData;
         this.timerSettings =

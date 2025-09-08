@@ -63,7 +63,7 @@ export class TimerBreakComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         const { principalBasicData } =
-            this.principalDataService.getPrincipalMainTopicsBasicData();
+            this.principalDataService.getPrincipalWithMainTopics();
 
         this.timerSettings =
             TimerService.mapToTimerSettings(principalBasicData);
