@@ -66,16 +66,24 @@ public class PersonController {
 
     @PutMapping(value = PERSON_PRINCIPAL_PATH_V1 + "/timer/focus")
     public ResponseEntity<Integer> principalMoveTimerToStageFocus(Principal principal, HttpServletRequest request,
-                                                       HttpServletResponse response,
-                                                       @RequestBody @Valid TimerSettingsDto dto) {
+                                                                  HttpServletResponse response,
+                                                                  @RequestBody @Valid TimerSettingsDto dto) {
         int timerRemainingFocus = personService.principalMoveTimerToStageFocus(principal, dto, request, response);
         return new ResponseEntity<>(timerRemainingFocus, HttpStatus.OK);
     }
 
+    @PutMapping(value = PERSON_PRINCIPAL_PATH_V1 + "/timer/home-after-focus")
+    public ResponseEntity<Void> principalMoveTimerBackToStageHome(Principal principal, HttpServletRequest request,
+                                                                  HttpServletResponse response
+    ) {
+        personService.principalMoveTimerBackToStageHome(principal, request, response);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PutMapping(value = PERSON_PRINCIPAL_PATH_V1 + "/timer/pause")
     public ResponseEntity<Integer> principalMoveTimerToStagePause(Principal principal, HttpServletRequest request,
-                                                       HttpServletResponse response,
-                                                       @RequestBody @Valid TimerCurrentTimeDto dto) {
+                                                                  HttpServletResponse response,
+                                                                  @RequestBody @Valid TimerCurrentTimeDto dto) {
         int timerRemainingFocus = personService.principalMoveTimerToStagePause(principal, dto, request, response);
         return new ResponseEntity<>(timerRemainingFocus, HttpStatus.OK);
     }
