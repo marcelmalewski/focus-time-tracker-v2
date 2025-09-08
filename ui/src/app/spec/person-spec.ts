@@ -13,7 +13,7 @@ export interface PrincipalBasicData {
     timerLongBreak: number;
     timerAutoBreak: boolean;
     timerInterval: number;
-    timerRemainingFocus: number;
+    timerRemainingFocus?: number;
     timerRemainingInterval: number;
 }
 
