@@ -89,7 +89,7 @@ export class PrincipalDataService {
         this.principalBasicData!.timerInterval = timerSettings.timerInterval;
     }
 
-    localUpdateTimerRemainingFocus(timerRemainingFocus: number) {
+    localUpdateTimerRemainingFocus(timerRemainingFocus?: number) {
         this.principalBasicData!.timerRemainingFocus = timerRemainingFocus;
     }
 
