@@ -2,7 +2,6 @@ package com.marcel.malewski.focustimetrackerapi.entity.person;
 
 import com.marcel.malewski.focustimetrackerapi.converter.StageConverter;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopic;
-import com.marcel.malewski.focustimetrackerapi.enums.BreakType;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 import com.marcel.malewski.focustimetrackerapi.validation.space.WithoutSpacesOnTheSides;
 import com.marcel.malewski.focustimetrackerapi.validation.space.WithoutSpacesWithinAWord;
@@ -101,7 +100,7 @@ public class Person implements UserDetails {
     @Nullable
     private Integer timerRemainingFocus;
     @Nullable
-    private BreakType nextBreakType;
+    private Stage nextBreakType;
     @Nullable
     private Integer timerRemainingInterval;
 
