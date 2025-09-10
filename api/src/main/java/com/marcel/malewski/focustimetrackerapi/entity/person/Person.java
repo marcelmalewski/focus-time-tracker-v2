@@ -101,7 +101,7 @@ public class Person implements UserDetails {
     @Nullable
     private Integer timerRemainingFocus;
     @Nullable
-    private BreakType previousBreakType;
+    private BreakType nextBreakType;
     @Nullable
     private Integer timerRemainingInterval;
 
