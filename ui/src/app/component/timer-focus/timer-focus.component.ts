@@ -22,8 +22,9 @@ import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
 import { Subject, takeUntil } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { Pages, Stages } from '../../spec/common-spec';
-import { TimerCurrentTime, TimerSettings } from '../../spec/person-spec';
+import { TimerSettings } from '../../spec/person-spec';
 import { UnknownServerErrorMessage } from '../../spec/message-spec';
+import { TimerCurrentTime } from '../../spec/timer-spec';
 
 @Component({
     selector: 'app-timer-focus',
@@ -212,24 +213,83 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
             });
     }
 
+    onAutoBreak() {
+        clearInterval(this.countDownId);
+        this.timerService
+            .principalMoveTimerToStageBreakWitAutoBreak()
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe({
+                next: result => {
+                    this.principalDataService.localUpdateTimerStage(
+                        result.timerStage
+                    );
+                    this.principalDataService.localUpdateTimerRemainingInterval(
+                        result.timerRemainingInterval
+                    );
+                    this.principalDataService.localUpdateTimerRemainingFocus(
+                        undefined
+                    );
+                    this.router.navigateByUrl(Pages.TIMER_BREAK);
+                },
+                error: (_: HttpResponse<any>) => {
+                    this.notificationService.openErrorNotification(
+                        UnknownServerErrorMessage
+                    );
+                },
+            });
+    }
+
     onShortBreak() {
-        const body: TimerSettings = this.timerSettings;
-        // this.timerService
-        //     .principalMoveTimerToStageFocus(body)
-        //     .pipe(takeUntil(this.componentDestroyed$))
-        //     .subscribe({
-        //         next: timerRemainingFocus => {
-        //             this.principalDataService.localUpdateTimerSettings(body);
-        //             this.principalDataService.localUpdateTimerRemainingFocus(
-        //                 timerRemainingFocus
-        //             );
-        //             this.router.navigateByUrl(Pages.TIMER_FOCUS);
-        //         },
-        //         error: (_: HttpResponse<any>) => {
-        //             this.notificationService.openErrorNotification(
-        //                 UnknownServerErrorMessage
-        //             );
-        //         },
-        //     });
+        const body = {
+            breakTypeToStart: Stages.SHORT_BREAK,
+        };
+
+        clearInterval(this.countDownId);
+        this.timerService
+            .principalMoveTimerToStageBreakWitManualBreak(body)
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe({
+                next: () => {
+                    this.principalDataService.localUpdateTimerStage(
+                        Stages.SHORT_BREAK
+                    );
+                    this.principalDataService.localUpdateTimerRemainingFocus(
+                        undefined
+                    );
+                    this.router.navigateByUrl(Pages.TIMER_BREAK);
+                },
+                error: (_: HttpResponse<any>) => {
+                    this.notificationService.openErrorNotification(
+                        UnknownServerErrorMessage
+                    );
+                },
+            });
+    }
+
+    onLongBreak() {
+        const body = {
+            breakTypeToStart: Stages.LONG_BREAK,
+        };
+
+        clearInterval(this.countDownId);
+        this.timerService
+            .principalMoveTimerToStageBreakWitManualBreak(body)
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe({
+                next: () => {
+                    this.principalDataService.localUpdateTimerStage(
+                        Stages.LONG_BREAK
+                    );
+                    this.principalDataService.localUpdateTimerRemainingFocus(
+                        undefined
+                    );
+                    this.router.navigateByUrl(Pages.TIMER_BREAK);
+                },
+                error: (_: HttpResponse<any>) => {
+                    this.notificationService.openErrorNotification(
+                        UnknownServerErrorMessage
+                    );
+                },
+            });
     }
 }
