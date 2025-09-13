@@ -19,9 +19,10 @@ import { Router } from '@angular/router';
 import { PrincipalDataService } from '../../service/principal-data.service';
 import { NotificationService } from '../../service/notification.service';
 import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
-import { TimerCurrentTime, TimerSettings } from '../../spec/person-spec';
+import { TimerSettings } from '../../spec/person-spec';
 import { Pages } from '../../spec/common-spec';
 import { NgIf } from '@angular/common';
+import { TimerCurrentTime } from '../../spec/timer-spec';
 
 @Component({
     selector: 'app-timer-break',
