@@ -38,13 +38,6 @@ export const Stages = {
 type StagesKeys = keyof typeof Stages;
 export type Stage = (typeof Stages)[StagesKeys];
 
-export const BreakTypes = {
-    SHORT_BREAK: 'SHORT_BREAK',
-    LONG_BREAK: 'LONG_BREAK',
-} as const;
-type BreakTypesKeys = keyof typeof BreakTypes;
-export type BreakType = (typeof Stages)[BreakTypesKeys];
-
 export const StageToPage: Record<Stage, Page> = {
     HOME: Pages.TIMER_HOME,
     FOCUS: Pages.TIMER_FOCUS,
