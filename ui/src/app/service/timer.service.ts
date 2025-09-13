@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {
-    PrincipalBasicData,
-    TimerCurrentTime,
-    TimerSettings,
-} from '../spec/person-spec';
+import { PrincipalBasicData, TimerSettings } from '../spec/person-spec';
 import { Page, Stage, Stages, StageToPage } from '../spec/common-spec';
 import { Router } from '@angular/router';
+import {
+    MoveTimerToStageBreakWithAutoBreakResult,
+    TimerCurrentTime,
+    TimerManualBreakDto,
+} from '../spec/timer-spec';
 
 @Injectable({
     providedIn: 'root',
@@ -74,10 +75,25 @@ export class TimerService {
         );
     }
 
-    principalMoveTimerToStageBreak(body: any): Observable<any> {
-        return this.http.put('/api/v1/persons/principal/timer/break', body, {
-            headers: this.headers,
-        });
+    principalMoveTimerToStageBreakWitAutoBreak(): Observable<MoveTimerToStageBreakWithAutoBreakResult> {
+        return this.http.put<MoveTimerToStageBreakWithAutoBreakResult>(
+            '/api/v1/persons/principal/timer/auto-break',
+            {
+                headers: this.headers,
+            }
+        );
+    }
+
+    principalMoveTimerToStageBreakWitManualBreak(
+        body: TimerManualBreakDto
+    ): Observable<any> {
+        return this.http.put(
+            '/api/v1/persons/principal/timer/manual-break',
+            body,
+            {
+                headers: this.headers,
+            }
+        );
     }
 
     static prepareDefaultTimerSettings(): TimerSettings {
