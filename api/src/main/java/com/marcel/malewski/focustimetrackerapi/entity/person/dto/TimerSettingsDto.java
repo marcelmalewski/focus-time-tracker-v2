@@ -33,7 +33,7 @@ public record TimerSettingsDto(
     Boolean timerAutoBreak,
     @Min(1)
     @Max(99)
-    @NotNull
+    @Nullable
     Integer timerInterval
 ) {
 }
