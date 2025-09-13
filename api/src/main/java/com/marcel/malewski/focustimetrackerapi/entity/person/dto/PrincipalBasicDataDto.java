@@ -27,7 +27,6 @@ public record PrincipalBasicDataDto(
     Integer timerLongBreak,
     @NotNull
     Boolean timerAutoBreak,
-    @NotNull
     Integer timerInterval,
     Integer timerRemainingFocus,
     Integer timerRemainingInterval
