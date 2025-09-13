@@ -89,11 +89,11 @@ public class PersonController {
     }
 
     @PutMapping(value = PERSON_PRINCIPAL_PATH_V1 + "/timer/auto-break")
-    public ResponseEntity<Void> principalMoveTimerToStageBreakWitAutoBreak(Principal principal, HttpServletRequest request,
-                                                                           HttpServletResponse response,
-                                                                           @RequestBody @Valid TimerManualBreakDto dto) {
-        personService.principalMoveTimerToStageBreakWitAutoBreak(principal, dto, request, response);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<MoveTimerToStageBreakWithAutoBreakResult> principalMoveTimerToStageBreakWitAutoBreak(Principal principal, HttpServletRequest request,
+                                                                                                               HttpServletResponse response) {
+        MoveTimerToStageBreakWithAutoBreakResult result =
+            personService.principalMoveTimerToStageBreakWitAutoBreak(principal, request, response);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PutMapping(value = PERSON_PRINCIPAL_PATH_V1 + "/timer/manual-break")
