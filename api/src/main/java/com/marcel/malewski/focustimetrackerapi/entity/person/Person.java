@@ -93,14 +93,11 @@ public class Person implements UserDetails {
     private boolean timerAutoBreak = false;
     @Min(1)
     @Max(99)
-    @Builder.Default
-    @NotNull
-    private Integer timerInterval = 1;
+    @Nullable
+    private Integer timerInterval;
 
     @Nullable
     private Integer timerRemainingFocus;
-    @Nullable
-    private Stage nextBreakType;
     @Nullable
     private Integer timerRemainingInterval;
 
