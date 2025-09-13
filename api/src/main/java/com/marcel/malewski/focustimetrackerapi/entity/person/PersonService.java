@@ -123,19 +123,38 @@ public class PersonService {
         long principalId = SecurityHelper.extractIdFromPrincipal(principal);
         int timerRemainingFocus = this.calculateRemainingTime(
             timerSettings.timerSetHours(), timerSettings.timerSetMinutes(), timerSettings.timerSetSeconds());
-        int numberOfAffectedRows = personRepository.updateTimerSettingsAndRemainingFocus(
-            principalId,
-            Stage.FOCUS,
-            timerSettings.timerSelectedTopic(),
-            timerSettings.timerSetHours(),
-            timerSettings.timerSetMinutes(),
-            timerSettings.timerSetSeconds(),
-            timerSettings.timerShortBreak(),
-            timerSettings.timerLongBreak(),
-            timerSettings.timerAutoBreak(),
-            timerSettings.timerInterval(),
-            timerRemainingFocus
-        );
+
+        int numberOfAffectedRows;
+        if (timerSettings.timerAutoBreak()) {
+            numberOfAffectedRows = personRepository.updateTimerSettingsAndRemainingFocusWhenAutoBreak(
+                principalId,
+                Stage.FOCUS,
+                timerSettings.timerSelectedTopic(),
+                timerSettings.timerSetHours(),
+                timerSettings.timerSetMinutes(),
+                timerSettings.timerSetSeconds(),
+                timerSettings.timerShortBreak(),
+                timerSettings.timerLongBreak(),
+                false,
+                timerSettings.timerInterval(),
+                timerRemainingFocus,
+                timerSettings.timerInterval()
+            );
+        } else {
+            numberOfAffectedRows = personRepository.updateTimerSettingsAndRemainingFocus(
+                principalId,
+                Stage.FOCUS,
+                timerSettings.timerSelectedTopic(),
+                timerSettings.timerSetHours(),
+                timerSettings.timerSetMinutes(),
+                timerSettings.timerSetSeconds(),
+                timerSettings.timerShortBreak(),
+                timerSettings.timerLongBreak(),
+                true,
+                timerSettings.timerInterval(),
+                timerRemainingFocus
+            );
+        }
 
         if (numberOfAffectedRows == 0) {
             SecurityHelper.logoutManually(request, response);
@@ -151,9 +170,10 @@ public class PersonService {
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         long principalId = SecurityHelper.extractIdFromPrincipal(principal);
-        int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingFocus(
+        int numberOfAffectedRows = personRepository.afterStageFocus(
             principalId,
             Stage.HOME,
+            null,
             null
         );
 
@@ -190,31 +210,66 @@ public class PersonService {
         return hours * 60 * 60 + minutes * 60 + seconds;
     }
 
-    public void principalMoveTimerToStageBreak(
+    public MoveTimerToStageBreakWithAutoBreakResult principalMoveTimerToStageBreakWitAutoBreak(
         Principal principal,
-        TimerBreakDto dto,
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws AuthenticatedPersonNotFoundException {
+        long principalId = SecurityHelper.extractIdFromPrincipal(principal);
+        Person person = personRepository.findById(principalId).orElseThrow(() -> {
+            SecurityHelper.logoutManually(request, response);
+            return new AuthenticatedPersonNotFoundException();
+        });
+
+
+        int currentTimerRemainingInterval = person.getTimerRemainingInterval() - 1;
+        int numberOfAffectedRows;
+        MoveTimerToStageBreakWithAutoBreakResult result;
+
+        if (currentTimerRemainingInterval == 0) {
+            numberOfAffectedRows = personRepository.afterStageFocus(
+                principalId,
+                Stage.LONG_BREAK,
+                person.getTimerInterval(),
+                null
+            );
+            result = new MoveTimerToStageBreakWithAutoBreakResult(Stage.LONG_BREAK,
+                person.getTimerInterval());
+        } else {
+            numberOfAffectedRows = personRepository.afterStageFocus(
+                principalId,
+                Stage.SHORT_BREAK,
+                currentTimerRemainingInterval,
+                null
+            );
+            result = new MoveTimerToStageBreakWithAutoBreakResult(Stage.SHORT_BREAK,
+                currentTimerRemainingInterval);
+        }
+
+        if (numberOfAffectedRows == 0) {
+            SecurityHelper.logoutManually(request, response);
+            throw new AuthenticatedPersonNotFoundException();
+        }
+        return result;
+    }
+
+    public void principalMoveTimerToStageBreakWitManualBreak(
+        Principal principal,
+        TimerManualBreakDto dto,
         HttpServletRequest request,
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         long principalId = SecurityHelper.extractIdFromPrincipal(principal);
 
-        if (dto.timerAutoBreak()) {
-            // Jeżeli remaining interval jest zero, ustaw remaining na full i daj short break
-            // Jeżeli remaining interval jest na jeden, to teraz będzie long break, w innym wypadku short break
-            //      Zmniejsz remaining interval
-        } else {
-            // Użyj breakTypeToStart
-        }
-//        int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingBreak(
-//            principalId,
-//            dto.timerStage(),
-//            dto.timerRemainingFocus()
-//        );
+        int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingFocus(
+            principalId,
+            dto.breakTypeToStart(),
+            null
+        );
 
-//        if (numberOfAffectedRows == 0) {
-//            securityHelper.logoutManually(request, response);
-//            throw new AuthenticatedPersonNotFoundException();
-//        }
-        // Result: remaining interval, break type
+        if (numberOfAffectedRows == 0) {
+            SecurityHelper.logoutManually(request, response);
+            throw new AuthenticatedPersonNotFoundException();
+        }
     }
 }
