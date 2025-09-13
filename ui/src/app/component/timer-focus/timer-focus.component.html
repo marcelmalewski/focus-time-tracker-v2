@@ -24,17 +24,20 @@
 
                 <button
                     *ngIf="timerSettings.timerAutoBreak"
-                    class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov">
+                    class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov"
+                    (click)="onAutoBreak()">
                     Break
                 </button>
 
                 <ng-container *ngIf="!timerSettings.timerAutoBreak">
                     <button
-                        class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov">
+                        class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov"
+                        (click)="onShortBreak()">
                         Short break
                     </button>
                     <button
-                        class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov">
+                        class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov"
+                        (click)="onLongBreak()">
                         Long break
                     </button>
                 </ng-container>
