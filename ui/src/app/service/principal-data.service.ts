@@ -96,4 +96,9 @@ export class PrincipalDataService {
     localUpdateTimerStage(timerStage: Stage) {
         this.principalBasicData!.timerStage = timerStage;
     }
+
+    localUpdateTimerRemainingInterval(timerRemainingInterval: number) {
+        this.principalBasicData!.timerRemainingInterval =
+            timerRemainingInterval;
+    }
 }
