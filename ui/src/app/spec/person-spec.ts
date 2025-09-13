@@ -1,4 +1,4 @@
-import { BreakType, Stage } from './common-spec';
+import { Stage } from './common-spec';
 
 export interface PrincipalBasicData {
     id: number;
@@ -27,24 +27,6 @@ export interface TimerSettings {
     timerLongBreak: number;
     timerAutoBreak: boolean;
     timerInterval: number;
-}
-
-export interface TimerCurrentTime {
-    timerCurrentHour: number;
-    timerCurrentMinute: number;
-    timerCurrentSecond: number;
-}
-
-export interface TimerBreak {
-    breakTypeToStart: BreakType;
-    timerRemainingInterval: number;
-    timerAutoBreak?: boolean;
-}
-
-export interface TimerBreakResponse {
-    breakTypeToStart: BreakType;
-    timerRemainingInterval: number;
-    timerAutoBreak?: boolean;
 }
 
 export interface PrincipalWithMainTopics {
