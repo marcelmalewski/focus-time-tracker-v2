@@ -22,9 +22,9 @@ export class PrincipalWithMainTopicsGuard implements CanActivate {
             .getOrLoadPrincipalWithMainTopics()
             .pipe(
                 retry(3),
-                tap((data: PrincipalWithMainTopics) => {
+                tap((result: PrincipalWithMainTopics) => {
                     this.principalDataService.setPrincipalDataWithMainTopics(
-                        data
+                        result
                     );
                 }),
                 map(() => true),
