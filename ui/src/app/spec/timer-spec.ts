@@ -6,6 +6,11 @@ export interface TimerCurrentTime {
     timerCurrentSecond: number;
 }
 
+export interface TimerCurrentBreakTime {
+    timerCurrentMinute: number;
+    timerCurrentSecond: number;
+}
+
 export interface MoveTimerToStageBreakWithAutoBreakResult {
     timerStage: Stage;
     timerRemainingInterval: number;
