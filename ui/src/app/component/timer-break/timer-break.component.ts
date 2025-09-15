@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommandLineComponent } from '../command-line/command-line.component';
 import { BottomMenuComponent } from '../bottom-menu/bottom-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Subject } from 'rxjs';
 import { MatCard, MatCardContent } from '@angular/material/card';
+import { NgIf } from '@angular/common';
 import {
     MatError,
     MatFormField,
@@ -14,15 +14,12 @@ import { MatInput } from '@angular/material/input';
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
-import { TimerService } from '../../service/timer.service';
-import { Router } from '@angular/router';
 import { PrincipalDataService } from '../../service/principal-data.service';
-import { NotificationService } from '../../service/notification.service';
 import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
-import { TimerSettings } from '../../spec/person-spec';
-import { Pages } from '../../spec/common-spec';
-import { NgIf } from '@angular/common';
-import { TimerCurrentTime } from '../../spec/timer-spec';
+import { PrincipalBasicData } from '../../spec/person-spec';
+import { Pages, Stages } from '../../spec/common-spec';
+import { TimerCurrentBreakTime } from '../../spec/timer-spec';
+import { TimerService } from '../../service/timer.service';
 
 @Component({
     selector: 'app-timer-break',
@@ -47,35 +44,38 @@ import { TimerCurrentTime } from '../../spec/timer-spec';
         TimerFieldPipe,
     ],
 })
-export class TimerBreakComponent implements OnInit, OnDestroy {
-    private componentDestroyed$ = new Subject<void>();
+export class TimerBreakComponent implements OnInit {
     readonly Pages = Pages;
 
-    timerSettings!: TimerSettings;
-    timerCurrentTime!: TimerCurrentTime;
+    principalBasicData!: PrincipalBasicData;
+    timerCurrentTime!: TimerCurrentBreakTime;
     countDownId: any | undefined;
 
     constructor(
-        private router: Router,
-        private timerService: TimerService,
         private principalDataService: PrincipalDataService,
-        private notificationService: NotificationService
+        private timerService: TimerService
     ) {}
 
     ngOnInit(): void {
-        const { principalBasicData } =
-            this.principalDataService.getPrincipalWithMainTopics();
+        this.principalBasicData =
+            this.principalDataService.getPrincipalBasicData();
 
-        this.timerSettings =
-            TimerService.mapToTimerSettings(principalBasicData);
-    }
+        this.timerService.matchPageWithStage(
+            Pages.TIMER_FOCUS,
+            this.principalBasicData.timerStage
+        );
 
-    ngOnDestroy() {
-        if (this.countDownId) {
-            clearInterval(this.countDownId);
-        }
-        this.componentDestroyed$.next();
-        this.componentDestroyed$.complete();
+        const timerCurrentTimeInMinutes =
+            this.principalBasicData.timerStage === Stages.SHORT_BREAK
+                ? this.principalBasicData.timerShortBreak
+                : this.principalBasicData.timerLongBreak;
+        this.timerCurrentTime = {
+            timerCurrentMinute: timerCurrentTimeInMinutes,
+            timerCurrentSecond: 0,
+        };
+        this.countDownId = setInterval(() => {
+            this.countDownLogic();
+        }, 1000);
     }
 
     private countDownLogic() {
@@ -93,14 +93,6 @@ export class TimerBreakComponent implements OnInit, OnDestroy {
                 this.timerCurrentTime.timerCurrentMinute - 1;
             this.timerCurrentTime.timerCurrentSecond = 59;
         } else {
-            this.countDownLogicOnTimerSetMinutesIsZero();
-        }
-    }
-
-    private countDownLogicOnTimerSetMinutesIsZero() {
-        if (this.timerCurrentTime.timerCurrentHour > 0) {
-            this.timerCurrentTime.timerCurrentHour =
-                this.timerCurrentTime.timerCurrentHour - 1;
             this.timerCurrentTime.timerCurrentMinute = 59;
             this.timerCurrentTime.timerCurrentSecond = 59;
         }
