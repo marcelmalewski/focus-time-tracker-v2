@@ -135,7 +135,7 @@ public class PersonService {
                 timerSettings.timerSetSeconds(),
                 timerSettings.timerShortBreak(),
                 timerSettings.timerLongBreak(),
-                false,
+                true,
                 timerSettings.timerInterval(),
                 timerRemainingFocus,
                 timerSettings.timerInterval()
@@ -150,7 +150,7 @@ public class PersonService {
                 timerSettings.timerSetSeconds(),
                 timerSettings.timerShortBreak(),
                 timerSettings.timerLongBreak(),
-                true,
+                false,
                 timerSettings.timerInterval(),
                 timerRemainingFocus
             );
