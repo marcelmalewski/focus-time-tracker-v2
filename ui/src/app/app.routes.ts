@@ -6,6 +6,8 @@ import { LoggedOutGuard } from './guard/logged-out-guard';
 import { PrincipalWithMainTopicsGuard } from './guard/principal-with-main-topics.guard';
 import { TimerFocusComponent } from './component/timer-focus/timer-focus.component';
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
+import { PrincipalBasicDataGuard } from './guard/principal-basic-data.guard';
+import { TimerBreakComponent } from './component/timer-break/timer-break.component';
 
 export const routes: Routes = [
     {
@@ -24,7 +26,13 @@ export const routes: Routes = [
         path: 'timer/focus',
         title: 'timer-focus',
         component: TimerFocusComponent,
-        canActivate: [PrincipalWithMainTopicsGuard],
+        canActivate: [PrincipalBasicDataGuard],
+    },
+    {
+        path: 'timer/break',
+        title: 'timer-break',
+        component: TimerBreakComponent,
+        canActivate: [PrincipalBasicDataGuard],
     },
     {
         path: 'unknown-error',
