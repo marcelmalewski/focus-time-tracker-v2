@@ -5,13 +5,13 @@
 
             <div class="grid grid-cols-2 gap-4">
                 <button
-                    *ngIf="timerSettings.timerStage === Stages.FOCUS"
+                    *ngIf="principalBasicData.timerStage === Stages.FOCUS"
                     class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov"
                     (click)="onPause()">
                     Pause
                 </button>
                 <button
-                    *ngIf="timerSettings.timerStage === Stages.PAUSE"
+                    *ngIf="principalBasicData.timerStage === Stages.PAUSE"
                     class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov"
                     (click)="onResume()">
                     Resume
@@ -23,13 +23,13 @@
                 </button>
 
                 <button
-                    *ngIf="timerSettings.timerAutoBreak"
+                    *ngIf="principalBasicData.timerAutoBreak"
                     class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov"
                     (click)="onAutoBreak()">
                     Break
                 </button>
 
-                <ng-container *ngIf="!timerSettings.timerAutoBreak">
+                <ng-container *ngIf="!principalBasicData.timerAutoBreak">
                     <button
                         class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov"
                         (click)="onShortBreak()">
@@ -59,23 +59,23 @@
         <div class="flex w-1/3 flex-col items-start gap-1 pl-4 pt-4 text-xl">
             <p>
                 <span class="font-bold">Selected topic:</span>
-                {{ timerSettings.timerSelectedTopic }}
+                {{ principalBasicData.timerSelectedTopic }}
             </p>
             <p>
                 <span class="font-bold">Short break:</span>
-                {{ timerSettings.timerShortBreak }}
+                {{ principalBasicData.timerShortBreak }}
             </p>
             <p>
                 <span class="font-bold">Long break:</span>
-                {{ timerSettings.timerLongBreak }}
+                {{ principalBasicData.timerLongBreak }}
             </p>
             <p>
                 <span class="font-bold">Auto break:</span>
-                {{ timerSettings.timerAutoBreak ? 'Enabled' : 'Disabled' }}
+                {{ principalBasicData.timerAutoBreak ? 'Enabled' : 'Disabled' }}
             </p>
-            <p *ngIf="timerSettings.timerAutoBreak">
+            <p *ngIf="principalBasicData.timerAutoBreak">
                 <span class="font-bold">Interval:</span>
-                {{ timerSettings.timerInterval }}
+                {{ principalBasicData.timerInterval }}
             </p>
         </div>
     </div>
