@@ -22,7 +22,7 @@ import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
 import { Subject, takeUntil } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { Pages, Stages } from '../../spec/common-spec';
-import { TimerSettings } from '../../spec/person-spec';
+import { PrincipalBasicData } from '../../spec/person-spec';
 import { UnknownServerErrorMessage } from '../../spec/message-spec';
 import { TimerCurrentTime } from '../../spec/timer-spec';
 
@@ -54,7 +54,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
     protected readonly Pages = Pages;
     protected readonly Stages = Stages;
 
-    timerSettings!: TimerSettings;
+    principalBasicData!: PrincipalBasicData;
     timerCurrentTime!: TimerCurrentTime;
     countDownId: any | undefined;
 
@@ -66,20 +66,17 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        const { principalBasicData } =
-            this.principalDataService.getPrincipalWithMainTopics();
+        this.principalBasicData =
+            this.principalDataService.getPrincipalBasicData();
 
         this.timerService.matchPageWithStage(
             Pages.TIMER_FOCUS,
-            principalBasicData.timerStage
+            this.principalBasicData.timerStage
         );
-
-        this.timerSettings =
-            TimerService.mapToTimerSettings(principalBasicData);
 
         const { timerCurrentHour, timerCurrentMinute, timerCurrentSecond } =
             this.extractCurrentFocusTime(
-                principalBasicData.timerRemainingFocus!
+                this.principalBasicData.timerRemainingFocus!
             );
         this.timerCurrentTime = {
             timerCurrentHour,
@@ -87,7 +84,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
             timerCurrentSecond,
         };
 
-        if (this.timerSettings.timerStage === Stages.FOCUS) {
+        if (this.principalBasicData.timerStage === Stages.FOCUS) {
             this.countDownId = setInterval(() => {
                 this.countDownLogic();
             }, 1000);
@@ -154,7 +151,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
                     this.principalDataService.localUpdateTimerRemainingFocus(
                         timerRemainingFocus
                     );
-                    this.timerSettings.timerStage = Stages.PAUSE;
+                    this.principalBasicData.timerStage = Stages.PAUSE;
                 },
                 error: (_: HttpResponse<any>) => {
                     this.notificationService.openErrorNotification(
@@ -177,7 +174,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
                     this.principalDataService.localUpdateTimerStage(
                         Stages.FOCUS
                     );
-                    this.timerSettings.timerStage = Stages.FOCUS;
+                    this.principalBasicData.timerStage = Stages.FOCUS;
                     this.countDownId = setInterval(() => {
                         this.countDownLogic();
                     }, 1000);
