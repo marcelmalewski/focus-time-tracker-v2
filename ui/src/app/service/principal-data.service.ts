@@ -28,11 +28,24 @@ export class PrincipalDataService {
         private notificationService: NotificationService
     ) {}
 
+    getPrincipalBasicData(): PrincipalBasicData {
+        return this.principalBasicData!;
+    }
+
     getPrincipalWithMainTopics(): PrincipalWithMainTopics {
         return {
             principalBasicData: this.principalBasicData!,
             mainTopicsBasicData: this.mainTopicsBasicData!,
         };
+    }
+
+    getOrLoadPrincipalBasicData(): Observable<PrincipalBasicData> {
+        if (this.principalBasicData !== undefined)
+            return of(this.principalBasicData!);
+
+        return this.http.get<PrincipalBasicData>(
+            '/api/v1/persons/principal/basic-data'
+        );
     }
 
     getOrLoadPrincipalWithMainTopics(): Observable<PrincipalWithMainTopics> {
@@ -45,6 +58,10 @@ export class PrincipalDataService {
         return this.http.get<PrincipalWithMainTopics>(
             '/api/v1/persons/principal/with-main-topics'
         );
+    }
+
+    setPrincipalBasicData(principalBasicData: PrincipalBasicData) {
+        this.principalBasicData = principalBasicData;
     }
 
     setPrincipalDataWithMainTopics(data: PrincipalWithMainTopics) {
