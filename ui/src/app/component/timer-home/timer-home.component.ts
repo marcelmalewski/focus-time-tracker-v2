@@ -112,6 +112,9 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
                     this.principalDataService.localUpdateTimerRemainingFocus(
                         timerRemainingFocus
                     );
+                    this.principalDataService.localUpdateTimerRemainingInterval(
+                        body.timerInterval
+                    );
                     this.principalDataService.localUpdateTimerStage(
                         Stages.FOCUS
                     );
