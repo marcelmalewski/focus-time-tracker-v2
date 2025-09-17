@@ -222,11 +222,10 @@ public class PersonService {
         });
 
 
-        int currentTimerRemainingInterval = person.getTimerRemainingInterval() - 1;
         int numberOfAffectedRows;
         MoveTimerToStageBreakWithAutoBreakResult result;
 
-        if (currentTimerRemainingInterval == 0) {
+        if (person.getTimerRemainingInterval() == 0) {
             numberOfAffectedRows = personRepository.afterStageFocus(
                 principalId,
                 Stage.LONG_BREAK,
@@ -236,6 +235,7 @@ public class PersonService {
             result = new MoveTimerToStageBreakWithAutoBreakResult(Stage.LONG_BREAK,
                 person.getTimerInterval());
         } else {
+            int currentTimerRemainingInterval = person.getTimerRemainingInterval() - 1;
             numberOfAffectedRows = personRepository.afterStageFocus(
                 principalId,
                 Stage.SHORT_BREAK,
