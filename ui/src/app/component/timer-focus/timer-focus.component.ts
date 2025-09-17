@@ -21,7 +21,7 @@ import { MatCard, MatCardContent } from '@angular/material/card';
 import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
 import { Subject, takeUntil } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
-import { Pages, Stages } from '../../spec/common-spec';
+import { Pages, Stage, Stages } from '../../spec/common-spec';
 import { PrincipalBasicData } from '../../spec/person-spec';
 import { UnknownServerErrorMessage } from '../../spec/message-spec';
 import { TimerCurrentTime } from '../../spec/timer-spec';
@@ -57,6 +57,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
     principalBasicData!: PrincipalBasicData;
     timerCurrentTime!: TimerCurrentTime;
     countDownId: any | undefined;
+    nextBreak: Stage | undefined;
 
     constructor(
         private router: Router,
@@ -74,6 +75,8 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
             this.principalBasicData.timerStage
         );
 
+        this.nextBreak = this.prepareNextBreakName();
+
         const { timerCurrentHour, timerCurrentMinute, timerCurrentSecond } =
             this.extractCurrentFocusTime(
                 this.principalBasicData.timerRemainingFocus!
@@ -89,6 +92,12 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
                 this.countDownLogic();
             }, 1000);
         }
+    }
+
+    private prepareNextBreakName(): Stage {
+        return this.principalBasicData.timerRemainingInterval === 0
+            ? Stages.LONG_BREAK
+            : Stages.SHORT_BREAK;
     }
 
     private extractCurrentFocusTime(remainingTime: number) {
