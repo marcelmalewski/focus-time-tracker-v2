@@ -22,12 +22,14 @@
                     Home
                 </button>
 
-                <button
-                    *ngIf="principalBasicData.timerAutoBreak"
-                    class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov"
-                    (click)="onAutoBreak()">
-                    Break
-                </button>
+                <div class="col-span-2 flex items-center justify-center">
+                    <button
+                        *ngIf="principalBasicData.timerAutoBreak"
+                        class="rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov"
+                        (click)="onAutoBreak()">
+                        Break
+                    </button>
+                </div>
 
                 <ng-container *ngIf="!principalBasicData.timerAutoBreak">
                     <button
@@ -73,10 +75,16 @@
                 <span class="font-bold">Auto break:</span>
                 {{ principalBasicData.timerAutoBreak ? 'Enabled' : 'Disabled' }}
             </p>
-            <p *ngIf="principalBasicData.timerAutoBreak">
-                <span class="font-bold">Interval:</span>
-                {{ principalBasicData.timerInterval }}
-            </p>
+            <ng-container *ngIf="principalBasicData.timerAutoBreak">
+                <p>
+                    <span class="font-bold">Interval:</span>
+                    {{ principalBasicData.timerInterval }}
+                </p>
+                <p>
+                    <span class="font-bold">Next break:</span>
+                    {{ nextBreak }}
+                </p>
+            </ng-container>
         </div>
     </div>
     <bottom-menu [commandContext]="Pages.TIMER_FOCUS"></bottom-menu>
