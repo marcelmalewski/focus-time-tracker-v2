@@ -179,6 +179,7 @@
                     class="custom-slide-toggle"
                     labelPosition="after"
                     name="timerAutoBreakInput"
+                    (change)="onAutoBreakToggle()"
                     [(ngModel)]="timerSettings.timerAutoBreak">
                 </mat-slide-toggle>
                 <div class="text-xl">Enable auto break</div>
