@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommandLineComponent } from '../command-line/command-line.component';
 import { BottomMenuComponent } from '../bottom-menu/bottom-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,10 +16,15 @@ import { MatSelect } from '@angular/material/select';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { PrincipalDataService } from '../../service/principal-data.service';
 import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
-import { PrincipalBasicData } from '../../spec/person-spec';
+import { PrincipalBasicData, TimerSettings } from '../../spec/person-spec';
 import { Pages, Stages } from '../../spec/common-spec';
 import { TimerCurrentBreakTime } from '../../spec/timer-spec';
 import { TimerService } from '../../service/timer.service';
+import { Subject, takeUntil } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
+import { UnknownServerErrorMessage } from '../../spec/message-spec';
+import { Router } from '@angular/router';
+import { NotificationService } from '../../service/notification.service';
 
 @Component({
     selector: 'app-timer-break',
@@ -44,7 +49,8 @@ import { TimerService } from '../../service/timer.service';
         TimerFieldPipe,
     ],
 })
-export class TimerBreakComponent implements OnInit {
+export class TimerBreakComponent implements OnInit, OnDestroy {
+    private componentDestroyed$ = new Subject<void>();
     readonly Pages = Pages;
 
     principalBasicData!: PrincipalBasicData;
@@ -52,8 +58,10 @@ export class TimerBreakComponent implements OnInit {
     countDownId: any | undefined;
 
     constructor(
+        private router: Router,
         private principalDataService: PrincipalDataService,
-        private timerService: TimerService
+        private timerService: TimerService,
+        private notificationService: NotificationService
     ) {}
 
     ngOnInit(): void {
@@ -96,5 +104,38 @@ export class TimerBreakComponent implements OnInit {
             this.timerCurrentTime.timerCurrentMinute = 59;
             this.timerCurrentTime.timerCurrentSecond = 59;
         }
+    }
+
+    ngOnDestroy() {
+        if (this.countDownId) {
+            clearInterval(this.countDownId);
+        }
+        this.componentDestroyed$.next();
+        this.componentDestroyed$.complete();
+    }
+
+    onSubmitAgain() {
+        const body: TimerSettings = TimerService.mapToTimerSettings(
+            this.principalBasicData
+        );
+        this.timerService
+            .principalMoveTimerToStageFocusAgain(body)
+            .pipe(takeUntil(this.componentDestroyed$))
+            .subscribe({
+                next: timerRemainingFocus => {
+                    this.principalDataService.localUpdateTimerRemainingFocus(
+                        timerRemainingFocus
+                    );
+                    this.principalDataService.localUpdateTimerStage(
+                        Stages.FOCUS
+                    );
+                    this.router.navigateByUrl(Pages.TIMER_FOCUS);
+                },
+                error: (_: HttpResponse<any>) => {
+                    this.notificationService.openErrorNotification(
+                        UnknownServerErrorMessage
+                    );
+                },
+            });
     }
 }
