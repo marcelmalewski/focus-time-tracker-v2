@@ -25,6 +25,7 @@ import { Pages, Stage, Stages } from '../../spec/common-spec';
 import { PrincipalBasicData } from '../../spec/person-spec';
 import { UnknownServerErrorMessage } from '../../spec/message-spec';
 import { TimerCurrentTime } from '../../spec/timer-spec';
+import { translateBreakPipe } from '../../pipes/translate-break.pipe';
 
 @Component({
     selector: 'app-timer-focus',
@@ -47,6 +48,7 @@ import { TimerCurrentTime } from '../../spec/timer-spec';
         MatCard,
         MatCardContent,
         TimerFieldPipe,
+        translateBreakPipe,
     ],
 })
 export class TimerFocusComponent implements OnInit, OnDestroy {
@@ -57,7 +59,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
     principalBasicData!: PrincipalBasicData;
     timerCurrentTime!: TimerCurrentTime;
     countDownId: any | undefined;
-    nextBreak: Stage | undefined;
+    nextBreak: string | undefined;
 
     constructor(
         private router: Router,
@@ -94,7 +96,7 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
         }
     }
 
-    private prepareNextBreakName(): Stage {
+    private prepareNextBreakName(): string {
         return this.principalBasicData.timerRemainingInterval === 0
             ? Stages.LONG_BREAK
             : Stages.SHORT_BREAK;
