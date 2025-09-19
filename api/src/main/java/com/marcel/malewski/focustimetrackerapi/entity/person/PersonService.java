@@ -164,6 +164,29 @@ public class PersonService {
         return timerRemainingFocus;
     }
 
+    public int principalMoveTimerToStageFocusAgain(
+        Principal principal,
+        TimerSetTimeDto timerSetTimeDto,
+        HttpServletRequest request,
+        HttpServletResponse response
+    ) throws AuthenticatedPersonNotFoundException {
+        long principalId = SecurityHelper.extractIdFromPrincipal(principal);
+        int timerRemainingFocus = this.calculateRemainingTime(
+            timerSetTimeDto.timerSetHours(), timerSetTimeDto.timerSetMinutes(), timerSetTimeDto.timerSetSeconds());
+
+        int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingFocus(
+            principalId,
+            Stage.FOCUS,
+            timerRemainingFocus
+        );
+        if (numberOfAffectedRows == 0) {
+            SecurityHelper.logoutManually(request, response);
+            throw new AuthenticatedPersonNotFoundException();
+        }
+
+        return timerRemainingFocus;
+    }
+
     public void principalMoveTimerBackToStageHome(
         Principal principal,
         HttpServletRequest request,
@@ -229,8 +252,9 @@ public class PersonService {
             numberOfAffectedRows = personRepository.afterStageFocus(
                 principalId,
                 Stage.LONG_BREAK,
-                person.getTimerInterval(),
-                null
+                null,
+                person.getTimerInterval()
+
             );
             result = new MoveTimerToStageBreakWithAutoBreakResult(Stage.LONG_BREAK,
                 person.getTimerInterval());
@@ -239,8 +263,9 @@ public class PersonService {
             numberOfAffectedRows = personRepository.afterStageFocus(
                 principalId,
                 Stage.SHORT_BREAK,
-                currentTimerRemainingInterval,
-                null
+                null,
+                currentTimerRemainingInterval
+
             );
             result = new MoveTimerToStageBreakWithAutoBreakResult(Stage.SHORT_BREAK,
                 currentTimerRemainingInterval);
