@@ -156,5 +156,14 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
         this.notificationService.openErrorNotification(NotImplementedYet);
     }
 
+    onAutoBreakToggle() {
+        if (
+            this.timerSettings.timerAutoBreak &&
+            !this.timerSettings.timerInterval
+        ) {
+            this.timerSettings.timerInterval = 1;
+        }
+    }
+
     protected readonly Pages = Pages;
 }
