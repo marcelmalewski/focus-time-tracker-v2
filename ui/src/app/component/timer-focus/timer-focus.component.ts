@@ -199,26 +199,10 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
     }
 
     onBackToHome() {
-        clearInterval(this.countDownId);
-        this.timerService
-            .principalMoveTimerBackToStageHome()
-            .pipe(takeUntil(this.componentDestroyed$))
-            .subscribe({
-                next: () => {
-                    this.principalDataService.localUpdateTimerStage(
-                        Stages.HOME
-                    );
-                    this.principalDataService.localUpdateTimerRemainingFocus(
-                        undefined
-                    );
-                    this.router.navigateByUrl(Pages.TIMER_HOME);
-                },
-                error: (_: HttpResponse<any>) => {
-                    this.notificationService.openErrorNotification(
-                        UnknownServerErrorMessage
-                    );
-                },
-            });
+        this.timerService.onBackToHome(
+            this.countDownId,
+            this.componentDestroyed$
+        );
     }
 
     onAutoBreak() {
