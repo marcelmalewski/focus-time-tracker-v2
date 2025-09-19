@@ -29,6 +29,12 @@ export interface TimerSettings {
     timerInterval: number;
 }
 
+export interface TimerSetTimeDto {
+    timerSetHours: number;
+    timerSetMinutes: number;
+    timerSetSeconds: number;
+}
+
 export interface PrincipalWithMainTopics {
     principalBasicData: PrincipalBasicData;
     mainTopicsBasicData: MainTopicBasicData[];
