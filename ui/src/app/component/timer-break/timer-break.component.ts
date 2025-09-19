@@ -114,7 +114,8 @@ export class TimerBreakComponent implements OnInit, OnDestroy {
         this.componentDestroyed$.complete();
     }
 
-    onSubmitAgain() {
+    onAgain() {
+        clearInterval(this.countDownId);
         const body: TimerSettings = TimerService.mapToTimerSettings(
             this.principalBasicData
         );
@@ -137,5 +138,12 @@ export class TimerBreakComponent implements OnInit, OnDestroy {
                     );
                 },
             });
+    }
+
+    onBackToHome() {
+        this.timerService.onBackToHome(
+            this.countDownId,
+            this.componentDestroyed$
+        );
     }
 }
