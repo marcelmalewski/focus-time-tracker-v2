@@ -1,4 +1,4 @@
-import { Stage } from './common-spec';
+import { Page, Pages, Stage } from './common-spec';
 
 export interface TimerCurrentTime {
     timerCurrentHour: number;
@@ -19,3 +19,8 @@ export interface MoveTimerToStageBreakWithAutoBreakResult {
 export interface TimerManualBreakDto {
     breakTypeToStart: Stage;
 }
+
+export const BreakTypeLabels: { [key: string]: string } = {
+    SHORT_BREAK: 'Short break',
+    LONG_BREAK: 'Long break',
+};
