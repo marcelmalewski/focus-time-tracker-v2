@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import {
     PrincipalBasicData,
     TimerSetTimeDto,
     TimerSettings,
 } from '../spec/person-spec';
-import { Page, Stage, Stages, StageToPage } from '../spec/common-spec';
+import { Page, Pages, Stage, Stages, StageToPage } from '../spec/common-spec';
 import { Router } from '@angular/router';
 import {
     MoveTimerToStageBreakWithAutoBreakResult,
     TimerCurrentTime,
     TimerManualBreakDto,
 } from '../spec/timer-spec';
+import { UnknownServerErrorMessage } from '../spec/message-spec';
+import { PrincipalDataService } from './principal-data.service';
+import { NotificationService } from './notification.service';
 
 @Injectable({
     providedIn: 'root',
@@ -22,7 +25,9 @@ export class TimerService {
 
     constructor(
         private http: HttpClient,
-        private router: Router
+        private router: Router,
+        private principalDataService: PrincipalDataService,
+        private notificationService: NotificationService
     ) {}
 
     matchPageWithStage(currentPage: Page, currentStage: Stage) {
@@ -72,15 +77,6 @@ export class TimerService {
         );
     }
 
-    principalMoveTimerBackToStageHome(): Observable<any> {
-        return this.http.put<number>(
-            '/api/v1/persons/principal/timer/home-after-focus',
-            {
-                headers: this.headers,
-            }
-        );
-    }
-
     principalMoveTimerToStagePause(body: TimerCurrentTime): Observable<number> {
         return this.http.put<number>(
             '/api/v1/persons/principal/timer/pause',
@@ -106,6 +102,40 @@ export class TimerService {
         return this.http.put(
             '/api/v1/persons/principal/timer/manual-break',
             body,
+            {
+                headers: this.headers,
+            }
+        );
+    }
+
+    onBackToHome(
+        countDownId: any | undefined,
+        componentDestroyed$: Subject<void>
+    ) {
+        clearInterval(countDownId);
+        this.principalMoveTimerBackToStageHome()
+            .pipe(takeUntil(componentDestroyed$))
+            .subscribe({
+                next: () => {
+                    this.principalDataService.localUpdateTimerStage(
+                        Stages.HOME
+                    );
+                    this.principalDataService.localUpdateTimerRemainingFocus(
+                        undefined
+                    );
+                    this.router.navigateByUrl(Pages.TIMER_HOME);
+                },
+                error: (_: HttpResponse<any>) => {
+                    this.notificationService.openErrorNotification(
+                        UnknownServerErrorMessage
+                    );
+                },
+            });
+    }
+
+    private principalMoveTimerBackToStageHome(): Observable<any> {
+        return this.http.put<number>(
+            '/api/v1/persons/principal/timer/home-after-focus',
             {
                 headers: this.headers,
             }
