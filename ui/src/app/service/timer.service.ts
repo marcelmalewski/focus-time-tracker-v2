@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { PrincipalBasicData, TimerSettings } from '../spec/person-spec';
+import {
+    PrincipalBasicData,
+    TimerSetTimeDto,
+    TimerSettings,
+} from '../spec/person-spec';
 import { Page, Stage, Stages, StageToPage } from '../spec/common-spec';
 import { Router } from '@angular/router';
 import {
@@ -49,6 +53,18 @@ export class TimerService {
     principalMoveTimerToStageFocus(body: TimerSettings): Observable<number> {
         return this.http.put<number>(
             '/api/v1/persons/principal/timer/focus',
+            body,
+            {
+                headers: this.headers,
+            }
+        );
+    }
+
+    principalMoveTimerToStageFocusAgain(
+        body: TimerSetTimeDto
+    ): Observable<number> {
+        return this.http.put<number>(
+            '/api/v1/persons/principal/timer/focus-again',
             body,
             {
                 headers: this.headers,
