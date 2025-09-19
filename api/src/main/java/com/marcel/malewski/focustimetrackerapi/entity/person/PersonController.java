@@ -72,6 +72,14 @@ public class PersonController {
         return new ResponseEntity<>(timerRemainingFocus, HttpStatus.OK);
     }
 
+    @PutMapping(value = PERSON_PRINCIPAL_PATH_V1 + "/timer/focus-again")
+    public ResponseEntity<Integer> principalMoveTimerToStageFocusAgain(Principal principal, HttpServletRequest request,
+                                                                       HttpServletResponse response,
+                                                                       @RequestBody @Valid TimerSetTimeDto dto) {
+        int timerRemainingFocus = personService.principalMoveTimerToStageFocusAgain(principal, dto, request, response);
+        return new ResponseEntity<>(timerRemainingFocus, HttpStatus.OK);
+    }
+
     @PutMapping(value = PERSON_PRINCIPAL_PATH_V1 + "/timer/home-after-focus")
     public ResponseEntity<Void> principalMoveTimerBackToStageHome(Principal principal, HttpServletRequest request,
                                                                   HttpServletResponse response
