@@ -21,9 +21,12 @@ import { MatCard, MatCardContent } from '@angular/material/card';
 import { TimerFieldPipe } from '../../pipes/timer-field.pipe';
 import { Subject, takeUntil } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
-import { Pages, Stage, Stages } from '../../spec/common-spec';
+import { Pages, Stages } from '../../spec/common-spec';
 import { PrincipalBasicData } from '../../spec/person-spec';
-import { UnknownServerErrorMessage } from '../../spec/message-spec';
+import {
+    SavedNewSession,
+    UnknownServerErrorMessage,
+} from '../../spec/message-spec';
 import { TimerCurrentTime } from '../../spec/timer-spec';
 import { translateBreakPipe } from '../../pipes/translate-break.pipe';
 
@@ -221,6 +224,9 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
                     this.principalDataService.localUpdateTimerRemainingFocus(
                         undefined
                     );
+                    this.notificationService.openSuccessNotification(
+                        SavedNewSession
+                    );
                     this.router.navigateByUrl(Pages.TIMER_BREAK);
                 },
                 error: (_: HttpResponse<any>) => {
@@ -248,6 +254,9 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
                     this.principalDataService.localUpdateTimerRemainingFocus(
                         undefined
                     );
+                    this.notificationService.openSuccessNotification(
+                        SavedNewSession
+                    );
                     this.router.navigateByUrl(Pages.TIMER_BREAK);
                 },
                 error: (_: HttpResponse<any>) => {
@@ -274,6 +283,9 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
                     );
                     this.principalDataService.localUpdateTimerRemainingFocus(
                         undefined
+                    );
+                    this.notificationService.openSuccessNotification(
+                        SavedNewSession
                     );
                     this.router.navigateByUrl(Pages.TIMER_BREAK);
                 },

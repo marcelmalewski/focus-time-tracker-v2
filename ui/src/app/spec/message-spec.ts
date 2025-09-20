@@ -12,3 +12,5 @@ export const LessThanOrEqual99Message = 'Must be less than or equal to 99';
 export const TimerSettingsUpdated = 'Updated timer settings successfully';
 
 export const NotImplementedYet = 'Not implemented yet';
+
+export const SavedNewSession = 'Saved new session';
