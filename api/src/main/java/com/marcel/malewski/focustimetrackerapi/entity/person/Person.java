@@ -1,6 +1,7 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
 import com.marcel.malewski.focustimetrackerapi.converter.StageConverter;
+import com.marcel.malewski.focustimetrackerapi.entity.focussession.FocusSession;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopic;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 import com.marcel.malewski.focustimetrackerapi.validation.space.WithoutSpacesOnTheSides;
@@ -105,6 +106,11 @@ public class Person implements UserDetails {
     @Builder.Default
     @NotNull
     private List<MainTopic> mainTopics = new ArrayList<>();
+
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    @Builder.Default
+    @NotNull
+    private List<FocusSession> focusSessions = new ArrayList<>();
 
     @Override
     public String toString() {

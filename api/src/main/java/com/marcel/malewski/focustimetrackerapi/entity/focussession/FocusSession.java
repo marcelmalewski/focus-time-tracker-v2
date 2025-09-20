@@ -1,5 +1,6 @@
 package com.marcel.malewski.focustimetrackerapi.entity.focussession;
 
+import com.marcel.malewski.focustimetrackerapi.entity.person.Person;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -27,6 +28,11 @@ public class FocusSession {
     @OneToMany(mappedBy = "focusSession", fetch = FetchType.LAZY)
     @NotNull
     private List<MainTopic> mainTopic;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_id")
+    @NotNull
+    private Person person;
 
     @Override
     public String toString() {
