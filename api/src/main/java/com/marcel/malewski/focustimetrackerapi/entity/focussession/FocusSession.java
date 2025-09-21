@@ -25,14 +25,22 @@ public class FocusSession {
     @NotNull
     private Boolean finished;
 
-    @OneToMany(mappedBy = "focusSession", fetch = FetchType.LAZY)
-    @NotNull
-    private List<MainTopic> mainTopic;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id")
     @NotNull
     private Person person;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "maintopic_id")
+    @NotNull
+    private MainTopic mainTopic;
+
+    public FocusSession(boolean finished, Person person, MainTopic mainTopic) {
+        this.finished = finished;
+        this.person = person;
+        this.mainTopic = mainTopic;
+    }
+
 
     @Override
     public String toString() {
