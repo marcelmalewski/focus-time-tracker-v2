@@ -87,9 +87,11 @@ export class TimerService {
         );
     }
 
-    principalMoveTimerToStageBreakWitAutoBreak(): Observable<MoveTimerToStageBreakWithAutoBreakResult> {
+    principalMoveTimerToStageBreakWitAutoBreak(
+        finished: boolean
+    ): Observable<MoveTimerToStageBreakWithAutoBreakResult> {
         return this.http.put<MoveTimerToStageBreakWithAutoBreakResult>(
-            '/api/v1/persons/principal/timer/auto-break',
+            `/api/v1/persons/principal/timer/auto-break?finished=${finished}`,
             {
                 headers: this.headers,
             }
