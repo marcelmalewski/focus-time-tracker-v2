@@ -210,8 +210,14 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
 
     onAutoBreak() {
         clearInterval(this.countDownId);
+
+        const finished =
+            this.timerCurrentTime.timerCurrentSecond +
+                this.timerCurrentTime.timerCurrentSecond +
+                this.timerCurrentTime.timerCurrentSecond ===
+            0;
         this.timerService
-            .principalMoveTimerToStageBreakWitAutoBreak()
+            .principalMoveTimerToStageBreakWitAutoBreak(finished)
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe({
                 next: result => {
@@ -238,8 +244,14 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
     }
 
     onShortBreak() {
+        const finished =
+            this.timerCurrentTime.timerCurrentSecond +
+                this.timerCurrentTime.timerCurrentSecond +
+                this.timerCurrentTime.timerCurrentSecond ===
+            0;
         const body = {
             breakTypeToStart: Stages.SHORT_BREAK,
+            finished,
         };
 
         clearInterval(this.countDownId);
@@ -268,8 +280,14 @@ export class TimerFocusComponent implements OnInit, OnDestroy {
     }
 
     onLongBreak() {
+        const finished =
+            this.timerCurrentTime.timerCurrentSecond +
+                this.timerCurrentTime.timerCurrentSecond +
+                this.timerCurrentTime.timerCurrentSecond ===
+            0;
         const body = {
             breakTypeToStart: Stages.LONG_BREAK,
+            finished,
         };
 
         clearInterval(this.countDownId);
