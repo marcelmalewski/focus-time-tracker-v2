@@ -4,10 +4,10 @@ import com.marcel.malewski.focustimetrackerapi.entity.focussession.FocusSession;
 import com.marcel.malewski.focustimetrackerapi.entity.person.Person;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,9 +31,10 @@ public class MainTopic {
     @NotNull
     private Person owner;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "focussession_id")
-    private FocusSession focusSession;
+    @OneToMany(mappedBy = "mainTopic", fetch = FetchType.LAZY)
+    @NotNull
+    private List<FocusSession> focusSessions = new ArrayList<>();
+
 
     public MainTopic(String name, Person owner) {
         this.name = name;
