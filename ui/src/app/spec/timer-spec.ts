@@ -18,6 +18,7 @@ export interface MoveTimerToStageBreakWithAutoBreakResult {
 
 export interface TimerManualBreakDto {
     breakTypeToStart: Stage;
+    finished: boolean;
 }
 
 export const BreakTypeLabels: { [key: string]: string } = {
