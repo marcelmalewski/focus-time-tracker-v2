@@ -1,8 +1,12 @@
 package com.marcel.malewski.focustimetrackerapi.entity.person;
 
+import com.marcel.malewski.focustimetrackerapi.entity.focussession.FocusSession;
+import com.marcel.malewski.focustimetrackerapi.entity.focussession.FocusSessionService;
 import com.marcel.malewski.focustimetrackerapi.entity.person.dto.*;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.dto.TopicBasicDataDto;
+import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopic;
 import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopicMapper;
+import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopicRepository;
 import com.marcel.malewski.focustimetrackerapi.enums.Stage;
 import com.marcel.malewski.focustimetrackerapi.security.exception.AuthenticatedPersonNotFoundException;
 import com.marcel.malewski.focustimetrackerapi.security.util.SecurityHelper;
@@ -21,11 +25,15 @@ import java.util.Optional;
 public class PersonService {
     private final PersonRepository personRepository;
     private final PersonMapper personMapper;
+    private final FocusSessionService focusSessionService;
+    private final MainTopicRepository mainTopicRepository;
     private final MainTopicMapper mainTopicMapper;
 
-    public PersonService(PersonRepository personRepository, PersonMapper personMapper, MainTopicMapper mainTopicMapper) {
+    public PersonService(PersonRepository personRepository, PersonMapper personMapper, FocusSessionService focusSessionService, MainTopicRepository mainTopicRepository, MainTopicMapper mainTopicMapper) {
         this.personRepository = personRepository;
         this.personMapper = personMapper;
+        this.focusSessionService = focusSessionService;
+        this.mainTopicRepository = mainTopicRepository;
         this.mainTopicMapper = mainTopicMapper;
     }
 
@@ -77,6 +85,7 @@ public class PersonService {
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         long principalId = SecurityHelper.extractIdFromPrincipal(principal);
+
         int numberOfAffectedRows = personRepository.updateTimerSettings(
             principalId,
             Stage.HOME,
@@ -89,11 +98,7 @@ public class PersonService {
             timerSettings.timerAutoBreak(),
             timerSettings.timerInterval()
         );
-
-        if (numberOfAffectedRows == 0) {
-            SecurityHelper.logoutManually(request, response);
-            throw new AuthenticatedPersonNotFoundException();
-        }
+        ifPersonIdNotFoundLogout(numberOfAffectedRows, request, response);
     }
 
     public void updatePrincipalTimerStage(
@@ -103,15 +108,12 @@ public class PersonService {
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         long principalId = SecurityHelper.extractIdFromPrincipal(principal);
+
         int numberOfAffectedRows = personRepository.updateTimerStage(
             principalId,
             dto.timerStage()
         );
-
-        if (numberOfAffectedRows == 0) {
-            SecurityHelper.logoutManually(request, response);
-            throw new AuthenticatedPersonNotFoundException();
-        }
+        ifPersonIdNotFoundLogout(numberOfAffectedRows, request, response);
     }
 
     public int principalMoveTimerToStageFocus(
@@ -155,11 +157,7 @@ public class PersonService {
                 timerRemainingFocus
             );
         }
-
-        if (numberOfAffectedRows == 0) {
-            SecurityHelper.logoutManually(request, response);
-            throw new AuthenticatedPersonNotFoundException();
-        }
+        ifPersonIdNotFoundLogout(numberOfAffectedRows, request, response);
 
         return timerRemainingFocus;
     }
@@ -179,10 +177,7 @@ public class PersonService {
             Stage.FOCUS,
             timerRemainingFocus
         );
-        if (numberOfAffectedRows == 0) {
-            SecurityHelper.logoutManually(request, response);
-            throw new AuthenticatedPersonNotFoundException();
-        }
+        ifPersonIdNotFoundLogout(numberOfAffectedRows, request, response);
 
         return timerRemainingFocus;
     }
@@ -193,17 +188,14 @@ public class PersonService {
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         long principalId = SecurityHelper.extractIdFromPrincipal(principal);
+
         int numberOfAffectedRows = personRepository.afterStageFocus(
             principalId,
             Stage.HOME,
             null,
             null
         );
-
-        if (numberOfAffectedRows == 0) {
-            SecurityHelper.logoutManually(request, response);
-            throw new AuthenticatedPersonNotFoundException();
-        }
+        ifPersonIdNotFoundLogout(numberOfAffectedRows, request, response);
     }
 
     public int principalMoveTimerToStagePause(
@@ -215,16 +207,13 @@ public class PersonService {
         long principalId = SecurityHelper.extractIdFromPrincipal(principal);
         int timerRemainingFocus = this.calculateRemainingTime(
             dto.timerCurrentHour(), dto.timerCurrentMinute(), dto.timerCurrentSecond());
+
         int numberOfAffectedRows = personRepository.updateTimerStageAndRemainingFocus(
             principalId,
             Stage.PAUSE,
             timerRemainingFocus
         );
-
-        if (numberOfAffectedRows == 0) {
-            SecurityHelper.logoutManually(request, response);
-            throw new AuthenticatedPersonNotFoundException();
-        }
+        ifPersonIdNotFoundLogout(numberOfAffectedRows, request, response);
 
         return timerRemainingFocus;
     }
@@ -235,15 +224,15 @@ public class PersonService {
 
     public MoveTimerToStageBreakWithAutoBreakResult principalMoveTimerToStageBreakWitAutoBreak(
         Principal principal,
+        boolean finished,
         HttpServletRequest request,
         HttpServletResponse response
     ) throws AuthenticatedPersonNotFoundException {
         long principalId = SecurityHelper.extractIdFromPrincipal(principal);
-        Person person = personRepository.findById(principalId).orElseThrow(() -> {
+        Person person = personRepository.findByIdWithFetchedMainTopics(principalId).orElseThrow(() -> {
             SecurityHelper.logoutManually(request, response);
             return new AuthenticatedPersonNotFoundException();
         });
-
 
         int numberOfAffectedRows;
         MoveTimerToStageBreakWithAutoBreakResult result;
@@ -270,11 +259,14 @@ public class PersonService {
             result = new MoveTimerToStageBreakWithAutoBreakResult(Stage.SHORT_BREAK,
                 currentTimerRemainingInterval);
         }
+        ifPersonIdNotFoundLogout(numberOfAffectedRows, request, response);
 
-        if (numberOfAffectedRows == 0) {
-            SecurityHelper.logoutManually(request, response);
-            throw new AuthenticatedPersonNotFoundException();
-        }
+        MainTopic currentMainTopic = person.getMainTopics().stream().filter(mainTopic ->
+            mainTopic.getName().equals(person.getTimerSelectedTopic())
+        ).findAny().get();
+        FocusSession newFocusSession = new FocusSession(finished, person, currentMainTopic);
+        focusSessionService.create(newFocusSession);
+
         return result;
     }
 
@@ -291,7 +283,18 @@ public class PersonService {
             dto.breakTypeToStart(),
             null
         );
+        ifPersonIdNotFoundLogout(numberOfAffectedRows, request, response);
 
+        Person person = personRepository.findByIdWithFetchedMainTopics(principalId).get();
+        MainTopic currentMainTopic = person.getMainTopics().stream().filter(mainTopic ->
+            mainTopic.getName().equals(person.getTimerSelectedTopic())
+        ).findAny().get();
+        FocusSession newFocusSession = new FocusSession(dto.finished(), person, currentMainTopic);
+        focusSessionService.create(newFocusSession);
+    }
+
+    private void ifPersonIdNotFoundLogout(int numberOfAffectedRows, HttpServletRequest request,
+                                          HttpServletResponse response) {
         if (numberOfAffectedRows == 0) {
             SecurityHelper.logoutManually(request, response);
             throw new AuthenticatedPersonNotFoundException();
