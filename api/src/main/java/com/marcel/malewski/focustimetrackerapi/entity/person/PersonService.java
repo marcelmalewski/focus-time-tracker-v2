@@ -26,14 +26,12 @@ public class PersonService {
     private final PersonRepository personRepository;
     private final PersonMapper personMapper;
     private final FocusSessionService focusSessionService;
-    private final MainTopicRepository mainTopicRepository;
     private final MainTopicMapper mainTopicMapper;
 
-    public PersonService(PersonRepository personRepository, PersonMapper personMapper, FocusSessionService focusSessionService, MainTopicRepository mainTopicRepository, MainTopicMapper mainTopicMapper) {
+    public PersonService(PersonRepository personRepository, PersonMapper personMapper, FocusSessionService focusSessionService, MainTopicMapper mainTopicMapper) {
         this.personRepository = personRepository;
         this.personMapper = personMapper;
         this.focusSessionService = focusSessionService;
-        this.mainTopicRepository = mainTopicRepository;
         this.mainTopicMapper = mainTopicMapper;
     }
 
