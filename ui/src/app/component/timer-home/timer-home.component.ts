@@ -36,6 +36,7 @@ import {
     NotImplementedYet,
 } from '../../spec/message-spec';
 import { Pages, Stages } from '../../spec/common-spec';
+import { FocusSessionService } from '../../service/focus-session.service';
 
 @Component({
     selector: 'app-home',
@@ -74,6 +75,7 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
     constructor(
         private router: Router,
         private timerService: TimerService,
+        private focusSessionService: FocusSessionService,
         private principalDataService: PrincipalDataService,
         private notificationService: NotificationService
     ) {}
@@ -90,6 +92,12 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
         this.mainTopicsBasicData = mainTopicsBasicData;
         this.timerSettings =
             TimerService.mapToTimerSettings(principalBasicData);
+
+        this.focusSessionService
+            .getPrincipalAllFocusSessions(0, 3)
+            .subscribe(result => {
+                console.log(result);
+            });
     }
 
     ngOnDestroy(): void {
