@@ -5,7 +5,10 @@ import com.marcel.malewski.focustimetrackerapi.entity.topic.mainTopic.MainTopic;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,6 +24,9 @@ public class FocusSession {
     private Long id;
     @Version
     private Integer version;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
 
     @NotNull
     private Boolean finished;
@@ -41,7 +47,6 @@ public class FocusSession {
         this.mainTopic = mainTopic;
     }
 
-
     @Override
     public String toString() {
         return "FocusSession{" + "id=" + id + '}';
@@ -58,5 +63,10 @@ public class FocusSession {
     @Override
     public int hashCode() {
         return getId() != null ? getId().hashCode() : 0;
+    }
+
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class FocusSessionFields {
+        public static final String CREATED_AT = "createdAt";
     }
 }
