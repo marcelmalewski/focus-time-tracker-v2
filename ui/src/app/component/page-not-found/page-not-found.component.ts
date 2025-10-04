@@ -12,5 +12,5 @@ import { PageLinks } from '../../spec/common-spec';
     imports: [RouterLink, FormsModule, NgIf, ReactiveFormsModule],
 })
 export class PageNotFoundComponent {
-    protected readonly PageLinks = PageLinks;
+    readonly PageLinks = PageLinks;
 }
