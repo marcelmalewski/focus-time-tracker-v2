@@ -44,3 +44,10 @@ export interface MainTopicBasicData {
     id: number;
     name: string;
 }
+
+export interface FocusSessionBasicData {
+    id: number;
+    createdAt: Date;
+    finished: boolean;
+    mainTopicName: string;
+}
