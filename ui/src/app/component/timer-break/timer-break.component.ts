@@ -50,12 +50,13 @@ import { NotificationService } from '../../service/notification.service';
     ],
 })
 export class TimerBreakComponent implements OnInit, OnDestroy {
-    private componentDestroyed$ = new Subject<void>();
-    readonly Pages = Pages;
-
     principalBasicData!: PrincipalBasicData;
     timerCurrentTime!: TimerCurrentBreakTime;
     countDownId: any | undefined;
+
+    readonly Pages = Pages;
+
+    private componentDestroyed$ = new Subject<void>();
 
     constructor(
         private router: Router,
