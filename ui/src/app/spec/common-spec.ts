@@ -9,6 +9,7 @@ export const Pages = {
     TIMER_FOCUS: 'timer/focus',
     TIMER_BREAK: 'timer/break',
     TIMER_EDIT: 'timer/edit',
+    FOCUS_SESSIONS: 'focus-sessions',
     SETTINGS: 'settings',
     UNKNOWN_ERROR: 'unknown-error',
 } as const;
@@ -45,3 +46,10 @@ export const StageToPage: Record<Stage, Page> = {
     SHORT_BREAK: Pages.TIMER_BREAK,
     LONG_BREAK: Pages.TIMER_BREAK,
 };
+
+export interface Paginated<T> {
+    content: T[];
+    totalElements: number;
+    numberOfElements: number;
+    empty: boolean; // TODO obsłużmy to
+}
