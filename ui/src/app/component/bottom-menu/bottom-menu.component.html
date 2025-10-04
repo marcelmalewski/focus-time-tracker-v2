@@ -4,5 +4,15 @@
         (click)="submitLogout()">
         Logout
     </button>
+    <button
+        class="mt-6 rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov"
+        (click)="goToHome()">
+        Home
+    </button>
+    <button
+        class="mt-6 rounded-md bg-base-button px-4 py-2 text-xl duration-200 hover:bg-base-button-hov"
+        (click)="goToFocusSessions()">
+        Sessions
+    </button>
 </div>
 <app-command-line [commandContext]="commandContext"></app-command-line>
