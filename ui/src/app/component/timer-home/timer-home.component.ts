@@ -61,21 +61,21 @@ import { FocusSessionService } from '../../service/focus-session.service';
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TimerHomeComponent implements OnDestroy, OnInit {
-    @ViewChild('timerForm') private timerForm!: NgForm;
-    private componentDestroyed$ = new Subject<void>();
+    mainTopicsBasicData: MainTopicBasicData[] | undefined;
+    timerSettings: TimerSettings = TimerService.prepareDefaultTimerSettings();
 
     readonly AtLeastOneMessage = AtLeastOneMessage;
     readonly LessThanOrEqual99Message = LessThanOrEqual99Message;
     readonly AtLeastZeroMessage = AtLeastZeroMessage;
     readonly LessThanOrEqual59Message = LessThanOrEqual59Message;
+    readonly Pages = Pages;
 
-    mainTopicsBasicData: MainTopicBasicData[] | undefined;
-    timerSettings: TimerSettings = TimerService.prepareDefaultTimerSettings();
+    @ViewChild('timerForm') private timerForm!: NgForm;
+    private componentDestroyed$ = new Subject<void>();
 
     constructor(
         private router: Router,
         private timerService: TimerService,
-        private focusSessionService: FocusSessionService,
         private principalDataService: PrincipalDataService,
         private notificationService: NotificationService
     ) {}
@@ -92,12 +92,6 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
         this.mainTopicsBasicData = mainTopicsBasicData;
         this.timerSettings =
             TimerService.mapToTimerSettings(principalBasicData);
-
-        this.focusSessionService
-            .getPrincipalAllFocusSessions(0, 3)
-            .subscribe(result => {
-                console.log(result);
-            });
     }
 
     ngOnDestroy(): void {
@@ -172,6 +166,4 @@ export class TimerHomeComponent implements OnDestroy, OnInit {
             this.timerSettings.timerInterval = 1;
         }
     }
-
-    protected readonly Pages = Pages;
 }
