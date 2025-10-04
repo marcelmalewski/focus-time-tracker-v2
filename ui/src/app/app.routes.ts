@@ -8,6 +8,7 @@ import { TimerFocusComponent } from './component/timer-focus/timer-focus.compone
 import { PageNotFoundComponent } from './component/page-not-found/page-not-found.component';
 import { PrincipalBasicDataGuard } from './guard/principal-basic-data.guard';
 import { TimerBreakComponent } from './component/timer-break/timer-break.component';
+import { FocusSessionsComponent } from './component/focus-sessions/focus-sessions.component';
 
 export const routes: Routes = [
     {
@@ -21,6 +22,12 @@ export const routes: Routes = [
         title: 'timer-home',
         component: TimerHomeComponent,
         canActivate: [PrincipalWithMainTopicsGuard],
+    },
+    {
+        path: 'focus-sessions',
+        title: 'focus-sessions',
+        component: FocusSessionsComponent,
+        canActivate: [PrincipalBasicDataGuard],
     },
     {
         path: 'timer/focus',
