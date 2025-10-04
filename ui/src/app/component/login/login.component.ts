@@ -19,14 +19,14 @@ import {
     templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnDestroy {
-    @ViewChild('loginForm') private loginForm!: NgForm;
-    private componentDestroyed$ = new Subject<void>();
     notCorrectLoginOrEmailOrPasswords: boolean = false;
-
     loginData: AuthInterface = {
         loginOrEmail: '',
         password: '',
     };
+
+    @ViewChild('loginForm') private loginForm!: NgForm;
+    private componentDestroyed$ = new Subject<void>();
 
     constructor(
         private router: Router,
