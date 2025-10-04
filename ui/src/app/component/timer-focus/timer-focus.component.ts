@@ -55,14 +55,15 @@ import { translateBreakPipe } from '../../pipes/translate-break.pipe';
     ],
 })
 export class TimerFocusComponent implements OnInit, OnDestroy {
-    private componentDestroyed$ = new Subject<void>();
-    protected readonly Pages = Pages;
-    protected readonly Stages = Stages;
-
     principalBasicData!: PrincipalBasicData;
     timerCurrentTime!: TimerCurrentTime;
     countDownId: any | undefined;
     nextBreak: string | undefined;
+
+    readonly Pages = Pages;
+    readonly Stages = Stages;
+
+    private componentDestroyed$ = new Subject<void>();
 
     constructor(
         private router: Router,
