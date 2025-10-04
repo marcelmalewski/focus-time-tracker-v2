@@ -59,4 +59,12 @@ export class BottomMenuComponent implements OnDestroy {
                 },
             });
     }
+
+    goToHome() {
+        this.router.navigateByUrl(Pages.TIMER_HOME);
+    }
+
+    goToFocusSessions() {
+        this.router.navigateByUrl(Pages.FOCUS_SESSIONS);
+    }
 }
